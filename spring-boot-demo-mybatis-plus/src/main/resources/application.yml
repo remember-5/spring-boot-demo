@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/spring_boot_demo?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&useSSL=false
+    username: root
+    password: 123456
+
+mybatis-plus:
+  mapper-locations: classpath:mappers/*.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.remember.mybatisplus
+  global-config:
+    # 数据库相关配置
+    db-config:
+      #驼峰下划线转换
+      table-underline: true
+      #是否开启大写命名，默认不开启
+      #capital-mode: true
+      #逻辑删除配置
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  # 原生配置
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: true

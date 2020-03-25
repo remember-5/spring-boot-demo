@@ -1,4 +1,4 @@
-package com.remember.elasticsearch;
+package com.remember.mybatisplus;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

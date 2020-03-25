@@ -1,10 +1,10 @@
-package com.remember.elasticsearch;
+package com.remember.mybatisplus;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class DemoApplicationTests {
+class ElasticSearchDemoApplicationTests {
 
 	@Test
 	void contextLoads() {
