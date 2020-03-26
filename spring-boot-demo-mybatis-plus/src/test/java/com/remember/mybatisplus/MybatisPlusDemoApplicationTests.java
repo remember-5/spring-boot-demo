@@ -18,6 +18,7 @@ class MybatisPlusDemoApplicationTests {
 	void contextLoads() {
 		List<HotWireKb> list = hotWireKbService.list();
 		System.err.println(list.size());
+		System.err.println(list.get(1));
 	}
 
 }

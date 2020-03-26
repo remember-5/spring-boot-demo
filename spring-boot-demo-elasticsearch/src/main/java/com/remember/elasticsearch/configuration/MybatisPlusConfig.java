@@ -1,4 +1,4 @@
-package com.remember.mybatisplus.configuration;
+package com.remember.elasticsearch.configuration;
 
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
@@ -10,9 +10,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @author wangjiahao
  * @date 2020/3/25
  */
+//Spring boot方式
 @EnableTransactionManagement
 @Configuration
-@MapperScan(basePackages = {"com.remember.mybatisplus.mapper"})
+@MapperScan(basePackages = {"com.remember.elasticsearch.mapper"})
 public class MybatisPlusConfig {
 
 	/**
