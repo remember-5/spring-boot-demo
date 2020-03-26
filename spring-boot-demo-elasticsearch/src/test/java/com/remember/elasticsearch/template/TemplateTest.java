@@ -1,6 +1,7 @@
 package com.remember.elasticsearch.template;
 
 import com.remember.elasticsearch.ElasticSearchDemoApplicationTests;
+import com.remember.elasticsearch.entity.GoodsInfo;
 import com.remember.elasticsearch.entity.HotWireKb;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,6 @@ public class TemplateTest extends ElasticSearchDemoApplicationTests {
         // 配置映射，会根据Item类中的id、Field等字段来自动完成映射
         esTemplate.putMapping(HotWireKb.class);
     }
-
     /**
      * 测试 ElasticTemplate 删除 index
      */
@@ -34,4 +34,27 @@ public class TemplateTest extends ElasticSearchDemoApplicationTests {
     public void testDeleteIndex() {
         esTemplate.deleteIndex(HotWireKb.class);
     }
+
+    /**
+     * 测试 ElasticTemplate 创建 index
+     */
+    @Test
+    public void testCreateIndex1() {
+        // 创建索引，会根据Item类的@Document注解信息来创建
+        esTemplate.createIndex(GoodsInfo.class);
+
+        // 配置映射，会根据Item类中的id、Field等字段来自动完成映射
+        esTemplate.putMapping(GoodsInfo.class);
+    }
+
+
+    /**
+     * 测试 ElasticTemplate 删除 index
+     */
+    @Test
+    public void testDeleteIndex1() {
+        esTemplate.deleteIndex(GoodsInfo.class);
+    }
+
+
 }

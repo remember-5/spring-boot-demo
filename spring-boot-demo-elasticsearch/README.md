@@ -35,5 +35,11 @@ http.cors.allow-origin: "*"
 9. 拉取elasticsearch-hq：  `docker pull elastichq/elasticsearch-hq`
 10. 安装elasticsearch-hq：`docker run -d -p 5000:5000 elastichq/elasticsearch-hq`
 11. 打开浏览器输入`http://localhost:5000` 地址处输入ES的地址即可 不要使用localhost或者127.0.0.1 请使用ipv4地址或者ipv6地址。windows打开cmd输入ipconfig即可查看，linux/mac终端输入ifconfig即可查看
+12. 安装拼音插件`./bin/elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-pinyin/releases/download/v6.8.6/elasticsearch-analysis-pinyin-6.8.6.zip`
+13. 安装`./bin/elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v6.8.6/elasticsearch-analysis-ik-6.8.6.zip`
+
+
+
+
 
 ## 添加依赖

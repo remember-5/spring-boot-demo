@@ -51,7 +51,7 @@ class HotWireKbRepositoryTest extends ElasticSearchDemoApplicationTests {
         List<HotWireKb> list = hotWireKbService.list();
         System.err.println(list.size());
         System.err.println(list.get(1));
-//        repo.saveAll(list);
+        repo.saveAll(list);
 //        List<Person> personList = Lists.newArrayList();
 //        personList.add(new Person(2L, "曹操", "魏国", 20, DateUtil.parse("1988-01-02 03:04:05"), "曹操（155年－220年3月15日），字孟德，一名吉利，小字阿瞒，沛国谯县（今安徽亳州）人。东汉末年杰出的政治家、军事家、文学家、书法家，三国中曹魏政权的奠基人。\n曹操曾担任东汉丞相，后加封魏王，奠定了曹魏立国的基础。去世后谥号为武王。其子曹丕称帝后，追尊为武皇帝，庙号太祖。\n东汉末年，天下大乱，曹操以汉天子的名义征讨四方，对内消灭二袁、吕布、刘表、马超、韩遂等割据势力，对外降服南匈奴、乌桓、鲜卑等，统一了中国北方，并实行一系列政策恢复经济生产和社会秩序，扩大屯田、兴修水利、奖励农桑、重视手工业、安置流亡人口、实行“租调制”，从而使中原社会渐趋稳定、经济出现转机。黄河流域在曹操统治下，政治渐见清明，经济逐步恢复，阶级压迫稍有减轻，社会风气有所好转。曹操在汉朝的名义下所采取的一些措施具有积极作用。\n曹操军事上精通兵法，重贤爱才，为此不惜一切代价将看中的潜能分子收于麾下；生活上善诗歌，抒发自己的政治抱负，并反映汉末人民的苦难生活，气魄雄伟，慷慨悲凉；散文亦清峻整洁，开启并繁荣了建安文学，给后人留下了宝贵的精神财富，鲁迅评价其为“改造文章的祖师”。同时曹操也擅长书法，唐朝张怀瓘在《书断》将曹操的章草评为“妙品”。"));
 //        personList.add(new Person(3L, "孙权", "吴国", 19, DateUtil.parse("1989-01-02 03:04:05"), "孙权（182年－252年5月21日），字仲谋，吴郡富春（今浙江杭州富阳区）人。三国时代孙吴的建立者（229年－252年在位）。\n孙权的父亲孙坚和兄长孙策，在东汉末年群雄割据中打下了江东基业。建安五年（200年），孙策遇刺身亡，孙权继之掌事，成为一方诸侯。建安十三年（208年），与刘备建立孙刘联盟，并于赤壁之战中击败曹操，奠定三国鼎立的基础。建安二十四年（219年），孙权派吕蒙成功袭取刘备的荆州，使领土面积大大增加。\n黄武元年（222年），孙权被魏文帝曹丕册封为吴王，建立吴国。同年，在夷陵之战中大败刘备。黄龙元年（229年），在武昌正式称帝，国号吴，不久后迁都建业。孙权称帝后，设置农官，实行屯田，设置郡县，并继续剿抚山越，促进了江南经济的发展。在此基础上，他又多次派人出海。黄龙二年（230年），孙权派卫温、诸葛直抵达夷州。\n孙权晚年在继承人问题上反复无常，引致群下党争，朝局不稳。太元元年（252年）病逝，享年七十一岁，在位二十四年，谥号大皇帝，庙号太祖，葬于蒋陵。\n孙权亦善书，唐代张怀瓘在《书估》中将其书法列为第三等。"));
@@ -105,8 +105,8 @@ class HotWireKbRepositoryTest extends ElasticSearchDemoApplicationTests {
      */
     @Test
     public void customSelectRangeOfId() {
-        List<HotWireKb> byPointsValueBetween = repo.findByIdBetween(200, 1000);
-        System.err.println(byPointsValueBetween);
+//        List<HotWireKb> byPointsValueBetween = repo.findByIdBetween(200, 1000);
+//        System.err.println(byPointsValueBetween);
 //        repo.findByAgeBetween(18, 19).forEach(person -> log.info("{} 年龄: {}", person.getName(), person.getAge()));
     }
 
@@ -121,6 +121,7 @@ class HotWireKbRepositoryTest extends ElasticSearchDemoApplicationTests {
         // 单个
         TermQueryBuilder id = QueryBuilders.termQuery("id", 1);
         repo.search(id).forEach(System.err::println);
+
         //批量
         TermsQueryBuilder id1 = QueryBuilders.termsQuery("id", Lists.newArrayList(1, 2, 3));
         repo.search(id1).forEach(System.err::println);
@@ -146,7 +147,7 @@ class HotWireKbRepositoryTest extends ElasticSearchDemoApplicationTests {
 
 
     /**
-     * 模糊查询
+     * 模糊查询 * = %  || ? = _
      * 数字查询都为精确查询
      * 字符串
      */
@@ -165,6 +166,27 @@ class HotWireKbRepositoryTest extends ElasticSearchDemoApplicationTests {
     }
 
     /**
+     * 分词查询
+     */
+    @Test
+    public void test4() {
+        BoolQueryBuilder boolQueryBuilder = new BoolQueryBuilder();
+        String prefix = "复合肥,我想吃番茄";
+        // Java分词器 jieba
+
+
+        boolQueryBuilder.should(QueryBuilders.prefixQuery("attrsKeyword", prefix))
+                .should(QueryBuilders.prefixQuery("text", prefix))
+                .should(QueryBuilders.prefixQuery("title", prefix))
+                .must(QueryBuilders.rangeQuery("id").from(107802).to(108000));
+
+        Iterable<HotWireKb> search = repo.search(boolQueryBuilder);
+        search.forEach(System.err::println);
+
+    }
+
+
+    /**
      * 使用QueryBuilder：
      * termQuery("key", obj) 完全匹配
      * termsQuery("key", obj1, obj2..) 一次匹配多个值
@@ -180,10 +202,10 @@ class HotWireKbRepositoryTest extends ElasticSearchDemoApplicationTests {
     @Test
     public void customSelectRangeOfAge() {
         // 根据字段 byXXXXBetween 来搜索
-        List<HotWireKb> byPointsValueBetween = repo.findByIdBetween(107800, 107900);
-        List<HotWireKb> byGoodsPriceBetween = repo.findByIdBetween(100, 200);
-        System.err.println(byPointsValueBetween);
-        System.err.println(byGoodsPriceBetween);
+//        List<HotWireKb> byPointsValueBetween = repo.findByIdBetween(107800, 107900);
+//        List<HotWireKb> byGoodsPriceBetween = repo.findByIdBetween(100, 200);
+//        System.err.println(byPointsValueBetween);
+//        System.err.println(byGoodsPriceBetween);
 
         // 数字
         // 闭区间查询

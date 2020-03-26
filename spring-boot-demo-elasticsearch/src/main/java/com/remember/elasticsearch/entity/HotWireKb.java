@@ -15,6 +15,8 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.util.Date;
 
 /**
+ * ik_max_word 尽可能多的分词
+ * ik_smart 尽可能少的分词
  * @author wangjiahao
  * @date 2020/3/25
  */
@@ -40,13 +42,6 @@ public class HotWireKb {
     private String title;
 
     /**
-     * 数据源
-     */
-    @Field(type = FieldType.Text)
-    @TableField(value = "origin")
-    private String origin;
-
-    /**
      * 等级
      */
     @Field(type = FieldType.Integer)
@@ -61,11 +56,11 @@ public class HotWireKb {
     private Integer status;
 
     /**
-     * 状态
+     * 正文
      */
-    @Field(type = FieldType.Text)
+    @Field(type = FieldType.Text, analyzer = "ik_smart")
     @TableField(value = "texts1")
-    private String texts;
+    private String text;
 
     /**
      * 绑定一级标签
@@ -91,7 +86,7 @@ public class HotWireKb {
     /**
      * 关键词
      */
-    @Field(type = FieldType.Text)
+    @Field(type = FieldType.Text, analyzer = "ik_smart")
     @TableField(value = "attrs_keyword")
     private String attrsKeyword;
 
