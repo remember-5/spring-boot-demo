@@ -60,6 +60,12 @@ public class HotWireKb {
     @TableField(value = "status")
     private Integer status;
 
+    /**
+     * 状态
+     */
+    @Field(type = FieldType.Text)
+    @TableField(value = "texts1")
+    private String texts;
 
     /**
      * 绑定一级标签
