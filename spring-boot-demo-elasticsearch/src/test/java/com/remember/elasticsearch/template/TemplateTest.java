@@ -1,6 +1,7 @@
 package com.remember.elasticsearch.template;
 
 import com.remember.elasticsearch.ElasticSearchDemoApplicationTests;
+import com.remember.elasticsearch.entity.CustomerComplain;
 import com.remember.elasticsearch.entity.GoodsInfo;
 import com.remember.elasticsearch.entity.HotWireKb;
 import org.junit.jupiter.api.Test;
@@ -17,7 +18,7 @@ public class TemplateTest extends ElasticSearchDemoApplicationTests {
     private ElasticsearchTemplate esTemplate;
 
     /**
-     * 测试 ElasticTemplate 创建 index
+     * 测试 ElasticTemplate 创建 index HotWireKb
      */
     @Test
     public void testCreateIndex() {
@@ -28,7 +29,7 @@ public class TemplateTest extends ElasticSearchDemoApplicationTests {
         esTemplate.putMapping(HotWireKb.class);
     }
     /**
-     * 测试 ElasticTemplate 删除 index
+     * 测试 ElasticTemplate 删除 index HotWireKb
      */
     @Test
     public void testDeleteIndex() {
@@ -36,7 +37,7 @@ public class TemplateTest extends ElasticSearchDemoApplicationTests {
     }
 
     /**
-     * 测试 ElasticTemplate 创建 index
+     * 测试 ElasticTemplate 创建 index GoodsInfo
      */
     @Test
     public void testCreateIndex1() {
@@ -49,11 +50,32 @@ public class TemplateTest extends ElasticSearchDemoApplicationTests {
 
 
     /**
-     * 测试 ElasticTemplate 删除 index
+     * 测试 ElasticTemplate 删除 index GoodsInfo
      */
     @Test
     public void testDeleteIndex1() {
         esTemplate.deleteIndex(GoodsInfo.class);
+    }
+
+
+    /**
+     * 测试 ElasticTemplate 创建 index CustomerComplain
+     */
+    @Test
+    public void testCreateIndex2() {
+        // 创建索引，会根据Item类的@Document注解信息来创建
+        esTemplate.createIndex(CustomerComplain.class);
+
+        // 配置映射，会根据Item类中的id、Field等字段来自动完成映射
+        esTemplate.putMapping(CustomerComplain.class);
+    }
+
+    /**
+     * 测试 ElasticTemplate 删除 index CustomerComplain
+     */
+    @Test
+    public void testDeleteIndex2() {
+        esTemplate.deleteIndex(CustomerComplain.class);
     }
 
 
