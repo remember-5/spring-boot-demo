@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpInputMessage;
-import org.springframework.lang.NonNull;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,13 +22,11 @@ public class DecryptHttpInputMessage implements HttpInputMessage {
     private HttpHeaders headers;
 
     @Override
-    @NonNull
     public InputStream getBody() throws IOException {
         return body;
     }
 
     @Override
-    @NonNull
     public HttpHeaders getHeaders() {
         return headers;
     }

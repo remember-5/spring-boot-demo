@@ -8,13 +8,11 @@ import com.remember.encrypt.annotation.decrypt.RSADecryptBody;
 import com.remember.encrypt.bean.DecryptAnnotationInfoBean;
 import com.remember.encrypt.bean.DecryptHttpInputMessage;
 import com.remember.encrypt.config.EncryptBodyConfig;
+import com.remember.encrypt.config.RSABodyConfig;
 import com.remember.encrypt.enums.DecryptBodyMethod;
 import com.remember.encrypt.exception.DecryptBodyFailException;
 import com.remember.encrypt.exception.DecryptMethodNotFoundException;
-import com.remember.encrypt.util.AESEncryptUtil;
-import com.remember.encrypt.util.CheckUtils;
-import com.remember.encrypt.util.DESEncryptUtil;
-import com.remember.encrypt.util.StringUtils;
+import com.remember.encrypt.util.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
@@ -22,7 +20,6 @@ import org.springframework.core.MethodParameter;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpInputMessage;
 import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.RequestBodyAdvice;
 
@@ -30,6 +27,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 
 /**
  * 请求数据的加密信息解密处理<br>
@@ -52,6 +51,8 @@ public class DecryptRequestBodyAdvice implements RequestBodyAdvice {
 
     private final EncryptBodyConfig config;
 
+    private final RSABodyConfig rsaBodyConfig;
+
     /**
      * 此处如果返回false , 则不执行当前Advice的业务
      *
@@ -61,7 +62,7 @@ public class DecryptRequestBodyAdvice implements RequestBodyAdvice {
      * @return boolean
      */
     @Override
-    public boolean supports(MethodParameter methodParameter, @NonNull Type targetType, Class<? extends HttpMessageConverter<?>> converterType) {
+    public boolean supports(MethodParameter methodParameter, Type targetType, Class<? extends HttpMessageConverter<?>> converterType) {
         Annotation[] annotations = methodParameter.getDeclaringClass().getAnnotations();
         if (annotations != null && annotations.length > 0) {
             for (Annotation annotation : annotations) {
@@ -91,7 +92,7 @@ public class DecryptRequestBodyAdvice implements RequestBodyAdvice {
      */
     @Override
 
-    public Object handleEmptyBody(Object body, @NonNull HttpInputMessage inputMessage, @NonNull MethodParameter parameter, @NonNull Type targetType, @NonNull Class<? extends HttpMessageConverter<?>> converterType) {
+    public Object handleEmptyBody(Object body,  HttpInputMessage inputMessage,  MethodParameter parameter,  Type targetType,  Class<? extends HttpMessageConverter<?>> converterType) {
         return body;
     }
 
@@ -107,28 +108,30 @@ public class DecryptRequestBodyAdvice implements RequestBodyAdvice {
      * @throws IOException IOException
      */
     @Override
-    @NonNull
-    public HttpInputMessage beforeBodyRead(@NonNull HttpInputMessage inputMessage, @NonNull MethodParameter parameter, @NonNull Type targetType, @NonNull Class<? extends HttpMessageConverter<?>> converterType) throws IOException {
+
+    public HttpInputMessage beforeBodyRead( HttpInputMessage inputMessage,  MethodParameter parameter,  Type targetType,  Class<? extends HttpMessageConverter<?>> converterType) {
 
 //        if (inputMessage.getBody() == null) {
 //            return inputMessage;
 //        }
 
         String body;
-
         try {
-            body = IOUtils.toString(inputMessage.getBody(), config.getEncoding());
+            body = IOUtils.toString(inputMessage.getBody(), StandardCharsets.UTF_8);
         } catch (Exception e) {
             throw new DecryptBodyFailException("Unable to get request body data," +
                     " please check if the sending data body or request method is in compliance with the specification." +
                     " (无法获取请求正文数据，请检查发送数据体或请求方法是否符合规范。)");
         }
+
         if (body == null || StringUtils.isNullOrEmpty(body)) {
             throw new DecryptBodyFailException("The request body is NULL or an empty string, so the decryption failed." +
                     " (请求正文为NULL或为空字符串，因此解密失败。)");
         }
+
         String decryptBody = null;
         DecryptAnnotationInfoBean methodAnnotation = this.getMethodAnnotation(parameter);
+
         if (methodAnnotation != null) {
             decryptBody = switchDecrypt(body, methodAnnotation);
         } else {
@@ -137,13 +140,15 @@ public class DecryptRequestBodyAdvice implements RequestBodyAdvice {
                 decryptBody = switchDecrypt(body, classAnnotation);
             }
         }
+
         if (decryptBody == null) {
             throw new DecryptBodyFailException("Decryption error, " +
                     "please check if the selected source data is encrypted correctly." +
                     " (解密错误，请检查选择的源数据的加密方式是否正确。)");
         }
+
         try {
-            InputStream inputStream = IOUtils.toInputStream(decryptBody, config.getEncoding());
+            InputStream inputStream = IOUtils.toInputStream(decryptBody, StandardCharsets.UTF_8);
             return new DecryptHttpInputMessage(inputStream, inputMessage.getHeaders());
         } catch (Exception e) {
             throw new DecryptBodyFailException("The string is converted to a stream format exception." +
@@ -163,8 +168,8 @@ public class DecryptRequestBodyAdvice implements RequestBodyAdvice {
      * @return 读取参数后执行
      */
     @Override
-    @NonNull
-    public Object afterBodyRead(@NonNull Object body, @NonNull HttpInputMessage inputMessage, @NonNull MethodParameter parameter, @NonNull Type targetType, @NonNull Class<? extends HttpMessageConverter<?>> converterType) {
+
+    public Object afterBodyRead( Object body,  HttpInputMessage inputMessage,  MethodParameter parameter,  Type targetType,  Class<? extends HttpMessageConverter<?>> converterType) {
         return body;
     }
 
@@ -193,6 +198,11 @@ public class DecryptRequestBodyAdvice implements RequestBodyAdvice {
             return DecryptAnnotationInfoBean.builder()
                     .decryptBodyMethod(DecryptBodyMethod.AES)
                     .key(methodParameter.getMethodAnnotation(AESDecryptBody.class).otherKey())
+                    .build();
+        }
+        if (methodParameter.getMethod().isAnnotationPresent(RSADecryptBody.class)) {
+            return DecryptAnnotationInfoBean.builder()
+                    .decryptBodyMethod(DecryptBodyMethod.RSA)
                     .build();
         }
         return null;
@@ -227,6 +237,11 @@ public class DecryptRequestBodyAdvice implements RequestBodyAdvice {
                             .key(((AESDecryptBody) annotation).otherKey())
                             .build();
                 }
+                if (annotation instanceof RSADecryptBody) {
+                    return DecryptAnnotationInfoBean.builder()
+                            .decryptBodyMethod(DecryptBodyMethod.RSA)
+                            .build();
+                }
             }
         }
         return null;
@@ -253,6 +268,16 @@ public class DecryptRequestBodyAdvice implements RequestBodyAdvice {
         if (method == DecryptBodyMethod.AES) {
             key = CheckUtils.checkAndGetKey(config.getAesKey(), key, "AES-KEY");
             return AESEncryptUtil.decrypt(formatStringBody, key);
+        }
+        if (method == DecryptBodyMethod.RSA) {
+            StringBuilder json = new StringBuilder();
+            formatStringBody = formatStringBody.replaceAll(" ", "+");
+            String[] contents = formatStringBody.split("\\|");
+            for (String value : contents) {
+                value = new String(Objects.requireNonNull(RSAUtil.decrypt(Base64Util.decode(value), rsaBodyConfig.getPrivateKey(), rsaBodyConfig.getMaxDecryptBlock())), StandardCharsets.UTF_8);
+                json.append(value);
+            }
+            return json.toString();
         }
         throw new DecryptBodyFailException();
     }

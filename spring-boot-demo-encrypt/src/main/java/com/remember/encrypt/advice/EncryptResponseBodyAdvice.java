@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.remember.encrypt.annotation.encrypt.*;
 import com.remember.encrypt.bean.EncryptAnnotationInfoBean;
 import com.remember.encrypt.config.EncryptBodyConfig;
+import com.remember.encrypt.config.RSABodyConfig;
 import com.remember.encrypt.enums.EncryptBodyMethod;
 import com.remember.encrypt.enums.SHAEncryptType;
 import com.remember.encrypt.exception.EncryptBodyFailException;
@@ -18,7 +19,6 @@ import org.springframework.core.annotation.Order;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
-import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
@@ -50,8 +50,10 @@ public class EncryptResponseBodyAdvice implements ResponseBodyAdvice {
 
     private final EncryptBodyConfig config;
 
+    private final RSABodyConfig rsaBodyConfig;
+
     @Override
-    public boolean supports(MethodParameter returnType, @NonNull Class converterType) {
+    public boolean supports(MethodParameter returnType,  Class converterType) {
         Annotation[] annotations = returnType.getDeclaringClass().getAnnotations();
         if (annotations != null && annotations.length > 0) {
             for (Annotation annotation : annotations) {
@@ -135,6 +137,11 @@ public class EncryptResponseBodyAdvice implements ResponseBodyAdvice {
                     .key(methodParameter.getMethodAnnotation(AESEncryptBody.class).otherKey())
                     .build();
         }
+        if (methodParameter.getMethod().isAnnotationPresent(RSAEncryptBody.class)) {
+            return EncryptAnnotationInfoBean.builder()
+                    .encryptBodyMethod(EncryptBodyMethod.RSA)
+                    .build();
+        }
         return null;
     }
 
@@ -179,6 +186,11 @@ public class EncryptResponseBodyAdvice implements ResponseBodyAdvice {
                             .key(((AESEncryptBody) annotation).otherKey())
                             .build();
                 }
+                if (annotation instanceof RSAEncryptBody) {
+                    return EncryptAnnotationInfoBean.builder()
+                            .encryptBodyMethod(EncryptBodyMethod.RSA)
+                            .build();
+                }
             }
         }
         return null;
@@ -215,6 +227,12 @@ public class EncryptResponseBodyAdvice implements ResponseBodyAdvice {
         if (method == EncryptBodyMethod.AES) {
             key = CheckUtils.checkAndGetKey(config.getAesKey(), key, "AES-KEY");
             return AESEncryptUtil.encrypt(formatStringBody, key);
+        }
+        if (method == EncryptBodyMethod.RSA) {
+            byte[] bytes = formatStringBody.getBytes();
+            byte[] encodedData = RSAUtil.encrypt(bytes, rsaBodyConfig.getPublicKey(),rsaBodyConfig.getMaxEncryptBlock());
+           return Base64Util.encode(encodedData);
+
         }
         throw new EncryptBodyFailException();
     }

@@ -12,21 +12,27 @@ import org.springframework.context.annotation.Configuration;
  *      body:
  *       aes-key: 12345678 # AES加密秘钥
  *       des-key: 12345678 # DES加密秘钥
+ *       rsa-private-key: rsa的私钥
+ *       rsa-publicKey: rsa的公钥
+ *       rsa-open: 是否打开
+ *       rsa-showLog: 是否打印日志
  * </pre>
+ *
  * @author wangjiahao
  * @version 2018/9/6
  */
-@ConfigurationProperties(prefix = "encrypt.body")
-@Configuration
 @Data
+@Configuration
+@ConfigurationProperties(prefix = "encrypt.body")
 public class EncryptBodyConfig {
 
+    /**
+     * aes的key
+     */
     private String aesKey;
 
+    /**
+     * des的key
+     */
     private String desKey;
-
-    private String encoding = "UTF-8";
-
-
-
 }
