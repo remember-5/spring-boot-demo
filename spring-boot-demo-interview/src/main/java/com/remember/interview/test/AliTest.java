@@ -13,6 +13,7 @@ public class AliTest {
         test3();
         test4();
         test7();
+        test(1, 2, 3, 4, 5, 6, 7);
     }
 
 
@@ -32,9 +33,10 @@ public class AliTest {
         double c = 0.8;
         double d = 0.7;
         double e = 0.6;
-        if(c - d == d - e){
+        if (c - d == d - e) {
             System.err.println("相等");
-        };
+        }
+        ;
 
     }
 
@@ -56,37 +58,35 @@ public class AliTest {
     /**
      * 某个类有两个重载方法：void f(String s) 和 void f(Integer i)，那么 f(null) 的会调用哪个方法？
      */
-    public static void test5(){
+    public static void test5() {
 //        test5(null);
     }
 
 
-    public static void test5(String s){
+    public static void test5(String s) {
 
     }
 
-    public static void test5(Integer i){
+    public static void test5(Integer i) {
 
     }
 
 
-    public static void test6(){
+    public static void test6() {
         test6(1);
+    }
+
+    public static void test6(double d) {
 
     }
 
-    public static void test6(double d){
+    public static void test6(Integer i) {
 
     }
 
-    public static void test6(Integer i){
-
-    }
-
-
-    public static void   test7(){
+    public static void test7() {
         String a = null;
-        switch(a){
+        switch (a) {
             case "1":
                 System.err.println("1");
                 break;
@@ -94,7 +94,23 @@ public class AliTest {
                 System.err.println("default");
                 break;
         }
+    }
 
+    public static void test8() {
+        test8(1);
+    }
+
+    public static void test8(double d) {
+    }
+
+    public static void test8(Long l) {
+    }
+
+
+    private static void test(int... params) {
+        for (int i = 0; i < params.length; i++) {
+            System.err.println(params[i]);
+        }
     }
 
 }
