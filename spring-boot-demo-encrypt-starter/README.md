@@ -1,6 +1,8 @@
 ## 使用方式
 
 注解可以添加到方法上或者类上
+
+```java
 @AESDecryptBody
 @DecryptBody
 @DESDecryptBody
@@ -12,10 +14,12 @@
 @MD5EncryptBody
 @RSAEncryptBody
 @SHAEncryptBody
+```
+
 
 
 完整配置请参考：
-
+```
 encrypt:
    enable: false
    aes-config:
@@ -29,3 +33,4 @@ encrypt:
       show-log: true 
       max-encrypt-block: 117
       max-decrypt-block: 256
+```

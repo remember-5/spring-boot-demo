@@ -16,9 +16,7 @@
         <module>spring-boot-demo-elasticsearch</module>
         <module>spring-boot-demo-mybatis-plus</module>
         <module>spring-boot-demo-sentinel</module>
-        <module>spring-boot-demo-rsa</module>
         <module>spring-boot-demo-spi</module>
-        <module>spring-boot-demo-aes</module>
         <module>spring-boot-demo-interview</module>
         <module>spring-boot-demo-encrypt</module>
         <module>spring-boot-demo-encrypt-starter</module>
