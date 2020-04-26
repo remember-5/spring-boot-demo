@@ -7,7 +7,7 @@ import org.springframework.core.type.AnnotatedTypeMetadata;
 
 /**
  * @author wangjiahao
- * @date 2020/4/24
+ * @version 2020/4/24
  */
 public class BeanCondtion implements Condition {
 

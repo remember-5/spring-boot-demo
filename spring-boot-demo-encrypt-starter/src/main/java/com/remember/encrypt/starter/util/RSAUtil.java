@@ -12,7 +12,7 @@ import java.security.spec.X509EncodedKeySpec;
  * RSA Util
  *
  * @author wangjiahao
- * @date 2019/4/9
+ * @version  2019/4/9
  **/
 public class RSAUtil {
 
@@ -26,8 +26,8 @@ public class RSAUtil {
      *
      * @param data      data
      * @param publicKey publicKey
+     * @param maxEncryptBlock maxEncryptBlock
      * @return byte
-     * @throws Exception Exception
      */
     public static byte[] encrypt(byte[] data, String publicKey, int maxEncryptBlock) {
         try {
@@ -68,8 +68,8 @@ public class RSAUtil {
      *
      * @param text       text
      * @param privateKey privateKey
+     * @param maxDecryptBlock maxDecryptBlock
      * @return byte
-     * @throws Exception Exception
      */
     public static byte[] decrypt(byte[] text, String privateKey, int maxDecryptBlock) {
         try {

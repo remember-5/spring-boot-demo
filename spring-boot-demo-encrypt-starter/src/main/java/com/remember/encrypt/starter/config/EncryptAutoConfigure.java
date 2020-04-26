@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * @author wangjiahao
- * @date 2020/4/24
+ * @version  2020/4/24
  */
 @Configuration
 @EnableConfigurationProperties(EncryptConfig.class)

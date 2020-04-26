@@ -22,6 +22,7 @@ public class SHAEncryptUtil {
      *
      * @param string 目标字符串
      * @param type   加密类型 {@link SHAEncryptType}
+     * @return 加密
      */
     public static String encrypt(String string, SHAEncryptType type) {
         if (string == null || "".equals(string.trim())) {

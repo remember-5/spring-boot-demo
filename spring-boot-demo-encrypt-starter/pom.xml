@@ -1,24 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.2.0.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
 	</parent>
 
-	<groupId>com.remember</groupId>
-	<artifactId>spring-boot-demo-encrypt-starter</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-boot-demo-encrypt-starter</name>
-	<description>Demo project for Spring Boot</description>
+	<groupId>top.remember5</groupId>
+	<artifactId>spring-boot-encrypt-starter</artifactId>
+	<version>1.0</version>
+
+	<name>spring-boot-encrypt-starter</name>
+	<description>spring-boot接口加解密</description>
+
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<name>wangjiahao</name>
+			<email>1332661444@qq.com</email>
+			<timezone>GMT+8</timezone>
+			<url>https://github.com/remember-5</url>
+			<organization>https://www.remember5.top</organization>
+		</developer>
+	</developers>
+
+	<scm>
+		<tag>master</tag>
+		<url>https://github.com/remember-5/spring-boot-encrypt-starter/tree/master</url>
+		<connection>scm:git:git://github.com/remember-5/spring-boot-encrypt-starter.git</connection>
+		<developerConnection>scm:git:git://github.com/remember-5/spring-boot-encrypt-starter.git</developerConnection>
+	</scm>
+
+	<!-- 问题管理系统，非必须，写上最好 -->
+	<issueManagement>
+		<system>GitHub Issue Management</system>
+		<url>https://github.com/remember-5/spring-boot-encrypt-starter/issues</url>
+	</issueManagement>
+
 
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 		<springboot-version>2.2.0.RELEASE</springboot-version>
+		<javadocExecutable>${java.home}/../bin/javadoc</javadocExecutable>
+		<javadoc.opts>-Xdoclint:none</javadoc.opts>
 	</properties>
 
 	<dependencies>
@@ -32,6 +68,7 @@
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -69,170 +106,187 @@
 	</dependencyManagement>
 
 
+
+
+
 	<build>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<configuration>
-						<encoding>${project.build.sourceEncoding}</encoding>
-						<source>${java.version}</source>
-						<target>${java.version}</target>
-						<showWarnings>true</showWarnings>
-					</configuration>
-				</plugin>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<encoding>${project.build.sourceEncoding}</encoding>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<showWarnings>true</showWarnings>
+				</configuration>
+			</plugin>
 
-				<plugin>
-					<groupId>org.jacoco</groupId>
-					<artifactId>jacoco-maven-plugin</artifactId>
-					<version>0.8.0</version>
-					<executions>
-						<execution>
-							<goals>
-								<goal>prepare-agent</goal>
-							</goals>
-						</execution>
-						<execution>
-							<id>report</id>
-							<phase>test</phase>
-							<goals>
-								<goal>report</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.0</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-scm-plugin</artifactId>
-					<version>1.8.1</version>
-					<configuration>
-						<connectionType>connection</connectionType>
-					</configuration>
-				</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-scm-plugin</artifactId>
+				<version>1.8.1</version>
+				<configuration>
+					<connectionType>connection</connectionType>
+				</configuration>
+			</plugin>
 
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-source-plugin</artifactId>
-					<version>2.4</version>
-					<executions>
-						<execution>
-							<id>attach-sources</id>
-							<goals>
-								<goal>jar-no-fork</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-surefire-plugin</artifactId>
-					<version>2.17</version>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-gpg-plugin</artifactId>
-					<version>1.5</version>
-					<executions>
-						<execution>
-							<id>sign-artifacts</id>
-							<phase>verify</phase>
-							<goals>
-								<goal>sign</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-			</plugins>
-		</pluginManagement>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.4</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.17</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.5</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
 	</build>
+
 	<profiles>
 		<profile>
 			<id>release</id>
 			<build>
-				<pluginManagement>
-					<plugins>
-						<plugin>
-							<groupId>org.sonatype.plugins</groupId>
-							<artifactId>nexus-staging-maven-plugin</artifactId>
-							<version>1.6.3</version>
-							<extensions>true</extensions>
-							<configuration>
-								<serverId>releases</serverId>
-								<nexusUrl>https://oss.sonatype.org/</nexusUrl>
-								<autoReleaseAfterClose>true</autoReleaseAfterClose>
-							</configuration>
-						</plugin>
-						<plugin>
-							<groupId>org.apache.maven.plugins</groupId>
-							<artifactId>maven-release-plugin</artifactId>
-							<configuration>
-								<autoVersionSubmodules>true</autoVersionSubmodules>
-								<useReleaseProfile>false</useReleaseProfile>
-								<releaseProfiles>release</releaseProfiles>
-								<goals>deploy</goals>
-							</configuration>
-						</plugin>
-						<plugin>
-							<groupId>org.apache.maven.plugins</groupId>
-							<artifactId>maven-gpg-plugin</artifactId>
-							<version>1.5</version>
-							<executions>
-								<execution>
-									<id>sign-artifacts</id>
-									<phase>verify</phase>
-									<goals>
-										<goal>sign</goal>
-									</goals>
-								</execution>
-							</executions>
-						</plugin>
-						<plugin>
-							<groupId>org.apache.maven.plugins</groupId>
-							<artifactId>maven-javadoc-plugin</artifactId>
-							<version>2.9.1</version>
-							<configuration>
-								<additionalparam>-Xdoclint:none</additionalparam>
-							</configuration>
-							<executions>
-								<execution>
-									<id>attach-javadocs</id>
-									<goals>
-										<goal>jar</goal>
-									</goals>
-								</execution>
-							</executions>
-						</plugin>
-					</plugins>
-				</pluginManagement>
+				<plugins>
+					<!-- Source -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-source-plugin</artifactId>
+						<version>3.0.1</version>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<goals>
+									<goal>jar-no-fork</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<!-- Javadoc -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>3.1.0</version>
+						<configuration>
+							<encoding>UTF-8</encoding>
+<!--							<aggregate>true</aggregate>-->
+							<charset>UTF-8</charset>
+							<docencoding>UTF-8</docencoding>
+<!--							<additionalparam>${javadoc.opts}</additionalparam>-->
+						</configuration>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<!-- GPG -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>1.5</version>
+						<executions>
+							<execution>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<!--Compiler-->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-compiler-plugin</artifactId>
+						<version>3.8.0</version>
+						<configuration>
+							<source>1.8</source>
+							<target>1.8</target>
+							<fork>true</fork>
+							<verbose>true</verbose>
+							<encoding>UTF-8</encoding>
+							<showWarnings>false</showWarnings>
+						</configuration>
+					</plugin>
+					<!--Release-->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-release-plugin</artifactId>
+						<version>2.5.3</version>
+					</plugin>
+				</plugins>
 			</build>
 			<distributionManagement>
-				<repository>
-					<id>releases</id>
-					<name>snapshots repository</name>
-					<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
-				</repository>
 				<snapshotRepository>
-					<id>snapshots</id>
-					<name>Nexus Snapshot Repository</name>
-					<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+					<id>sonatype-nexus-snapshots</id>
+					<name>Sonatype Nexus Snapshots</name>
+					<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
 				</snapshotRepository>
+				<repository>
+					<id>sonatype-nexus-staging</id>
+					<name>Nexus Release Repository</name>
+					<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+				</repository>
 			</distributionManagement>
 		</profile>
 	</profiles>
 
 	<distributionManagement>
-		<repository>
-			<id>releases</id>
-			<name>snapshots repository</name>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
-		</repository>
 		<snapshotRepository>
-			<id>snapshots</id>
-			<name>Nexus Snapshot Repository</name>
+			<id>sonatype-nexus-snapshots</id>
+			<name>sonatype-nexus-snapshots</name>
 			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 		</snapshotRepository>
+		<repository>
+			<id>sonatype-nexus-staging</id>
+			<name>sonatype-nexus-staging</name>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+		</repository>
 	</distributionManagement>
-
 </project>

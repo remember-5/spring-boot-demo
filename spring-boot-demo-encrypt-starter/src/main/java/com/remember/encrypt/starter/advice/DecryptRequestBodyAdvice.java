@@ -22,7 +22,6 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.RequestBodyAdvice;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
@@ -102,7 +101,6 @@ public class DecryptRequestBodyAdvice implements RequestBodyAdvice {
      * @param targetType    targetType
      * @param converterType converterType
      * @return 解密后的内容
-     * @throws IOException IOException
      */
     @Override
 

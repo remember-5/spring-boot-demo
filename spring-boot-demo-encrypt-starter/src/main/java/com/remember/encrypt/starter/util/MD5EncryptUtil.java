@@ -12,6 +12,8 @@ public class MD5EncryptUtil {
 
     /**
      * MD5加密-32位小写
+     * @param encryptStr 加密的串
+     * @return 加密
      */
     public static String encrypt(String encryptStr) {
         MessageDigest md5;

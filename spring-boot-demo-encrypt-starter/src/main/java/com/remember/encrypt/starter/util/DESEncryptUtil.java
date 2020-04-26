@@ -45,6 +45,7 @@ public class DESEncryptUtil {
      *
      * @param content  字符串内容
      * @param password 密钥
+     * @return DES加密
      */
     public static String encrypt(String content, String password) {
         return des(content, password, Cipher.ENCRYPT_MODE);
@@ -56,6 +57,7 @@ public class DESEncryptUtil {
      *
      * @param content  字符串内容
      * @param password 密钥
+     * @return DES解密
      */
     public static String decrypt(String content, String password) {
         return des(content, password, Cipher.DECRYPT_MODE);

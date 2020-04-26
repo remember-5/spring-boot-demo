@@ -22,6 +22,8 @@ public class AESEncryptUtil {
 
     /**
      * 随机生成秘钥
+     * @param length 长度
+     * @return 秘钥
      */
     public static String getKey(int length) {
         try {
@@ -47,6 +49,7 @@ public class AESEncryptUtil {
      *
      * @param content  字符串内容
      * @param password 密钥
+     * @return  AES加密
      */
     public static String encrypt(String content, String password) {
         return aes(content, password, Cipher.ENCRYPT_MODE);
@@ -58,6 +61,7 @@ public class AESEncryptUtil {
      *
      * @param content  字符串内容
      * @param password 密钥
+     * @return AES解密
      */
     public static String decrypt(String content, String password) {
         return aes(content, password, Cipher.DECRYPT_MODE);
@@ -69,6 +73,7 @@ public class AESEncryptUtil {
      * @param content  字符串
      * @param password 密钥
      * @param type     加密：{@link Cipher#ENCRYPT_MODE}，解密：{@link Cipher#DECRYPT_MODE}
+     * @return  AES加密/解密
      */
     private static String aes(String content, String password, int type) {
         try {
