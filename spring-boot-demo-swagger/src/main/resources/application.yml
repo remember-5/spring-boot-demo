@@ -1,0 +1,11 @@
+swagger:
+  enabled: true
+  title: 'spring-boot-demo-swagger'
+  description: '测试swagger-ui'
+  author: 'wangjiahao'
+  email: '1332661444@qq.com'
+  blog: 'http://blog.remember5.top'
+  controller: 'com.remember.swagger'
+  service-url: 'http://127.0.0.1:8080'
+  version: '1.0'
+  host: '/'

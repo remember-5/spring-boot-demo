@@ -48,12 +48,25 @@ public class DemoController {
         return "success...";
     }
 
-    // BlockHandler 处理函数，参数最后多一个 BlockException，其余与原函数一致.
+    /**
+     * 处理函数，参数最后多一个 BlockException，其余与原函数一致.
+     *
+     * @param id 程序id
+     * @param ex 时间
+     * @return String
+     */
     public String blockHandler(Integer id, BlockException ex) {
         return "block：" + ex.getClass().getSimpleName();
     }
 
-    // Fallback 处理函数，函数签名与原函数一致或加一个 Throwable 类型的参数.
+
+    /**
+     * Fallback 处理函数，函数签名与原函数一致或加一个 Throwable 类型的参数.
+     *
+     * @param id        程序id
+     * @param throwable 异常
+     * @return String
+     */
     public String fallback(Integer id, Throwable throwable) {
         return "fallback：" + throwable.getMessage();
     }

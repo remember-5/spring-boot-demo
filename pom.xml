@@ -22,6 +22,9 @@
         <module>spring-boot-demo-encrypt-starter</module>
         <module>spring-boot-demo-rabbitmq-provider</module>
         <module>spring-boot-demo-rabbitmq-consumer</module>
+        <module>spring-boot-demo-validation</module>
+        <module>spring-boot-demo-swagger</module>
+        <module>spring-boot-demo-guava</module>
     </modules>
 
 
