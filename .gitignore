@@ -12,6 +12,7 @@ target/
 .settings
 .springBeans
 .sts4-cache
+.DS_Store
 
 ### IntelliJ IDEA ###
 .idea
@@ -26,6 +27,7 @@ target/
 /nbdist/
 /.nb-gradle/
 build/
+log
 
 ### VS Code ###
 .vscode/
