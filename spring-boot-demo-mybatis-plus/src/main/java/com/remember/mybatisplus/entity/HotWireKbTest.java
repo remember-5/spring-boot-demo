@@ -15,15 +15,15 @@ import java.util.Date;
  * @date 2020/3/25
  */
 @Data
-@TableName("hot_wire_kb")
+@TableName("hot_wire_kb_test")
 @AllArgsConstructor
 @NoArgsConstructor
-public class HotWireKb {
+public class HotWireKbTest {
 
     /**
      *
      */
-    @TableId(type = IdType.NONE)
+    @TableId(type = IdType.AUTO)
     private int id;
 
     /**
