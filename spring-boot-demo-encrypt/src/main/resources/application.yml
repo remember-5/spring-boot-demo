@@ -1,5 +1,8 @@
+spring:
+   application:
+      name: spring-boot-demo-encrypt
+
 encrypt:
-   enable: false
    aes-config:
       key: 77BA1F3F86C5D15365FC8BD4E27C9C37 # AES\u52A0\u5BC6\u79D8\u94A5
    des-config:

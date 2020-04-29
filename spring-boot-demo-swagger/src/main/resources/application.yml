@@ -1,3 +1,11 @@
+spring:
+  application:
+    name: spring-boot-demo-swagger
+
+server:
+  port: 8080
+
+
 swagger:
   enabled: true
   title: 'spring-boot-demo-swagger'

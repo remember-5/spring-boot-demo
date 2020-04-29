@@ -5,6 +5,7 @@ import com.remember.swagger.enetity.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
 
     @GetMapping
+    @ApiOperation(value = "这是一个get请求", notes = "这是get请求的描述，让我多写点字")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "name", value = "名称", required = true, type = "String"),
             @ApiImplicitParam(name = "age", value = "年纪", required = true, type = "int"),
@@ -33,10 +35,12 @@ public class TestController {
 
 
     @PostMapping
-    public Result testPost(User user){
-        return new Result(200,"success",user);
-    };
+    @ApiOperation(value = "这是一个post请求", notes = "这是post请求的描述，让我多写点字")
+    public Result testPost(User user) {
+        return new Result(200, "success", user);
+    }
 
+    ;
 
 
 }

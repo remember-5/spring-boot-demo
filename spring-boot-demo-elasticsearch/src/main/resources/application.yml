@@ -2,6 +2,8 @@ server:
   port: 9091
 
 spring:
+  application:
+    name: spring-boot-demo-elasticsearch
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/spring_boot_demo?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&useSSL=false
@@ -11,6 +13,7 @@ spring:
     elasticsearch:
       cluster-name: docker-cluster
       cluster-nodes: localhost:9300
+
 
 mybatis-plus:
   mapper-locations: classpath:mappers/*.xml

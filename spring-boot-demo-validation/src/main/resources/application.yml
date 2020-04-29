@@ -1,1 +1,6 @@
+spring:
+  application:
+    name: spring-boot-demo-validation
 
+server:
+  port: 8080

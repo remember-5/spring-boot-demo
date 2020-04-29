@@ -1,10 +1,12 @@
-server:
-  port: 9091
-
-
 spring:
+  application:
+    name: spring-boot-demo-rabbitmq-provider
   rabbitmq:
     host: 127.0.0.1
     port: 5672
     username: guest
     password: guest
+
+server:
+  port: 9091
+
