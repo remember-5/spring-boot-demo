@@ -5,7 +5,17 @@ spring:
     host: 127.0.0.1
     port: 5672
     username: guest
-    password: guest
+    listener:
+      simple:
+        retry:
+          enabled: true
+          initial-interval: 1000
+          # 最大尝试次数
+          max-attempts: 3
+          max-interval: 10000
+          multiplier: 2.0
+          stateless: true
+
 
 server:
   port: 9092
