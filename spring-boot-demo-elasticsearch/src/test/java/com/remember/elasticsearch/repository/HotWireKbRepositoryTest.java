@@ -30,9 +30,6 @@ class HotWireKbRepositoryTest extends ElasticSearchDemoApplicationTests {
     @Autowired
     private HotWireKbService hotWireKbService;
 
-
-
-
     /**
      * 测试新增
      */
@@ -79,10 +76,8 @@ class HotWireKbRepositoryTest extends ElasticSearchDemoApplicationTests {
     public void delete() {
         // 主键删除
         repo.deleteById(1L);
-
         // 对象删除
         repo.findById(2L).ifPresent(hotWireKb -> repo.delete(hotWireKb));
-
         // 批量删除
         repo.deleteAll(repo.findAll());
     }
@@ -362,10 +357,10 @@ class HotWireKbRepositoryTest extends ElasticSearchDemoApplicationTests {
     @Test
     public void advanceSelect() {
         // QueryBuilders 提供了很多静态方法，可以实现大部分查询条件的封装
-        MatchQueryBuilder queryBuilder = QueryBuilders.matchQuery("name", "孙权");
+        MatchQueryBuilder queryBuilder = QueryBuilders.matchQuery("title", "菜");
         log.info("【queryBuilder】= {}", queryBuilder.toString());
 
-        repo.search(queryBuilder).forEach(HotWireKb -> log.info("【person】= {}", HotWireKb));
+        repo.search(queryBuilder).forEach(HotWireKb -> log.info("【HotWireKb】= {}", HotWireKb));
 
     }
 
@@ -377,9 +372,10 @@ class HotWireKbRepositoryTest extends ElasticSearchDemoApplicationTests {
      */
     @Test
     public void testWildCardQuery() {
-        WildcardQueryBuilder wildcardQueryBuilder = QueryBuilders.wildcardQuery("goodsName", String.format("*%s*","春蕾计划"));
+        WildcardQueryBuilder wildcardQueryBuilder = QueryBuilders.wildcardQuery("title", String.format("*%s*","菜"));
         log.info("【wildcardQueryBuilder】= {}", wildcardQueryBuilder.toString());
         Iterable<HotWireKb> search = repo.search(wildcardQueryBuilder);
+        search.forEach(System.err::println);
     }
 
 

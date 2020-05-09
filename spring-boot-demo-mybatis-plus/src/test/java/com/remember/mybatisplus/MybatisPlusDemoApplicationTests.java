@@ -10,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 
 @SpringBootTest
-class MybatisPlusDemoApplicationTests {
+public class MybatisPlusDemoApplicationTests {
     @Autowired
     private HotWireKbService hotWireKbService;
 

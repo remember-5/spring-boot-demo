@@ -29,7 +29,7 @@ public class SpringMvcConfiguration implements WebMvcConfigurer {
         // <1.3> 设置 BlockException 处理器。
         // config.setBlockExceptionHandler(new DefaultBlockExceptionHandler());
 
-        // <2> 添加 SentinelWebInterceptor 拦截器
+        /// <2> 添加 SentinelWebInterceptor 拦截器
         registry.addInterceptor(new SentinelWebInterceptor(config)).addPathPatterns("/**");
     }
 
