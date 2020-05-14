@@ -1,0 +1,46 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    dynamic:
+      hikari:
+        connection-timeout: 30000
+        max-lifetime: 1800000
+        max-pool-size: 15
+        min-idle: 5
+        connection-test-query: select 1
+        pool-name: MyHikariCP
+      primary: master
+      datasource:
+        master:
+          username: root
+          password: root
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://192.168.115.184:3306/spring_boot_demo?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8
+        slave:
+          username: root
+          password: root
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://192.168.115.184:3307/spring_boot_demo?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8
+          hikari: # \u4EE5\u4E0B\u53C2\u6570\u9488\u5BF9\u6BCF\u4E2A\u5E93\u53EF\u4EE5\u91CD\u65B0\u8BBE\u7F6Ehikari\u53C2\u6570
+            is-read-only: true
+
+mybatis-plus:
+  mapper-locations: classpath:mappers/*.xml
+  #\u5B9E\u4F53\u626B\u63CF\uFF0C\u591A\u4E2Apackage\u7528\u9017\u53F7\u6216\u8005\u5206\u53F7\u5206\u9694
+  typeAliasesPackage: com.remember.dynamic.datasource
+  global-config:
+    # \u6570\u636E\u5E93\u76F8\u5173\u914D\u7F6E
+    db-config:
+      #\u9A7C\u5CF0\u4E0B\u5212\u7EBF\u8F6C\u6362
+      table-underline: true
+      #\u662F\u5426\u5F00\u542F\u5927\u5199\u547D\u540D\uFF0C\u9ED8\u8BA4\u4E0D\u5F00\u542F
+      #capital-mode: true
+      #\u903B\u8F91\u5220\u9664\u914D\u7F6E
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  # \u539F\u751F\u914D\u7F6E
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: true

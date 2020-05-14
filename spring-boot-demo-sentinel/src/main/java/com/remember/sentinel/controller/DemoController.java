@@ -1,5 +1,7 @@
 package com.remember.sentinel.controller;
 
+import com.alibaba.csp.sentinel.Entry;
+import com.alibaba.csp.sentinel.SphU;
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,6 +38,28 @@ public class DemoController {
     public String productInfo(Integer id) {
         return "商品编号：" + id;
     }
+
+
+
+    @GetMapping("/entry_demo")
+    public String entryDemo(){
+        Entry entry = null;
+        try {
+            entry = SphU.entry("entry_demo");
+            // <2> ... 执行业务逻辑
+            return "执行成功";
+        } catch (BlockException e) { // <3>
+            e.printStackTrace();
+            return "被拒绝";
+        } finally {
+            // <4> 释放资源
+            if (entry != null) {
+                entry.exit();
+            }
+        }
+    }
+
+
 
     @GetMapping("/annotations_demo")
     @SentinelResource(value = "annotations_demo_resource",
