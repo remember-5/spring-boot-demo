@@ -30,7 +30,7 @@ public class PersonServiceImpl extends ServiceImpl<PersonMapper, Person> impleme
         System.err.println(person);
     }
 
-    @DS("master")
+    @DS("slave")
     @Override
     public void testInsert() {
         Person person = new Person();

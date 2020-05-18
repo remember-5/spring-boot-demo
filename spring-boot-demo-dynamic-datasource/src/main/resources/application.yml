@@ -2,29 +2,9 @@ server:
   port: 8080
 
 spring:
-  datasource:
-    dynamic:
-      hikari:
-        connection-timeout: 30000
-        max-lifetime: 1800000
-        max-pool-size: 15
-        min-idle: 5
-        connection-test-query: select 1
-        pool-name: MyHikariCP
-      primary: master
-      datasource:
-        master:
-          username: root
-          password: root
-          driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://192.168.115.184:3306/spring_boot_demo?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8
-        slave:
-          username: root
-          password: root
-          driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://192.168.115.184:3307/spring_boot_demo?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8
-          hikari: # \u4EE5\u4E0B\u53C2\u6570\u9488\u5BF9\u6BCF\u4E2A\u5E93\u53EF\u4EE5\u91CD\u65B0\u8BBE\u7F6Ehikari\u53C2\u6570
-            is-read-only: true
+  profiles:
+    active: prod
+
 
 mybatis-plus:
   mapper-locations: classpath:mappers/*.xml
