@@ -58,6 +58,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>top.remember5</groupId>
+			<artifactId>spring-boot-encrypt-starter</artifactId>
+			<version>1.0-RELEASE</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
