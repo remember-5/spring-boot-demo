@@ -43,11 +43,10 @@ public class AssociateWordTest extends ElasticSearchDemoApplicationTests {
 
 	@Test
 	void batchSave() {
-		List<String> list = Arrays.asList("手机", "8p支架",
-				"手机支架", "支架", "全新", "全新手机", "苹果手机", "手机华为",
+		List<String> list = Arrays.asList(
+				"手机", "8p支架","手机支架", "支架", "全新", "全新手机", "苹果手机", "手机华为",
 				"苹果7p", "手机壳", "手机话费", "话费充值", "充值话费", "7p手机壳", "手机壳7p",
-				"7p钢化膜", "7p支架");
-
+				"7p钢化膜", "7p支架", "iphone11", "iphone");
 		for (int i = 0; i < list.size(); i++) {
 			repository.save(AssociateWord.builder().id(i + 1).keyword(list.get(i)).sort(1).build());
 		}

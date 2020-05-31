@@ -1,0 +1,12 @@
+spring:
+  minio:
+    endpoint: http://192.168.227.128:9000
+    bucket: wangjiahao
+    access-key: minioadmin
+    secret-key: minioadmin
+  servlet:
+    multipart:
+      max-file-size: 100MB
+
+
+

@@ -29,6 +29,7 @@
         <module>spring-boot-demo-junit</module>
         <module>spring-boot-demo-dynamic-datasource</module>
         <module>spring-boot-demo-jwt</module>
+        <module>spring-boot-demo-minio</module>
     </modules>
 
 
