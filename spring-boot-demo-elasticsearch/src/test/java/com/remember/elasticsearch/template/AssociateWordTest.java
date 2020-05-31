@@ -3,8 +3,8 @@ package com.remember.elasticsearch.template;
 import com.remember.elasticsearch.ElasticSearchDemoApplicationTests;
 import com.remember.elasticsearch.entity.AssociateWord;
 import com.remember.elasticsearch.repository.AssociateWordRepository;
-import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 
 import java.util.Arrays;
@@ -14,11 +14,12 @@ import java.util.List;
  * @author wangjiahao
  * @date 2020/5/30
  */
-@RequiredArgsConstructor
 public class AssociateWordTest extends ElasticSearchDemoApplicationTests {
 
+	@Autowired
 	ElasticsearchTemplate esTemplate;
 
+	@Autowired
 	AssociateWordRepository repository;
 
 	/**
@@ -48,7 +49,7 @@ public class AssociateWordTest extends ElasticSearchDemoApplicationTests {
 				"7p钢化膜", "7p支架");
 
 		for (int i = 0; i < list.size(); i++) {
-			repository.save(AssociateWord.builder().id(i + 1).keyword(list.get(i)).build());
+			repository.save(AssociateWord.builder().id(i + 1).keyword(list.get(i)).sort(1).build());
 		}
 	}
 

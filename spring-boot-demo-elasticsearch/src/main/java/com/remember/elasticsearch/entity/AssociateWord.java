@@ -32,20 +32,21 @@ public class AssociateWord {
 	/**
 	 * 活动名称
 	 */
-	@Field(type = FieldType.Text, analyzer = "ik_smart")
+//	@Field(type = FieldType.Text, analyzer = "ik_smart")
+	@Field(type = FieldType.Text, analyzer = "ik_max_word")
 	private String keyword;
 
 	/**
 	 * 状态
 	 */
 	@Field(type = FieldType.Integer)
-	private String state;
+	private Integer state;
 
 	/**
 	 * 排序
 	 */
 	@Field(type = FieldType.Integer)
-	private String sort;
+	private Integer sort;
 
 	/**
 	 * 创建时间

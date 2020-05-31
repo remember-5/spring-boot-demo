@@ -5,7 +5,9 @@ import com.google.common.collect.Lists;
 import com.remember.elasticsearch.entity.AssociateWord;
 import com.remember.elasticsearch.repository.AssociateWordRepository;
 import lombok.RequiredArgsConstructor;
+import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.TermsQueryBuilder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -89,7 +91,22 @@ public class AssociateWordController {
 		prefixQuery(keyword, result);
 		wildcardQuery(keyword, result);
 
-
+		return result;
+	}
+	/**
+	 * 关键词查询
+	 *
+	 * @param ids ids
+	 * @return 查询结果
+	 */
+	@GetMapping("searchByIds")
+	public JSONObject searchByIds(String keyword, String ids) {
+		JSONObject result = new JSONObject();
+		TermsQueryBuilder termsQueryBuilder = QueryBuilders.termsQuery("id", ids.split(","));
+		BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery().must(termsQueryBuilder);
+		boolQueryBuilder.should(QueryBuilders.prefixQuery("keyword", keyword));
+		ArrayList<AssociateWord> list = Lists.newArrayList(repository.search(boolQueryBuilder));
+		list.forEach(System.err::println);
 		return result;
 	}
 
