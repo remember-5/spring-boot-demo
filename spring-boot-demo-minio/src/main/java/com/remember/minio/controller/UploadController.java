@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+
 /**
  * @author wangjiahao
  * @date 2020/5/31
@@ -31,7 +33,10 @@ public class UploadController {
 		// 获取1.png的流并保存到photo.png文件中。
 		//参数为：文件夹，要获得的文件，要写入的文件
 //		minioClient.getObject("wangjiahao", filename, filename);
-		return "success";
+		// 需要在backet上面加上配置 '*.*' 才可以做永久路径，否则无效
+		String url = minIOConfig.getEndpoint()+ File.separator
+				+ minIOConfig.getBucket() + File.separator  + file.getOriginalFilename();
+		return "success，"+ url;
 
 	}
 
