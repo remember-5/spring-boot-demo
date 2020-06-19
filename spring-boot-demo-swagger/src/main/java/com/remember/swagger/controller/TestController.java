@@ -30,6 +30,16 @@ public class TestController {
     })
     public Result test1(String name, Integer age) {
         log.info("name = {},age = {}", name, age);
+        log.info("这是logstash开始打印的日志");
+        log.info("我就是不想测试");
+        log.info("日志到底是个啥");
+        log.info("让我们看看接下来会发生什么");
+        log.debug("这是debug");
+        log.debug("这是debug啊");
+        log.debug("这是debug吗");
+        log.warn("这是warn吗");
+        log.warn("这是warn吗");
+        log.warn("这是warn吗");
         return new Result(200, "success", null);
     }
 
@@ -40,7 +50,6 @@ public class TestController {
         return new Result(200, "success", user);
     }
 
-    ;
 
 
 }

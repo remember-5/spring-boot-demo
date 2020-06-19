@@ -39,11 +39,13 @@
         <java.version>1.8</java.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <spring.boot.version>2.2.0.RELEASE</spring.boot.version>
-        <mysql.version>8.0.12</mysql.version>
+        <skipTests>true</skipTests>
+
+        <spring.boot.version>2.3.1.RELEASE</spring.boot.version>
         <hutool.version>5.3.7</hutool.version>
-        <guava.version>28.1-jre</guava.version>
+        <guava.version>29.0-jre</guava.version>
         <user.agent.version>1.20</user.agent.version>
+        <fastjson.version>1.2.71</fastjson.version>
     </properties>
 
     <repositories>
@@ -69,11 +71,6 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
-                <version>${mysql.version}</version>
-            </dependency>
             <!-- hutool工具类 -->
             <dependency>
                 <groupId>cn.hutool</groupId>
@@ -93,14 +90,9 @@
                 <version>${user.agent.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>1.18.12</version>
-            </dependency>
-            <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
-                <version>1.2.68</version>
+                <version>${fastjson.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
