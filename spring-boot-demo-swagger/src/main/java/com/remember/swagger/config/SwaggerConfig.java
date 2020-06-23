@@ -1,9 +1,11 @@
 package com.remember.swagger.config;
 
-import com.github.xiaoymin.swaggerbootstrapui.annotations.EnableSwaggerBootstrapUI;
+import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
+import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -17,11 +19,11 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * @author wangjiahao
  * @date 2020/4/27
  */
-
 @Data
 @EnableSwagger2
-@EnableSwaggerBootstrapUI
+@EnableKnife4j
 @ConfigurationProperties(prefix = "swagger")
+@Import(BeanValidatorPluginsConfiguration.class)
 public class SwaggerConfig {
 
     private String controller;
