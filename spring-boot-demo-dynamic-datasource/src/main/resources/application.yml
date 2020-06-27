@@ -8,19 +8,19 @@ spring:
 
 mybatis-plus:
   mapper-locations: classpath:mappers/*.xml
-  #\u5B9E\u4F53\u626B\u63CF\uFF0C\u591A\u4E2Apackage\u7528\u9017\u53F7\u6216\u8005\u5206\u53F7\u5206\u9694
+  #实体扫描，多个package用逗号或者分号分隔
   typeAliasesPackage: com.remember.dynamic.datasource
   global-config:
-    # \u6570\u636E\u5E93\u76F8\u5173\u914D\u7F6E
+    # 数据库相关配置
     db-config:
-      #\u9A7C\u5CF0\u4E0B\u5212\u7EBF\u8F6C\u6362
+      #驼峰下划线转换
       table-underline: true
-      #\u662F\u5426\u5F00\u542F\u5927\u5199\u547D\u540D\uFF0C\u9ED8\u8BA4\u4E0D\u5F00\u542F
+      #是否开启大写命名，默认不开启
       #capital-mode: true
-      #\u903B\u8F91\u5220\u9664\u914D\u7F6E
+      #逻辑删除配置
       logic-delete-value: 1
       logic-not-delete-value: 0
-  # \u539F\u751F\u914D\u7F6E
+  # 原生配置
   configuration:
     map-underscore-to-camel-case: true
     cache-enabled: true
