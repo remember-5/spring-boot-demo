@@ -57,3 +57,13 @@ nohup java -jar sentinel-dashboard-1.7-server.port=7070 &
 在项目的resource目录下创建`sentinel.properties`文件，并添加一下配置：
 ````
 csp.sentinel.dashboard.server=127.0.0.1:7070
+
+springboot 2.3.0+ 以后取消了默认依赖，需要手动导入
+
+```
+<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+```
+
