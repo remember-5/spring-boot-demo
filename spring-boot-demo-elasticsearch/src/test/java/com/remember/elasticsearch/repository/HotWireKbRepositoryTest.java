@@ -7,8 +7,8 @@ import com.remember.elasticsearch.service.HotWireKbService;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.util.Lists;
 import org.elasticsearch.index.query.*;
+import org.elasticsearch.search.aggregations.Aggregation;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
-import org.elasticsearch.search.aggregations.metrics.avg.InternalAvg;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
 import org.junit.jupiter.api.Test;
@@ -417,8 +417,8 @@ class HotWireKbRepositoryTest extends ElasticSearchDemoApplicationTests {
         log.info("【queryBuilder】= {}", JSONUtil.toJsonStr(queryBuilder.build()));
 
         AggregatedPage<HotWireKb> people = (AggregatedPage<HotWireKb>) repo.search(queryBuilder.build());
-        double avgAge = ((InternalAvg) people.getAggregation("avg")).getValue();
-        log.info("【avgAge】= {}", avgAge);
+        Aggregation avg = people.getAggregation("avg");
+        log.info("【avgAge】= {}", avg);
     }
 
     /**

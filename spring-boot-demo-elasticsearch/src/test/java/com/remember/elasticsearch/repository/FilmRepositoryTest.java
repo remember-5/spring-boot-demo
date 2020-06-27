@@ -10,8 +10,8 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
-import org.springframework.data.elasticsearch.core.query.SearchQuery;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -62,10 +62,10 @@ public class FilmRepositoryTest extends ElasticSearchDemoApplicationTests {
         disMaxQueryBuilder.add(ikDirectorQuery);
 
         // 聚合查询
-        SearchQuery searchQuery = new NativeSearchQueryBuilder()
+        NativeSearchQuery build = new NativeSearchQueryBuilder()
                 .withQuery(disMaxQueryBuilder)
                 .build();
-        Page<FilmEntity> search = repo.search(searchQuery);
+        Page<FilmEntity> search = repo.search(build);
         search.forEach(System.err::println);
     }
 }
