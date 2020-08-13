@@ -1,5 +1,7 @@
 package com.remember.swagger.controller;
 
+import cn.hutool.core.lang.UUID;
+import cn.hutool.extra.qrcode.QrCodeUtil;
 import com.remember.swagger.enetity.Result;
 import com.remember.swagger.enetity.User;
 import io.swagger.annotations.Api;
@@ -7,10 +9,11 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import sun.misc.BASE64Decoder;
+
+import java.io.IOException;
 
 /**
  * @author wangjiahao
@@ -50,6 +53,52 @@ public class TestController {
         return new Result(200, "success", user);
     }
 
+    @PostMapping("upload")
+    @ApiOperation(value = "这是一个post请求", notes = "这是post请求的描述，让我多写点字")
+    public Result testPost(@RequestParam(value = "file")MultipartFile file) {
+        try {
+            String decode = QrCodeUtil.decode(file.getInputStream());
+            if (decode.length() != 19) {
+                return new Result(500, " ", "");
+            }
+            return new Result(200, " ", decode);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new Result(500, " ", "");
+    }
 
+
+    @PostMapping("uploadBybase64")
+    @ApiOperation(value = "这是一个post请求", notes = "这是post请求的描述，让我多写点字")
+    public Result testPostByBase64(String str) {
+        String s = UUID.fastUUID().toString();
+        MultipartFile multipartFile = base64toMultipart(str, s + ".jpg");
+        String iccid = null;
+        try {
+            iccid = QrCodeUtil.decode(multipartFile.getInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new Result(200, " ", iccid);
+    }
+
+
+    public MultipartFile base64toMultipart(String data, String fileName) {
+        try {
+            String[] baseStrs = data.split(",");
+            BASE64Decoder decoder = new BASE64Decoder();
+            byte[] b = decoder.decodeBuffer(baseStrs[1]);
+            for(int i = 0; i < b.length; ++i) {
+                if (b[i] < 0) {
+                    b[i] += 256;
+                }
+            }
+            return new Base64MultipartFile(b, baseStrs[0] , fileName);
+        } catch (IOException e) {
+           e.printStackTrace();
+        }
+        return null;
+    }
 
 }
