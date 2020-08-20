@@ -9,9 +9,9 @@
 	</parent>
 
 
-	<artifactId>jpa</artifactId>
+	<artifactId>spring-boot-demo-jpa</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>jpa</name>
+	<name>spring-boot-demo-jpa</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>

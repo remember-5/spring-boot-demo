@@ -42,11 +42,11 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <skipTests>true</skipTests>
 
-        <spring.boot.version>2.3.1.RELEASE</spring.boot.version>
+        <spring.boot.version>2.3.3.RELEASE</spring.boot.version>
         <hutool.version>5.3.8</hutool.version>
         <guava.version>29.0-jre</guava.version>
         <user.agent.version>1.20</user.agent.version>
-        <fastjson.version>1.2.71</fastjson.version>
+        <fastjson.version>1.2.73</fastjson.version>
     </properties>
 
     <repositories>
