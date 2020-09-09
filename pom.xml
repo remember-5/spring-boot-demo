@@ -31,6 +31,7 @@
         <module>spring-boot-demo-jwt</module>
         <module>spring-boot-demo-minio</module>
         <module>spring-boot-demo-jpa</module>
+        <module>spring-boot-demo-postgresql</module>
     </modules>
 
 
