@@ -1,5 +1,7 @@
 package com.remember.postgresql.runner;
 
+import com.remember.postgresql.entity.Person;
+import com.remember.postgresql.mapper.PersonMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;

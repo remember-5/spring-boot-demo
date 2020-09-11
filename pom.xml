@@ -13,6 +13,7 @@
     <url>http://blog.remember5.com</url>
 
     <modules>
+        <module>spring-boot-demo-common</module>
         <module>spring-boot-demo-elasticsearch</module>
         <module>spring-boot-demo-mybatis-plus</module>
         <module>spring-boot-demo-sentinel</module>
@@ -32,6 +33,8 @@
         <module>spring-boot-demo-minio</module>
         <module>spring-boot-demo-jpa</module>
         <module>spring-boot-demo-postgresql</module>
+        <module>spring-boot-demo-rocketmq-provider</module>
+        <module>spring-boot-demo-rocketmq-consumer</module>
     </modules>
 
 

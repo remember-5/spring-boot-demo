@@ -1,0 +1,9 @@
+server:
+  port: 9500
+
+
+
+rocketmq:
+  name-server: 192.168.90.136:9876
+  producer:
+    group: my-group
