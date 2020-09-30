@@ -31,5 +31,4 @@ public class QueryRequest implements Serializable {
     private String order;
 
 
-
 }

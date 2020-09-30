@@ -5,6 +5,4 @@ import com.remember.rabbitmq.consumer.SpringBootDemoRabbitmqConsumerApplicationT
 class RabbitReceiverTest extends SpringBootDemoRabbitmqConsumerApplicationTests {
 
 
-
-
 }

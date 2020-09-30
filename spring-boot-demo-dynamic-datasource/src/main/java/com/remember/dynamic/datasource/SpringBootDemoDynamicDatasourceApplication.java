@@ -10,8 +10,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 public class SpringBootDemoDynamicDatasourceApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(SpringBootDemoDynamicDatasourceApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(SpringBootDemoDynamicDatasourceApplication.class, args);
+    }
 
 }

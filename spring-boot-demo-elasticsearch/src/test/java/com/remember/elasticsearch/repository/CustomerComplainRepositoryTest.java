@@ -58,7 +58,6 @@ public class CustomerComplainRepositoryTest extends ElasticSearchDemoApplication
      * slop(0)就是使用该词条列表 查询时，每个词条必须紧接在一起，是一个完整的短语，效果相当于不分词
      * 但是，这种方式也无法实现精确查询，比如address为”宜兴埠红旗路北7号“，查询时，”北辰区宜兴埠红旗路北7号“
      * 也会被匹配，只要包含“宜兴埠红旗路北7号”的短语或者句子，都会被匹配。因此使用字符串比对的方式要再做一次过滤，才能实现分词后的精确查询
-     *
      */
     @Test
     public void queryByComplainDescribe() {
@@ -69,7 +68,6 @@ public class CustomerComplainRepositoryTest extends ElasticSearchDemoApplication
 
 
         // 方式2
-
 
 
     }

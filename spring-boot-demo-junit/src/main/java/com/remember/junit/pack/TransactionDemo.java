@@ -6,5 +6,4 @@ package com.remember.junit.pack;
 public class TransactionDemo {
 
 
-
 }

@@ -31,7 +31,6 @@ public class RabbitSender {
 
     /**
      * 回调函数: confirm确认
-     *
      */
     final ConfirmCallback confirmCallback = (correlationData, ack, cause) -> {
         System.err.println("correlationData: " + correlationData);
@@ -57,7 +56,7 @@ public class RabbitSender {
         rabbitTemplate.setConfirmCallback(confirmCallback);
         rabbitTemplate.setReturnCallback(returnCallback);
         //id + 时间戳 全局唯一
-        String  uuid = UUID.randomUUID().toString();
+        String uuid = UUID.randomUUID().toString();
         CorrelationData correlationData = new CorrelationData(uuid);
         rabbitTemplate.convertAndSend("exchange-1", "springboot.abc", msg, correlationData);
     }
@@ -66,13 +65,14 @@ public class RabbitSender {
     /**
      * 发送消息方法调用: 构建自定义对象消息
      * 消费者必须要用同一个对象，否则失败
+     *
      * @param order 消息
      */
     public void sendOrder(Order order) {
         rabbitTemplate.setConfirmCallback(confirmCallback);
         rabbitTemplate.setReturnCallback(returnCallback);
         //id + 时间戳 全局唯一
-        String  uuid = UUID.randomUUID().toString();
+        String uuid = UUID.randomUUID().toString();
         CorrelationData correlationData = new CorrelationData(uuid);
         rabbitTemplate.convertAndSend("exchange-2", "springboot.def", order, correlationData);
     }

@@ -54,6 +54,7 @@ public class TestController {
         result.put("data", "noting");
         return result;
     }
+
     @PostMapping("getArray")
     public JSONObject getArray(String ids) {
         List<String> split = Arrays.asList(ids.split(","));

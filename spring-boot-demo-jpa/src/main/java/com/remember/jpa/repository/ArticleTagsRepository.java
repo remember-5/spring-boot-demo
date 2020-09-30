@@ -12,5 +12,4 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 public interface ArticleTagsRepository extends JpaRepository<ArticleTags, Long>, JpaSpecificationExecutor<ArticleTags> {
 
 
-
 }

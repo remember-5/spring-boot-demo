@@ -27,7 +27,7 @@ public class AtDemo {
 
         int lastIndex = 0;
 
-        while(matcher.find()) {
+        while (matcher.find()) {
             //匹配到的昵称（正则中定义的名称）
             String name = matcher.group("name");
 
@@ -35,7 +35,7 @@ public class AtDemo {
             int start = matcher.start("name");
 
             //截取昵称前面的字符串,从上一个昵称结束的角标开始截取
-            stringBuilder.append(content.substring(lastIndex,start));
+            stringBuilder.append(content.substring(lastIndex, start));
 
             //手动对昵称添加a标签，可以从DB根据name检索数据，然后添加href属性。
             stringBuilder.append("<a>" + name + "</a>");

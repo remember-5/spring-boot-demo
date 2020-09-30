@@ -16,6 +16,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @RequiredArgsConstructor
 public class WebMvcConfig implements WebMvcConfigurer {
     private final JwtInterceptor jwtInterceptor;
+
     /**
      * 允许跨域配置
      */
@@ -33,6 +34,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     /**
      * 添加拦截器
+     *
      * @param registry 拦截器
      */
     @Override

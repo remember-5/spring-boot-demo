@@ -13,14 +13,14 @@ import java.util.Arrays;
 @SpringBootApplication
 public class SpringBootDemoEncryptApplication {
 
-	public static void main(String[] args) {
-		ConfigurableApplicationContext run = SpringApplication.run(SpringBootDemoEncryptApplication.class, args);
-		String property = run.getEnvironment().getProperty("encrypt.enable");
-		System.err.println(property);
+    public static void main(String[] args) {
+        ConfigurableApplicationContext run = SpringApplication.run(SpringBootDemoEncryptApplication.class, args);
+        String property = run.getEnvironment().getProperty("encrypt.enable");
+        System.err.println(property);
 
-		String[] beanDefinitionNames = run.getBeanDefinitionNames();
-		Arrays.stream(beanDefinitionNames).forEach(System.err::println);
+        String[] beanDefinitionNames = run.getBeanDefinitionNames();
+        Arrays.stream(beanDefinitionNames).forEach(System.err::println);
 
-	}
+    }
 
 }

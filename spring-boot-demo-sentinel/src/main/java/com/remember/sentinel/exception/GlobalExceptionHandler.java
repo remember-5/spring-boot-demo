@@ -15,7 +15,7 @@ public class GlobalExceptionHandler {
 
     @ResponseBody
     @ExceptionHandler(value = BlockException.class)
-    public String blockExceptionHandler(BlockException blockException){
+    public String blockExceptionHandler(BlockException blockException) {
         return "请求过于频繁";
     }
 

@@ -10,7 +10,7 @@ public class PersonServiceTest extends SpringBootDemoPostgresqlApplicationTests 
 //    PersonService personService;
 
     @Test
-    public void test(){
+    public void test() {
         System.err.println("test");
 //        personService.list().forEach(System.err::println);
 

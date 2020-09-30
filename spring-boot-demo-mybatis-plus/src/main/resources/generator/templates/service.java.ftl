@@ -4,12 +4,12 @@ import ${package.Entity}.${entity};
 import ${superServiceClassPackage};
 
 /**
- * @author ${author}
- */
+* @author ${author}
+*/
 <#if kotlin>
-interface ${table.serviceName} : ${superServiceClass}<${entity}>
+    interface ${table.serviceName} : ${superServiceClass}<${entity}>
 <#else>
-public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
+    public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
 
-}
+    }
 </#if>

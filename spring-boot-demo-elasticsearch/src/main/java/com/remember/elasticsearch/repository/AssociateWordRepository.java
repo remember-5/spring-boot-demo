@@ -9,5 +9,5 @@ import org.springframework.stereotype.Component;
  * @date 2020/5/30
  */
 @Component
-public interface AssociateWordRepository extends ElasticsearchRepository<AssociateWord,Long> {
+public interface AssociateWordRepository extends ElasticsearchRepository<AssociateWord, Long> {
 }

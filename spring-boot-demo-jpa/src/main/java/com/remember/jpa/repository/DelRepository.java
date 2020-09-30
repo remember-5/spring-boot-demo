@@ -12,5 +12,4 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 public interface DelRepository extends JpaRepository<Del, Long>, JpaSpecificationExecutor<Del> {
 
 
-
 }

@@ -9,5 +9,5 @@ import org.springframework.stereotype.Component;
  * @date 2020/3/26
  */
 @Component
-public interface FilmRepository extends ElasticsearchRepository<FilmEntity,Long> {
+public interface FilmRepository extends ElasticsearchRepository<FilmEntity, Long> {
 }

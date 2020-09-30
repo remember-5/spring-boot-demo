@@ -40,9 +40,8 @@ public class DemoController {
     }
 
 
-
     @GetMapping("/entry_demo")
-    public String entryDemo(){
+    public String entryDemo() {
         Entry entry = null;
         try {
             entry = SphU.entry("entry_demo");
@@ -58,7 +57,6 @@ public class DemoController {
             }
         }
     }
-
 
 
     @GetMapping("/annotations_demo")

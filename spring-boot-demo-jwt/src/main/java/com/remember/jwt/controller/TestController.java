@@ -20,13 +20,13 @@ public class TestController {
 
 
     @GetMapping
-    public String test(){
+    public String test() {
         String crmId = getCrmId();
         return "请求成功";
     }
 
     @GetMapping("auth")
-    public String auth(){
+    public String auth() {
         // TODO 解密
 
         // TODO 通过设备号获取客户号
@@ -40,7 +40,7 @@ public class TestController {
     }
 
 
-    public static String getCrmId(){
+    public static String getCrmId() {
         String token = getHttpServletRequest().getHeader("Authorization").substring(7);
         String id = JwtUtils.parseJWT(token).getId();
         //TODO 根据标识查询redis 如 API:AUTH:JWT:KEY

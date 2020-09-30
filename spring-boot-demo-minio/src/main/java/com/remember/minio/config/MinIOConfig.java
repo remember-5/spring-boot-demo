@@ -15,18 +15,16 @@ import org.springframework.context.annotation.Bean;
 @ConfigurationProperties(prefix = "spring.minio")
 public class MinIOConfig {
 
-	private String endpoint;
-	private String bucket;
-	private String accessKey;
-	private String secretKey;
+    private String endpoint;
+    private String bucket;
+    private String accessKey;
+    private String secretKey;
 
 
-	@Bean(name = "minioClient")
-	public MinioClient minioClient() throws InvalidPortException, InvalidEndpointException {
-		return new MinioClient(this.endpoint, this.accessKey, this.secretKey);
-	}
-
-
+    @Bean(name = "minioClient")
+    public MinioClient minioClient() throws InvalidPortException, InvalidEndpointException {
+        return new MinioClient(this.endpoint, this.accessKey, this.secretKey);
+    }
 
 
 }

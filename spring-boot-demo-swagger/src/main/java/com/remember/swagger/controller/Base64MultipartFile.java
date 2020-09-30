@@ -10,7 +10,8 @@ public class Base64MultipartFile implements MultipartFile {
     private final String header;
 
     private final String fileName;
-    public Base64MultipartFile(byte[] imgContent, String header, String fileName){
+
+    public Base64MultipartFile(byte[] imgContent, String header, String fileName) {
         this.imgContent = imgContent;
         this.header = header.split(";")[0];
         this.fileName = fileName;

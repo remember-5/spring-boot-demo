@@ -36,7 +36,7 @@ public class JwtUtils {
     /**
      * 签发JWT
      *
-     * @param id 全局唯一的id
+     * @param id        全局唯一的id
      * @param subject   可以是JSON数据 尽可能少
      * @param ttlMillis 失效时间
      * @return String
@@ -81,11 +81,12 @@ public class JwtUtils {
 
     /**
      * 解密jwt
+     *
      * @param jwt
      * @return
      * @throws Exception
      */
-    public static Claims parseJWT(String jwt){
+    public static Claims parseJWT(String jwt) {
         SecretKey key = generalKey();  // 签名秘钥，和生成的签名的秘钥一模一样
         Claims claims = Jwts.parser()  // 得到DefaultJwtParser
                 .setSigningKey(key)         // 设置签名的秘钥
@@ -95,9 +96,10 @@ public class JwtUtils {
 
     /**
      * 由字符串生成加密key
+     *
      * @return
      */
-    public static SecretKey generalKey(){
+    public static SecretKey generalKey() {
         byte[] encodedKey = Base64Utils.decode(JWT_SECERT.getBytes(StandardCharsets.UTF_8));
         System.out.println(Base64Utils.encodeToUrlSafeString(encodedKey));
         // 根据给定的字节数组使用AES加密算法构造一个密钥，使用 encodedKey中的始于且包含 0 到前 leng 个字节这是当然是所有。（后面的文章中马上回推出讲解Java加密和解密的一些算法）

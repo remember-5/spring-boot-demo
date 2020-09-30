@@ -10,8 +10,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest(classes = ElasticSearchDemoApplication.class)
 public class ElasticSearchDemoApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+    @Test
+    void contextLoads() {
+    }
 
 }

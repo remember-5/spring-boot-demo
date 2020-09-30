@@ -21,7 +21,7 @@ public class SpringMvcConfiguration implements WebMvcConfigurer {
         addSentinelWebInterceptors(registry);
     }
 
-    private void addSentinelWebInterceptors(InterceptorRegistry registry){
+    private void addSentinelWebInterceptors(InterceptorRegistry registry) {
         // <1.1> 创建 SentinelWebMvcConfig 对象
         SentinelWebMvcConfig config = new SentinelWebMvcConfig();
         // <1.2> 是否包含请求方法。即基于 URL 创建的资源，是否包含 Method。
@@ -34,7 +34,7 @@ public class SpringMvcConfiguration implements WebMvcConfigurer {
     }
 
 
-    private void addSentinelWebTotalInterceptor(InterceptorRegistry registry){
+    private void addSentinelWebTotalInterceptor(InterceptorRegistry registry) {
         // <1> 创建 SentinelWebMvcTotalConfig 对象
         SentinelWebMvcTotalConfig config = new SentinelWebMvcTotalConfig();
         // <2> 添加 SentinelWebTotalInterceptor 拦截器

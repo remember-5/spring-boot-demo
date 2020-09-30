@@ -25,16 +25,16 @@ public class RabbitReceiver {
 
     @RabbitListener(
             bindings = @QueueBinding(
-            value = @Queue(value = "queue-1", durable = "true"),
-            exchange = @Exchange(value = "exchange-1", type = "topic", ignoreDeclarationExceptions = "true"),
-            key = "springboot.*")
+                    value = @Queue(value = "queue-1", durable = "true"),
+                    exchange = @Exchange(value = "exchange-1", type = "topic", ignoreDeclarationExceptions = "true"),
+                    key = "springboot.*")
     )
     @RabbitHandler
     public void onMessage(Message message, Channel channel) throws Exception {
         System.err.println("--------------------------------------");
         System.err.println("消费端Payload: " + message.getPayload());
         Order order = JSONObject.toJavaObject(JSON.parseObject(message.getPayload().toString()), Order.class);
-        log.info("{}",order);
+        log.info("{}", order);
         MessageHeaders headers = message.getHeaders();
         System.err.println(headers);
         Long deliveryTag = (Long) message.getHeaders().get(AmqpHeaders.DELIVERY_TAG);

@@ -16,11 +16,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @MapperScan(basePackages = {"com.remember.elasticsearch.mapper"})
 public class MybatisPlusConfig {
 
-	/**
-	 * 分页插件
-	 */
-	@Bean
-	public PaginationInterceptor paginationInterceptor() {
-		return new PaginationInterceptor();
-	}
+    /**
+     * 分页插件
+     */
+    @Bean
+    public PaginationInterceptor paginationInterceptor() {
+        return new PaginationInterceptor();
+    }
 }

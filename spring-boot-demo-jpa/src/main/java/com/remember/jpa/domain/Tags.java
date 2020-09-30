@@ -13,12 +13,12 @@ import javax.persistence.*;
 @Table(name = "t_tags")
 public class Tags {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-	@Column(name = "name")
-	private String name;
+    @Column(name = "name")
+    private String name;
 
 
 }

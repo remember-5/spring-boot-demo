@@ -18,7 +18,7 @@ class SpringBootDemoSpiApplicationTests {
     void HelloSpiTest() {
         ServiceLoader<HelloInterface> serviceLoader = ServiceLoader.load(HelloInterface.class);
 
-        for (HelloInterface hello: serviceLoader) {
+        for (HelloInterface hello : serviceLoader) {
             hello.sayHello();
         }
     }

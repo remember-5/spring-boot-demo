@@ -22,12 +22,10 @@ public class GoodsRepositoryTest extends ElasticSearchDemoApplicationTests {
      */
     @Test
     public void save() {
-        GoodsInfo goodsInfo = new GoodsInfo(1L,"为了更美好的明天而战","");
+        GoodsInfo goodsInfo = new GoodsInfo(1L, "为了更美好的明天而战", "");
         GoodsInfo save = repo.save(goodsInfo);
         log.info("【save】= {}", save);
     }
-
-
 
 
 }

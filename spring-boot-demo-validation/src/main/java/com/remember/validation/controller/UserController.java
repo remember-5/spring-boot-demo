@@ -19,13 +19,13 @@ import javax.validation.constraints.Min;
 public class UserController {
 
 
-	@GetMapping("/get")
-	public void get(@RequestParam("id") @Min(value = 1L, message = "编号必须大于 0") Integer id) {
-		log.info("[get][id: {}]", id);
-	}
+    @GetMapping("/get")
+    public void get(@RequestParam("id") @Min(value = 1L, message = "编号必须大于 0") Integer id) {
+        log.info("[get][id: {}]", id);
+    }
 
-	@PostMapping("/add")
-	public void add(@Valid UserAddDTO addDTO) {
-		log.info("[add][addDTO: {}]", addDTO);
-	}
+    @PostMapping("/add")
+    public void add(@Valid UserAddDTO addDTO) {
+        log.info("[add][addDTO: {}]", addDTO);
+    }
 }

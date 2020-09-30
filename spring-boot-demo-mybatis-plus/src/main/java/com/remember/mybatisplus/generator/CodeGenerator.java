@@ -55,10 +55,10 @@ public class CodeGenerator {
         // 全局配置
         GlobalConfig globalConfig = new GlobalConfig();
         String projectPath = System.getProperty("user.dir");
-        if(StringUtils.isBlank(PROJECT_NAME)){
-            globalConfig.setOutputDir(projectPath  +"/src/main/java");
-        }else{
-            globalConfig.setOutputDir(projectPath + File.separator + PROJECT_NAME +"/src/main/java");
+        if (StringUtils.isBlank(PROJECT_NAME)) {
+            globalConfig.setOutputDir(projectPath + "/src/main/java");
+        } else {
+            globalConfig.setOutputDir(projectPath + File.separator + PROJECT_NAME + "/src/main/java");
         }
 
         globalConfig.setAuthor(AUTHOR);

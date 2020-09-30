@@ -45,10 +45,11 @@ public class JwtInterceptor implements HandlerInterceptor {
                 }
             }
         } else {
-            throw new BaseException(401,"请求未认证！");
+            throw new BaseException(401, "请求未认证！");
         }
         return false;
     }
+
     /**
      * 这个方法只会在当前这个Interceptor的preHandle方法返回值为true的时候才会执行。postHandle是进行处理器拦截用的，它的执行时间是在处理器进行处理之后，
      * 也就是在Controller的方法调用之后执行，但是它会在DispatcherServlet进行视图的渲染之前执行，也就是说在这个方法中你可以对ModelAndView进行操作。

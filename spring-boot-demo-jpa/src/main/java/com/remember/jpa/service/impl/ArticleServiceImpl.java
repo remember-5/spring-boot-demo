@@ -18,12 +18,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ArticleServiceImpl implements ArticleService {
 
-	private final ArticleRepository articleRepository;
+    private final ArticleRepository articleRepository;
 
 
-	@Override
-	public List<Article> findAll() {
-		List<Article> all = articleRepository.findAll();
-		return all;
-	}
+    @Override
+    public List<Article> findAll() {
+        List<Article> all = articleRepository.findAll();
+        return all;
+    }
 }

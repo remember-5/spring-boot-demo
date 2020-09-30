@@ -16,7 +16,7 @@ import javax.sql.DataSource;
  */
 @Service
 @RequiredArgsConstructor
-public class PersonServiceImpl extends ServiceImpl<PersonMapper, Person> implements PersonService{
+public class PersonServiceImpl extends ServiceImpl<PersonMapper, Person> implements PersonService {
 
     private final DataSource dataSource;
 
@@ -37,7 +37,6 @@ public class PersonServiceImpl extends ServiceImpl<PersonMapper, Person> impleme
         person.setName("wangjiahao");
         this.baseMapper.insert(person);
     }
-
 
 
 }

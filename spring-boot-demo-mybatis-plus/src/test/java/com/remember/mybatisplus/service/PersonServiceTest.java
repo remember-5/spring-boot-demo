@@ -16,7 +16,7 @@ public class PersonServiceTest extends MybatisPlusDemoApplicationTests {
      * 测试一下事物的执行顺序
      */
     @Test
-    void test(){
+    void test() {
         personService.test();
     }
 
@@ -24,7 +24,7 @@ public class PersonServiceTest extends MybatisPlusDemoApplicationTests {
      * 测试一下事物的执行顺序
      */
     @Test
-    void test1(){
+    void test1() {
     }
 
 

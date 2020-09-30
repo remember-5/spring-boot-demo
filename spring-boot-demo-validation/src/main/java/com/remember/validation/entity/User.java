@@ -19,7 +19,7 @@ public class User implements Serializable {
 
 
     @NotNull(message = "{required}")
-    @Size(min = 2,max = 10,message = "{range}")
+    @Size(min = 2, max = 10, message = "{range}")
     private String name;
 
     @Positive

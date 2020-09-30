@@ -20,7 +20,7 @@ public class LabelTree implements Serializable {
 
     private List<SearchLabel> children;
 
-    public void initChildren(){
+    public void initChildren() {
         this.children = new ArrayList<>();
     }
 

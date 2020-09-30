@@ -21,6 +21,6 @@ public class FilmEntity {
     private Long id;
     private String name;
     private String director;
-    private Date created ;
+    private Date created;
 
 }

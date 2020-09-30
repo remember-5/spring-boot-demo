@@ -4,7 +4,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.remember.postgresql.entity.Person;
 
 import java.util.List;
-public interface PersonService extends IService<Person>{
+
+public interface PersonService extends IService<Person> {
 
 
     int updateBatch(List<Person> list);

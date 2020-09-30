@@ -17,6 +17,7 @@ import java.util.Date;
 /**
  * ik_max_word 尽可能多的分词
  * ik_smart 尽可能少的分词
+ *
  * @author wangjiahao
  * @date 2020/3/25
  */

@@ -189,7 +189,7 @@ class HotWireKbRepositoryTest extends ElasticSearchDemoApplicationTests {
      * multiMatchQuery("text", "field1", "field2"..); 匹配多个字段, field有通配符不行 //搜索field1中或field1中包含有text的文档（必须与text一致）
      * matchAllQuery(); 匹配所有文件 组合查询：：
      * wildcardQuery("field","val"); 模糊查询，?匹配单个字符，*匹配多个字符
-     *BoolQueryBuilder 进行复合查询 结合must mustNot should等用
+     * BoolQueryBuilder 进行复合查询 结合must mustNot should等用
      * must(QueryBuilders) : AND：
      * mustNot(QueryBuilders): NOT：
      * should: : OR：
@@ -265,7 +265,7 @@ class HotWireKbRepositoryTest extends ElasticSearchDemoApplicationTests {
     @Test
     public void testMoreLikeThisQuery() {
         QueryBuilder queryBuilder = QueryBuilders
-                .moreLikeThisQuery(new String[]{"attrsKeyword"}, new String[]{"小葱;变黄","花菜;育苗","毛豆;豆荚螟"}, null)
+                .moreLikeThisQuery(new String[]{"attrsKeyword"}, new String[]{"小葱;变黄", "花菜;育苗", "毛豆;豆荚螟"}, null)
                 .minTermFreq(1)         //最少出现的次数
                 .maxQueryTerms(12);        // 最多允许查询的词语
         Iterable<HotWireKb> search = repo.search(queryBuilder);
@@ -282,7 +282,7 @@ class HotWireKbRepositoryTest extends ElasticSearchDemoApplicationTests {
      * fuzzyQuery("key",obj)  模糊查询 不能用通配符, 不知道干啥用
      */
     @Test
-    public void testQueryBuilder(){
+    public void testQueryBuilder() {
         TermQueryBuilder goodsName = QueryBuilders.termQuery("goodsName", "“春蕾计划”捐赠200积分");
         log.info("【goodsName】= {}", goodsName.toString());
         Iterable<HotWireKb> search1 = repo.search(goodsName);
@@ -323,6 +323,7 @@ class HotWireKbRepositoryTest extends ElasticSearchDemoApplicationTests {
                 .should(QueryBuilders.termQuery("gender", "male"));
         repo.search(queryBuilder);
     }
+
     /**
      * 包裹查询, 高于设定分数, 不计算相关性
      */
@@ -372,14 +373,11 @@ class HotWireKbRepositoryTest extends ElasticSearchDemoApplicationTests {
      */
     @Test
     public void testWildCardQuery() {
-        WildcardQueryBuilder wildcardQueryBuilder = QueryBuilders.wildcardQuery("title", String.format("*%s*","菜"));
+        WildcardQueryBuilder wildcardQueryBuilder = QueryBuilders.wildcardQuery("title", String.format("*%s*", "菜"));
         log.info("【wildcardQueryBuilder】= {}", wildcardQueryBuilder.toString());
         Iterable<HotWireKb> search = repo.search(wildcardQueryBuilder);
         search.forEach(System.err::println);
     }
-
-
-
 
 
     /**
@@ -390,7 +388,7 @@ class HotWireKbRepositoryTest extends ElasticSearchDemoApplicationTests {
         // 构造查询条件
         NativeSearchQueryBuilder queryBuilder = new NativeSearchQueryBuilder();
         // 添加基本的分词条件
-        queryBuilder.withQuery(QueryBuilders.wildcardQuery("goodsName", String.format("*%s*","春蕾计划")));
+        queryBuilder.withQuery(QueryBuilders.wildcardQuery("goodsName", String.format("*%s*", "春蕾计划")));
         // 排序条件
         queryBuilder.withSort(SortBuilders.fieldSort("id").order(SortOrder.DESC));
         // 分页条件

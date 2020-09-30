@@ -28,6 +28,7 @@ public class TemplateTest extends ElasticSearchDemoApplicationTests {
         // 配置映射，会根据Item类中的id、Field等字段来自动完成映射
         esTemplate.putMapping(HotWireKb.class);
     }
+
     /**
      * 测试 ElasticTemplate 删除 index HotWireKb
      */

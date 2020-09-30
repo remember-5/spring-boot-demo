@@ -11,10 +11,11 @@ import java.util.List;
  */
 public interface ArticleService {
 
-	/**
-	 * /
-	 * @return /
-	 */
-	List<Article> findAll();
+    /**
+     * /
+     *
+     * @return /
+     */
+    List<Article> findAll();
 
 }

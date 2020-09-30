@@ -38,9 +38,9 @@ public class MybatisPlusDemoApplicationTests {
     @Test
     void query1() {
         String query = "植保";
-		List<HotWireKbTest> list = hotWireKbServiceTest.lambdaQuery().eq(HotWireKbTest::getAttrsSecondTag, query).list();
-		System.err.println(list.size());
-	}
+        List<HotWireKbTest> list = hotWireKbServiceTest.lambdaQuery().eq(HotWireKbTest::getAttrsSecondTag, query).list();
+        System.err.println(list.size());
+    }
 
 
 }

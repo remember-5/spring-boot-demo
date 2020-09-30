@@ -14,19 +14,21 @@ import java.util.List;
 public interface ArticleRepository extends JpaRepository<Article, Long>, JpaSpecificationExecutor<Article> {
 
 
-	/**
-	 * 根据id查询文章
-	 * @param id /
-	 * @return /
-	 */
-	List<Article> findArticleById(Integer id);
+    /**
+     * 根据id查询文章
+     *
+     * @param id /
+     * @return /
+     */
+    List<Article> findArticleById(Integer id);
 
-	/**
-	 * ids
-	 * @param ids /
-	 * @return /
-	 */
-	List<Article> findArticlesByIdIn(List<Integer> ids);
+    /**
+     * ids
+     *
+     * @param ids /
+     * @return /
+     */
+    List<Article> findArticlesByIdIn(List<Integer> ids);
 
 
 }

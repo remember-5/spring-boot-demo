@@ -16,7 +16,7 @@ public class BaseExceptionHandler {
 
     @ExceptionHandler(value = BaseException.class)
     @ResponseBody
-    public String notDecryptException(BaseException e){
+    public String notDecryptException(BaseException e) {
         return e.getMessage();
     }
 

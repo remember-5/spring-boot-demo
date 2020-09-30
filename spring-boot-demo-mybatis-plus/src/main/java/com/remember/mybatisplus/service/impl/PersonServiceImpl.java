@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class PersonServiceImpl extends ServiceImpl<PersonMapper, Person> implements PersonService {
 
     @Override
-    @Transactional(rollbackFor=Exception.class)
+    @Transactional(rollbackFor = Exception.class)
     public void test() {
         log.info("开始执行事物");
         try {

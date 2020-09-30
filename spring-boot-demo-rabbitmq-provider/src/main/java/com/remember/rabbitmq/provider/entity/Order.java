@@ -23,7 +23,7 @@ public class Order implements Serializable {
     private static final long serialVersionUID = 3155702992463925456L;
 
     @NotNull
-    @Max(value = 10,message = "这个错误信息")
+    @Max(value = 10, message = "这个错误信息")
     @Min(3)
     private String orderId;
 
@@ -42,7 +42,6 @@ public class Order implements Serializable {
     private BigDecimal totalMoney;
 
     private String remake;
-
 
 
 }

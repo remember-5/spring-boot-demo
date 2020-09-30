@@ -13,6 +13,7 @@ import java.util.Date;
 
 /**
  * 联想词
+ *
  * @author wangjiahao
  * @date 2020/5/30
  */
@@ -23,43 +24,42 @@ import java.util.Date;
 @NoArgsConstructor
 public class AssociateWord {
 
-	/**
-	 * id
-	 */
-	@Id
-	private int id;
+    /**
+     * id
+     */
+    @Id
+    private int id;
 
-	/**
-	 * 活动名称
-	 */
+    /**
+     * 活动名称
+     */
 //	@Field(type = FieldType.Text, analyzer = "ik_smart")
-	@Field(type = FieldType.Text, analyzer = "ik_max_word")
-	private String keyword;
+    @Field(type = FieldType.Text, analyzer = "ik_max_word")
+    private String keyword;
 
-	/**
-	 * 状态
-	 */
-	@Field(type = FieldType.Integer)
-	private Integer state;
+    /**
+     * 状态
+     */
+    @Field(type = FieldType.Integer)
+    private Integer state;
 
-	/**
-	 * 排序
-	 */
-	@Field(type = FieldType.Integer)
-	private Integer sort;
+    /**
+     * 排序
+     */
+    @Field(type = FieldType.Integer)
+    private Integer sort;
 
-	/**
-	 * 创建时间
-	 */
-	@Field(type = FieldType.Date)
-	private Date createTime;
+    /**
+     * 创建时间
+     */
+    @Field(type = FieldType.Date)
+    private Date createTime;
 
-	/**
-	 * 修改时间
-	 */
-	@Field(type = FieldType.Date)
-	private Date updateTime;
-
+    /**
+     * 修改时间
+     */
+    @Field(type = FieldType.Date)
+    private Date updateTime;
 
 
 }

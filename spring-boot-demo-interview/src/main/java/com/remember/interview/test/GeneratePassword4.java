@@ -6,16 +6,17 @@ package com.remember.interview.test;
  */
 public class GeneratePassword4 {
     public static void main(String[] args) {
-        for(int i =0 ;i< 10 ;i++){
+        for (int i = 0; i < 10; i++) {
             name(8);
         }
     }
+
     // 生成复杂码函数
     public static void name(int lenght) {
 
-        String[] pswdStr = { "qwertyuiopasdfghjklzxcvbnm",
+        String[] pswdStr = {"qwertyuiopasdfghjklzxcvbnm",
                 "QWERTYUIOPASDFGHJKLZXCVBNM", "0123456789",
-                "~!@#$%^&*()_+{}|<>?:{}" };
+                "~!@#$%^&*()_+{}|<>?:{}"};
 
         int pswdLen = lenght;
         String pswd = " ";

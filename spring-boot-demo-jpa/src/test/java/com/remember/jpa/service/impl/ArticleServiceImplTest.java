@@ -13,24 +13,24 @@ import java.util.List;
 
 public class ArticleServiceImplTest extends JpaApplicationTests {
 
-	@Autowired
-	ArticleRepository articleRepository;
-	@Autowired
-	TagsRepository tagsRepository;
-	@Autowired
-	ArticleTagsRepository articleTagsRepository;
-	@Autowired
-	DelRepository delRepository;
+    @Autowired
+    ArticleRepository articleRepository;
+    @Autowired
+    TagsRepository tagsRepository;
+    @Autowired
+    ArticleTagsRepository articleTagsRepository;
+    @Autowired
+    DelRepository delRepository;
 
-	@Test
-	public void test() {
-		List<Article> all = articleRepository.findAll();
+    @Test
+    public void test() {
+        List<Article> all = articleRepository.findAll();
 
-		System.err.println(articleRepository.findAll().size());
-		System.err.println(tagsRepository.findAll().size());
-		System.err.println(articleTagsRepository.findAll().size());
-		System.err.println(delRepository.findAll().size());
-	}
+        System.err.println(articleRepository.findAll().size());
+        System.err.println(tagsRepository.findAll().size());
+        System.err.println(articleTagsRepository.findAll().size());
+        System.err.println(delRepository.findAll().size());
+    }
 
 
 }

@@ -9,8 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class SpringBootDemoRabbitmqConsumerApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(SpringBootDemoRabbitmqConsumerApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(SpringBootDemoRabbitmqConsumerApplication.class, args);
+    }
 
 }

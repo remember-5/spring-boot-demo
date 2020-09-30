@@ -8,10 +8,10 @@ public class TransactionDemoTest extends SpringBootDemoJunitApplication {
 
 
     @Test
-    public void test(){
+    public void test() {
         int a = 1;
         String str = "ass";
-        Assert.assertEquals(a,1);
+        Assert.assertEquals(a, 1);
         System.err.println("aa");
     }
 

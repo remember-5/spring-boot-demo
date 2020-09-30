@@ -55,7 +55,7 @@ public class TestController {
 
     @PostMapping("upload")
     @ApiOperation(value = "这是一个post请求", notes = "这是post请求的描述，让我多写点字")
-    public Result testPost(@RequestParam(value = "file")MultipartFile file) {
+    public Result testPost(@RequestParam(value = "file") MultipartFile file) {
         try {
             String decode = QrCodeUtil.decode(file.getInputStream());
             if (decode.length() != 19) {
@@ -89,14 +89,14 @@ public class TestController {
             String[] baseStrs = data.split(",");
             BASE64Decoder decoder = new BASE64Decoder();
             byte[] b = decoder.decodeBuffer(baseStrs[1]);
-            for(int i = 0; i < b.length; ++i) {
+            for (int i = 0; i < b.length; ++i) {
                 if (b[i] < 0) {
                     b[i] += 256;
                 }
             }
-            return new Base64MultipartFile(b, baseStrs[0] , fileName);
+            return new Base64MultipartFile(b, baseStrs[0], fileName);
         } catch (IOException e) {
-           e.printStackTrace();
+            e.printStackTrace();
         }
         return null;
     }
