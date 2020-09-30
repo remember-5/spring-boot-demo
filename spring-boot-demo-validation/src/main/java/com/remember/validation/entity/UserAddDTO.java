@@ -1,6 +1,8 @@
 package com.remember.validation.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotEmpty;
@@ -11,6 +13,8 @@ import javax.validation.constraints.Pattern;
  * @date 2020/6/6
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserAddDTO {
 
     /**

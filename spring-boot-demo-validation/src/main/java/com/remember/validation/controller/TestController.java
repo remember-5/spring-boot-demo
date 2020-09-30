@@ -55,7 +55,7 @@ public class TestController {
         return result;
     }
 
-    @PostMapping("getArray")
+    @PostMapping("getArray1")
     public JSONObject getArray(String ids) {
         List<String> split = Arrays.asList(ids.split(","));
         log.info("list = {}", split);

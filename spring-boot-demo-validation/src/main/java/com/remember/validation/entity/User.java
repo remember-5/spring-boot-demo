@@ -1,6 +1,8 @@
 package com.remember.validation.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;
@@ -11,6 +13,8 @@ import java.util.Date;
  * @date 2020/4/27
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class User implements Serializable {
     private static final long serialVersionUID = -6130414118159979433L;
 
