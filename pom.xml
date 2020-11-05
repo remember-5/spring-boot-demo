@@ -34,6 +34,8 @@
         <module>spring-boot-demo-postgresql</module>
         <module>spring-boot-demo-rocketmq-provider</module>
         <module>spring-boot-demo-rocketmq-consumer</module>
+        <module>spring-boot-demo-rabbitmq</module>
+        <module>spring-boot-demo-rabbitmq</module>
     </modules>
 
 

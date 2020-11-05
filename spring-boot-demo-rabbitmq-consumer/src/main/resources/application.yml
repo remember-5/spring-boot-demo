@@ -2,19 +2,26 @@ spring:
   application:
     name: spring-boot-rabbitmq-consumer
   rabbitmq:
-    host: 127.0.0.1
+    host: 192.168.161.248
     port: 5672
     username: guest
     listener:
       simple:
+        acknowledge-mode: manual
+        default-requeue-rejected: false
         retry:
-          enabled: true
-          initial-interval: 1000
-          # 最大尝试次数
-          max-attempts: 3
-          max-interval: 10000
-          multiplier: 2.0
-          stateless: true
+          enabled: true # 开启消费重试机制
+          max-attempts: 3 # 最大重试次数。默认为 3 。
+          initial-interval: 1000 # 重试间隔，单位为毫秒。默认为 1000 。
+      direct:
+        acknowledge-mode: manual
+
+    template:
+      # 对应 RabbitProperties.Retry 类
+      retry:
+        enabled: true # 开启发送机制
+        max-attempts: 3 # 最大重试次数。默认为 3 。
+        initial-interval: 1000 # 重试间隔，单位为毫秒。默认为 1000
 
 
 server:

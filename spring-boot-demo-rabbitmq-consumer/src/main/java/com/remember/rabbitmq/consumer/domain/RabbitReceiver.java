@@ -23,23 +23,47 @@ import java.util.Map;
 @Component
 public class RabbitReceiver {
 
+
+    /**
+     * 1.@Argument(name = "x-message-ttl",value = "3000") 绑定业务队列的时候，增加消息的过期时长，当消息过期后，消息将被转发到死信队列中。
+     * 2.@Argument(name = "x-max-length",value = "3") 设置消息队列长度，当队列中的消息达到最大长度后，继续发送消息，消息将被转发到死信队列中
+     * @param message
+     * @param channel
+     * @throws Exception
+     */
     @RabbitListener(
             bindings = @QueueBinding(
                     value = @Queue(value = "queue-1", durable = "true"),
-                    exchange = @Exchange(value = "exchange-1", type = "topic", ignoreDeclarationExceptions = "true"),
+                    exchange = @Exchange(value = "exchange-1", type = "topic", ignoreDeclarationExceptions = "true", delayed = "true",arguments =
+                        {
+                            @Argument(name="x-dead-letter-exchange",value = "deadExchange"),
+                            @Argument(name="x-dead-letter-routing-key",value = "deadKey"),
+                        }
+                    ),
                     key = "springboot.*")
     )
     @RabbitHandler
     public void onMessage(Message message, Channel channel) throws Exception {
         System.err.println("--------------------------------------");
         System.err.println("消费端Payload: " + message.getPayload());
-        Order order = JSONObject.toJavaObject(JSON.parseObject(message.getPayload().toString()), Order.class);
-        log.info("{}", order);
-        MessageHeaders headers = message.getHeaders();
-        System.err.println(headers);
         Long deliveryTag = (Long) message.getHeaders().get(AmqpHeaders.DELIVERY_TAG);
-        //手工ACK
-        channel.basicAck(deliveryTag, false);
+        try {
+            Order order = JSONObject.toJavaObject(JSON.parseObject(message.getPayload().toString()), Order.class);
+            log.info("{}", order);
+            if ("D001".equals(order.getOrderId())) {
+//                return;
+                channel.basicNack(deliveryTag, false, false);
+                return;
+            }
+            MessageHeaders headers = message.getHeaders();
+            System.err.println(headers);
+            //手工ACK
+            channel.basicAck(deliveryTag, false);
+        } catch (Exception e) {
+//            channel.basicNack(deliveryTag, false, true);
+            channel.basicNack(deliveryTag, false, false);
+        }
+
     }
 
 
@@ -64,11 +88,36 @@ public class RabbitReceiver {
     ))
     @RabbitHandler
     public void onOrderMessage(Order order, Channel channel, @Headers Map<String, Object> headers) throws IOException {
-        System.err.println("onOrderMessage");
-        System.err.println("--------------------------------------");
-        System.err.println("消费端order: " + order.getOrderId());
         Long deliveryTag = (Long) headers.get(AmqpHeaders.DELIVERY_TAG);
-        //手工ACK
-        channel.basicAck(deliveryTag, false);
+        try {
+            System.err.println("onOrderMessage");
+            System.err.println("--------------------------------------");
+            System.err.println("消费端order: " + order.getOrderId());
+            //手工ACK
+            channel.basicAck(deliveryTag, false);
+        } catch (Exception e) {
+            //否则不ACK
+            channel.basicNack(deliveryTag, false, true);
+        }
     }
+
+
+    /**
+     *
+     * @param message
+     * @param channel
+     * @param headers
+     */
+    @RabbitListener(bindings = {
+            @QueueBinding(
+                    value = @Queue(value = "javatripDead"),
+                    exchange = @Exchange(value = "deadExchange"),
+                    key = "deadKey"
+            )
+    })
+    public void deadMessage(String message, Channel channel, @Headers Map<String, Object> headers) {
+        System.out.println("死信" + message);
+    }
+
+
 }

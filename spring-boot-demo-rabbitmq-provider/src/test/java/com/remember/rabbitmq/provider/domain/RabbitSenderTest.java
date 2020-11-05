@@ -42,16 +42,18 @@ class RabbitSenderTest extends SpringBootDemoRabbitmqProviderApplicationTests {
 
     @Test
     public void testSender3() {
-        Order order = new Order();
-        order.setOrderId("D001111");
-        order.setGoodsName("第一个订单");
-        order.setDetail("测试第一个订单");
-//        Order aaa = new Order("")
-        String jsonString = JSONObject.toJSONString(order,
-                SerializerFeature.WriteNullStringAsEmpty,
-                SerializerFeature.WriteNullNumberAsZero);
-        log.info("{}", jsonString);
-        rabbitSender.send(jsonString, null);
+        for (int i = 0; i < 4 ; i++) {
+            Order order = new Order();
+            order.setOrderId("D00"+i);
+            order.setGoodsName("第"+ i +"个订单");
+            order.setDetail("测试"+ i +"第一个订单");
+            String jsonString = JSONObject.toJSONString(order,
+                    SerializerFeature.WriteNullStringAsEmpty,
+                    SerializerFeature.WriteNullNumberAsZero);
+            log.info("{}", jsonString);
+            rabbitSender.send(jsonString, null);
+        }
+
     }
 
 
