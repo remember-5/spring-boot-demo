@@ -35,7 +35,7 @@
         <module>spring-boot-demo-rocketmq-provider</module>
         <module>spring-boot-demo-rocketmq-consumer</module>
         <module>spring-boot-demo-rabbitmq</module>
-        <module>spring-boot-demo-rabbitmq</module>
+        <module>spring-boot-demo-admin</module>
     </modules>
 
 
