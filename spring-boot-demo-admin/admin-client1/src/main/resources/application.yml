@@ -1,1 +1,24 @@
+server:
+  port: 9901
 
+spring:
+  boot:
+    admin:
+      client:
+        url: http://127.0.0.1:9900
+        instance:
+          # 客户端实例 url
+          service-url: http://127.0.0.1:9901
+          prefer-ip: true
+          # 客户端实例名称
+          name: admin-client1
+
+management:
+  endpoints:
+    web:
+      exposure:
+        # 暴漏的接口 - 所有接口
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
