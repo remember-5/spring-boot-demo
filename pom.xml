@@ -37,6 +37,9 @@
 
 
     <properties>
+        <!--   默认jdk版本     -->
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
         <!--   跳过测试    -->
         <skipTests>true</skipTests>
 
