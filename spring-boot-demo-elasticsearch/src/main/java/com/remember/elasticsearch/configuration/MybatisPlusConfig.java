@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @author wangjiahao
  * @date 2020/3/25
  */
-//Spring boot方式
+// Spring boot方式 开启事物
 @EnableTransactionManagement
 @Configuration
 @MapperScan(basePackages = {"com.remember.elasticsearch.mapper"})

@@ -15,4 +15,43 @@ public class TransactionDemoTest extends SpringBootDemoJunitApplication {
         System.err.println("aa");
     }
 
+
+    /**
+     * 调用service
+     */
+    @Test
+    public void test1() {
+        // 读文件夹
+        // for遍历
+
+
+        // 调service
+
+
+        //
+
+
+    }
+
+    /**
+     * 调用api形式
+     */
+    @Test
+    public void test2() {
+        // 读文件夹
+        // for遍历
+
+        for (int i = 0; i < 100; i++) {
+
+        }
+
+
+        // 调用api
+
+
+        //
+
+
+    }
+
 }

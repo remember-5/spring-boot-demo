@@ -28,8 +28,8 @@ public class CustomerComplainController {
     @PostMapping
     public Map<String, Object> queryByKeyword(String keyword) {
         // 方式1
-        HashMap<String, Object> result = new HashMap<>(8);
-        ArrayList<LabelTree> labelTrees = new ArrayList<>();
+        HashMap<String, Object> result = new HashMap<String, Object>(8);
+        ArrayList<LabelTree> labelTrees = new ArrayList<LabelTree>();
 
         LabelTree complainDescribe = new LabelTree();
         complainDescribe.setTitle("投诉描述");

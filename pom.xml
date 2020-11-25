@@ -20,8 +20,6 @@
         <module>spring-boot-demo-spi</module>
         <module>spring-boot-demo-interview</module>
         <module>spring-boot-demo-encrypt</module>
-        <module>spring-boot-demo-rabbitmq-provider</module>
-        <module>spring-boot-demo-rabbitmq-consumer</module>
         <module>spring-boot-demo-validation</module>
         <module>spring-boot-demo-swagger</module>
         <module>spring-boot-demo-guava</module>
@@ -32,16 +30,13 @@
         <module>spring-boot-demo-minio</module>
         <module>spring-boot-demo-jpa</module>
         <module>spring-boot-demo-postgresql</module>
-        <module>spring-boot-demo-rocketmq-provider</module>
-        <module>spring-boot-demo-rocketmq-consumer</module>
         <module>spring-boot-demo-admin</module>
+        <module>spring-boot-demo-rabbitmq</module>
+        <module>spring-boot-demo-rocketmq</module>
     </modules>
 
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
         <!--   跳过测试    -->
         <skipTests>true</skipTests>
 
