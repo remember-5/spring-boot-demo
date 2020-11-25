@@ -25,7 +25,6 @@ public class AssociateWordController {
 
     private final AssociateWordRepository repository;
 
-
     /**
      * 保存
      *
