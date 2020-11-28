@@ -1,0 +1,8 @@
+spring:
+  # Spring Security \u914D\u7F6E\u9879\uFF0C\u5BF9\u5E94 SecurityProperties \u914D\u7F6E\u7C7B
+  security:
+    # \u914D\u7F6E\u9ED8\u8BA4\u7684 InMemoryUserDetailsManager \u7684\u7528\u6237\u8D26\u53F7\u4E0E\u5BC6\u7801\u3002
+    user:
+      name: user # \u8D26\u53F7
+      password: user # \u5BC6\u7801
+      roles: ADMIN # \u62E5\u6709\u89D2\u8272
