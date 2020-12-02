@@ -8,6 +8,8 @@ import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.stereotype.Component;
 
 /**
+ * 同步发送
+ * 异步发送
  * @author wangjiahao
  * @date 2020/12/2
  */

@@ -3,12 +3,13 @@ package com.remember.rocketmq.demo.message;
 import lombok.Data;
 
 /**
- * @author wangjiahao
+ * @author wangjihao
  * @date 2020/12/2
  */
 @Data
-public class Demo01Message {
-    public static final String TOPIC = "DEMO_01";
+public class Demo02Message {
+
+    public static final String TOPIC = "DEMO_02";
 
     private Integer id;
 }
