@@ -60,7 +60,7 @@ public class HotWireKb {
     /**
      * 正文
      */
-    @Field(type = FieldType.Text, analyzer = "ik_smart")
+    @Field(type = FieldType.Text, analyzer = "ik _smart")
     @TableField(value = "texts1")
     private String text;
 
