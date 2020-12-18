@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.DateFormat;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
@@ -66,14 +67,14 @@ public class CustomerComplain implements Serializable {
     /**
      * 创建时间
      */
-    @Field(type = FieldType.Date)
+    @Field(type = FieldType.Date,format = DateFormat.basic_date)
     @TableField(value = "create_time")
     private Date createTime;
 
     /**
      * 修改时间
      */
-    @Field(type = FieldType.Date)
+    @Field(type = FieldType.Date,format = DateFormat.basic_date)
     @TableField(value = "update_time")
     private Date updateTime;
 }

@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.DateFormat;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
@@ -19,7 +20,7 @@ import java.util.Date;
  */
 @Data
 @Builder
-@Document(indexName = "associate_word", type = "associate_word", shards = 1, replicas = 0)
+@Document(indexName = "associate_word", shards = 1, replicas = 0)
 @AllArgsConstructor
 @NoArgsConstructor
 public class AssociateWord {
@@ -52,13 +53,13 @@ public class AssociateWord {
     /**
      * 创建时间
      */
-    @Field(type = FieldType.Date)
+    @Field(type = FieldType.Date,format = DateFormat.basic_date)
     private Date createTime;
 
     /**
      * 修改时间
      */
-    @Field(type = FieldType.Date)
+    @Field(type = FieldType.Date,format = DateFormat.basic_date)
     private Date updateTime;
 
 
