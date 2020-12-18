@@ -6,9 +6,9 @@ spring:
     name: spring-boot-demo-elasticsearch
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://47.104.177.44:3306/spring_boot_demo?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&useSSL=false
+    url: jdbc:mysql://127.0.0.1:3306/spring_boot_demo?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&useSSL=false
     username: root
-    password: wang@jiahao_0505
+    password: root
   data:
 #    elasticsearch:
 #      cluster-name: node-1
