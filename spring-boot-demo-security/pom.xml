@@ -16,6 +16,7 @@
 
     <modules>
         <module>security-demo1</module>
+        <module>role-demo</module>
     </modules>
 
 

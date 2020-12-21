@@ -1,5 +1,6 @@
 package com.remember.swagger.controller;
 
+import cn.hutool.core.codec.Base64Decoder;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.extra.qrcode.QrCodeUtil;
 import com.remember.swagger.enetity.Result;
@@ -11,7 +12,6 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import sun.misc.BASE64Decoder;
 
 import java.io.IOException;
 
@@ -85,20 +85,17 @@ public class TestController {
 
 
     public MultipartFile base64toMultipart(String data, String fileName) {
-        try {
-            String[] baseStrs = data.split(",");
-            BASE64Decoder decoder = new BASE64Decoder();
-            byte[] b = decoder.decodeBuffer(baseStrs[1]);
-            for (int i = 0; i < b.length; ++i) {
-                if (b[i] < 0) {
-                    b[i] += 256;
-                }
+
+        String[] baseStrs = data.split(",");
+
+        byte[] b = Base64Decoder.decode(baseStrs[1]);
+        for (int i = 0; i < b.length; ++i) {
+            if (b[i] < 0) {
+                b[i] += 256;
             }
-            return new Base64MultipartFile(b, baseStrs[0], fileName);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-        return null;
+        return new Base64MultipartFile(b, baseStrs[0], fileName);
+
     }
 
 }

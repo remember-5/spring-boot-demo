@@ -20,11 +20,11 @@ public class PersonServiceImpl extends ServiceImpl<PersonMapper, Person> impleme
     public void test() {
         log.info("开始执行事物");
         try {
-            // TODO 先测试写入操作
+            // 先测试写入操作
             Person person = new Person(1, null, 24, "PVG airport", null, null);
             this.save(person);
-        } catch (Exception e) { // TODO 抛出异常
-            // TODO 异常块内调用三方模块
+        } catch (Exception e) { // 抛出异常
+            // 异常块内调用三方模块
             myPrint();
             new Exception("hhhh");
         }

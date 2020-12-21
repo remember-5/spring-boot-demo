@@ -34,6 +34,7 @@
         <module>spring-boot-demo-rabbitmq</module>
         <module>spring-boot-demo-rocketmq</module>
         <module>spring-boot-demo-security</module>
+        <module>spring-boot-demo-web</module>
     </modules>
 
 

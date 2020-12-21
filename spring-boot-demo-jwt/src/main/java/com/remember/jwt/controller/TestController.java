@@ -27,9 +27,9 @@ public class TestController {
 
     @GetMapping("auth")
     public String auth() {
-        // TODO 解密
+        // 解密
 
-        // TODO 通过设备号获取客户号
+        // 通过设备号获取客户号
 
         // setRedis
         return JwtUtils.createJWT("123", "13361928119", 1000L * 60 * 60);
@@ -43,7 +43,7 @@ public class TestController {
     public static String getCrmId() {
         String token = getHttpServletRequest().getHeader("Authorization").substring(7);
         String id = JwtUtils.parseJWT(token).getId();
-        //TODO 根据标识查询redis 如 API:AUTH:JWT:KEY
+        //根据标识查询redis 如 API:AUTH:JWT:KEY
 
         // String crmId = redis.getString(key);
         // System.err.println(crmId);
