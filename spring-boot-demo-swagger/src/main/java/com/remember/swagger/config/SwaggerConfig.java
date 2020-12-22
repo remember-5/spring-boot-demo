@@ -39,6 +39,7 @@ public class SwaggerConfig {
 
     @Bean
     public Docket getDocket() {
+        // TODO 新版swagger不能使用
         return new Docket(DocumentationType.SWAGGER_2)
                 .enable(enabled)
                 .host(host)
