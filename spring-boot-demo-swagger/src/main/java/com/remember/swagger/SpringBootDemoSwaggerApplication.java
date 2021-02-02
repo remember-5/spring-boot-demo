@@ -7,6 +7,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SpringBootDemoSwaggerApplication {
 
     public static void main(String[] args) {
+        for (String arg : args) {
+            System.err.println(arg);
+        }
+        System.err.println(System.getProperty("name"));
         SpringApplication.run(SpringBootDemoSwaggerApplication.class, args);
     }
 
