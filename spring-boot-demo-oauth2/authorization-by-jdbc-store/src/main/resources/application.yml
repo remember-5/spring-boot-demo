@@ -1,0 +1,7 @@
+spring:
+  # datasource 数据源配置内容，对应 DataSourceProperties 配置属性类
+  datasource:
+    url: jdbc:mysql://47.104.177.44:3306/spring_boot_demo?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root # 数据库账号
+    password: wang@jiahao_0505 # 数据库密码

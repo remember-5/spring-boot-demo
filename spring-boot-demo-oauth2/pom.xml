@@ -22,6 +22,8 @@
         <module>password-credentials</module>
         <module>resource-server</module>
         <module>authorization-code</module>
+        <module>authorization-by-jdbc-store</module>
+        <module>resource-server-sso</module>
     </modules>
 
 </project>
