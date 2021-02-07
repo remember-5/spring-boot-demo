@@ -558,4 +558,15 @@ public class RedisService {
             return 0L;
         }
     }
+
+    /**
+     * 查询前缀为xx所有key值
+     *
+     * @return
+     */
+    public Set<String> getKeys(String key) {
+        Set<String> keys = redisTemplate.keys(key);
+        return keys;
+    }
+
 }

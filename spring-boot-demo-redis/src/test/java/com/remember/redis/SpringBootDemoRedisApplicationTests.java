@@ -16,9 +16,20 @@ class SpringBootDemoRedisApplicationTests {
 
     @Test
     void contextLoads() {
-        User user = new User("wangjiahao", 24, "上海浦东");
-        System.err.println(redisService.set("wangjiahao", user));
 
+        for (int i = 0; i < 100; i++) {
+            User user = new User("wangjiahao"+i, i, "上海浦东"+i);
+            System.err.println(redisService.set("USER:ADMIN:"+i, user));
+        }
     }
+
+    @Test
+    void getKeys(){
+        for (String key : redisService.getKeys("USER:ADMIN:*")) {
+//            System.err.println(key);
+            System.err.println(redisService.get(key));
+        }
+    }
+
 
 }

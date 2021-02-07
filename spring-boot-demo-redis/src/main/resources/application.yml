@@ -2,10 +2,10 @@ spring:
   application:
     name: spring-boot-demo-jedis
   redis:
-    sentinel:
-      master: #master节点
-      nodes: # 地址
-    host: 192.168.115.184
+#    sentinel:
+#      master: #master节点
+#      nodes: # 地址
+    host: 172.16.108.138
     port: 6379
     password:
     database: 13 # Redis默认情况下有16个分片，这里配置具体使用的分片
