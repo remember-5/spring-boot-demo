@@ -36,6 +36,7 @@
         <module>spring-boot-demo-security</module>
         <module>spring-boot-demo-web</module>
         <module>spring-boot-demo-oauth2</module>
+        <module>spring-boot-demo-nacos</module>
     </modules>
 
 
@@ -51,7 +52,30 @@
         <guava.version>29.0-jre</guava.version>
         <user.agent.version>1.20</user.agent.version>
         <fastjson.version>1.2.73</fastjson.version>
+        <lombok.version>1.18.12</lombok.version>
     </properties>
+
+    <dependencies>
+        <!-- hutool工具类 -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${hutool.version}</version>
+        </dependency>
+        <!-- guava工具类 -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
+        </dependency>
+        <!-- fastjson -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
+        </dependency>
+    </dependencies>
+
 
     <repositories>
         <repository>
@@ -76,29 +100,11 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!-- hutool工具类 -->
-            <dependency>
-                <groupId>cn.hutool</groupId>
-                <artifactId>hutool-all</artifactId>
-                <version>${hutool.version}</version>
-            </dependency>
-            <!-- guava工具类 -->
-            <dependency>
-                <groupId>com.google.guava</groupId>
-                <artifactId>guava</artifactId>
-                <version>${guava.version}</version>
-            </dependency>
             <!-- 解析 UserAgent 信息 -->
             <dependency>
                 <groupId>eu.bitwalker</groupId>
                 <artifactId>UserAgentUtils</artifactId>
                 <version>${user.agent.version}</version>
-            </dependency>
-            <!-- fastjson -->
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>fastjson</artifactId>
-                <version>${fastjson.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

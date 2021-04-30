@@ -2,9 +2,10 @@ spring:
   application:
     name: spring-boot-demo-rabbitmq-provider
   rabbitmq:
-    host: 192.168.161.248
+    host: 127.0.0.1
     port: 5672
-    username: guest
+    username: guest # RabbitMQ 服务的账号
+    password: guest # RabbitMQ 服务的密码
     listener:
       simple:
         acknowledge-mode: manual

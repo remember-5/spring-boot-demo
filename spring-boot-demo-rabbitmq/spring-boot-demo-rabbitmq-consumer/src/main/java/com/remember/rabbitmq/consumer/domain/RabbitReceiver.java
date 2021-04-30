@@ -23,7 +23,6 @@ import java.util.Map;
 @Component
 public class RabbitReceiver {
 
-
     /**
      * 1.@Argument(name = "x-message-ttl",value = "3000") 绑定业务队列的时候，增加消息的过期时长，当消息过期后，消息将被转发到死信队列中。
      * 2.@Argument(name = "x-max-length",value = "3") 设置消息队列长度，当队列中的消息达到最大长度后，继续发送消息，消息将被转发到死信队列中
@@ -34,11 +33,7 @@ public class RabbitReceiver {
     @RabbitListener(
             bindings = @QueueBinding(
                     value = @Queue(value = "queue-1", durable = "true"),
-                    exchange = @Exchange(value = "exchange-1", type = "topic", ignoreDeclarationExceptions = "true", delayed = "true",arguments =
-                        {
-                            @Argument(name="x-dead-letter-exchange",value = "deadExchange"),
-                            @Argument(name="x-dead-letter-routing-key",value = "deadKey"),
-                        }
+                    exchange = @Exchange(value = "exchange-1", type = "topic"
                     ),
                     key = "springboot.*")
     )
