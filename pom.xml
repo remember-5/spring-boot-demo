@@ -13,30 +13,30 @@
     <url>http://blog.remember5.top</url>
 
     <modules>
-        <module>spring-boot-demo-common</module>
-        <module>spring-boot-demo-elasticsearch</module>
-        <module>spring-boot-demo-mybatis-plus</module>
-        <module>spring-boot-demo-sentinel</module>
-        <module>spring-boot-demo-spi</module>
-        <module>spring-boot-demo-interview</module>
-        <module>spring-boot-demo-encrypt</module>
-        <module>spring-boot-demo-validation</module>
-        <module>spring-boot-demo-swagger</module>
-        <module>spring-boot-demo-guava</module>
-        <module>spring-boot-demo-redis</module>
-        <module>spring-boot-demo-junit</module>
-        <module>spring-boot-demo-dynamic-datasource</module>
-        <module>spring-boot-demo-jwt</module>
-        <module>spring-boot-demo-minio</module>
-        <module>spring-boot-demo-jpa</module>
-        <module>spring-boot-demo-postgresql</module>
-        <module>spring-boot-demo-admin</module>
-        <module>spring-boot-demo-rabbitmq</module>
-        <module>spring-boot-demo-rocketmq</module>
-        <module>spring-boot-demo-security</module>
-        <module>spring-boot-demo-web</module>
-        <module>spring-boot-demo-oauth2</module>
-        <module>spring-boot-demo-nacos</module>
+        <module>demo-admin</module>
+        <module>demo-common</module>
+        <module>demo-elasticsearch</module>
+        <module>demo-mybatis-plus</module>
+        <module>demo-sentinel</module>
+        <module>demo-spi</module>
+        <module>demo-interview</module>
+        <module>demo-encrypt</module>
+        <module>demo-validation</module>
+        <module>demo-swagger</module>
+        <module>demo-guava</module>
+        <module>demo-redis</module>
+        <module>demo-junit</module>
+        <module>demo-dynamic-datasource</module>
+        <module>demo-jwt</module>
+        <module>demo-minio</module>
+        <module>demo-jpa</module>
+        <module>demo-postgresql</module>
+        <module>demo-rabbitmq</module>
+        <module>demo-rocketmq</module>
+        <module>demo-security</module>
+        <module>demo-web</module>
+        <module>demo-oauth2</module>
+        <module>demo-nacos</module>
     </modules>
 
 
@@ -109,4 +109,12 @@
         </dependencies>
     </dependencyManagement>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>
