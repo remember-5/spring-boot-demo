@@ -8,7 +8,7 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <groupId>com.remember</groupId>
-    <artifactId>spring-boot-demo-junit</artifactId>
+    <artifactId>demo-junit</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>spring-boot-demo-junit</name>
     <description>Demo project for Spring Boot</description>
