@@ -5,7 +5,7 @@ spring:
 #    sentinel:
 #      master: #master节点
 #      nodes: # 地址
-    host: 172.16.108.138
+    host: 192.168.123.136
     port: 6379
     password:
     database: 13 # Redis默认情况下有16个分片，这里配置具体使用的分片

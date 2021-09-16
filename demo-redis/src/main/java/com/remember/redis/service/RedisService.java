@@ -493,7 +493,7 @@ public class RedisService {
      * @param value 值
      * @return Boolean
      */
-    public Boolean lSet(String key, List<Object> value) {
+    public Boolean lSetAll(String key, List<Object> value) {
         try {
             redisTemplate.opsForList().rightPushAll(key, value);
             return true;
