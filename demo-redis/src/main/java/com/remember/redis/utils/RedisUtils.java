@@ -19,8 +19,11 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.geo.*;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisGeoCommands;
 import org.springframework.data.redis.core.Cursor;
 import org.springframework.data.redis.core.RedisConnectionUtils;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -47,6 +50,7 @@ public class RedisUtils {
      *
      * @param key  键
      * @param time 时间(秒)
+     * @return true成功，false失败
      */
     public boolean expire(String key, long time) {
         try {
@@ -66,6 +70,7 @@ public class RedisUtils {
      * @param key      键
      * @param time     时间(秒)
      * @param timeUnit 单位
+     * @return true成功，false失败
      */
     public boolean expire(String key, long time, TimeUnit timeUnit) {
         try {
@@ -206,8 +211,8 @@ public class RedisUtils {
     /**
      * 批量获取
      *
-     * @param keys
-     * @return
+     * @param keys keys
+     * @return list
      */
     public List<Object> multiGet(List<String> keys) {
         List list = redisTemplate.opsForValue().multiGet(Sets.newHashSet(keys));
@@ -407,7 +412,7 @@ public class RedisUtils {
      * @param key  键
      * @param item 项
      * @param by   要增加几(大于0)
-     * @return
+     * @return 新的值
      */
     public double hincr(String key, String item, double by) {
         return redisTemplate.opsForHash().increment(key, item, by);
@@ -419,7 +424,7 @@ public class RedisUtils {
      * @param key  键
      * @param item 项
      * @param by   要减少记(小于0)
-     * @return
+     * @return 新的值
      */
     public double hdecr(String key, String item, double by) {
         return redisTemplate.opsForHash().increment(key, item, -by);
@@ -431,7 +436,7 @@ public class RedisUtils {
      * 根据key获取Set中的所有值
      *
      * @param key 键
-     * @return
+     * @return Set<Object>
      */
     public Set<Object> sGet(String key) {
         try {
@@ -499,7 +504,7 @@ public class RedisUtils {
      * 获取set缓存的长度
      *
      * @param key 键
-     * @return
+     * @return 长度
      */
     public long sGetSetSize(String key) {
         try {
@@ -535,7 +540,7 @@ public class RedisUtils {
      * @param key   键
      * @param start 开始
      * @param end   结束 0 到 -1代表所有值
-     * @return
+     * @return List
      */
     public List<Object> lGet(String key, long start, long end) {
         try {
@@ -550,7 +555,7 @@ public class RedisUtils {
      * 获取list缓存的长度
      *
      * @param key 键
-     * @return
+     * @return 长度
      */
     public long lGetListSize(String key) {
         try {
@@ -566,7 +571,7 @@ public class RedisUtils {
      *
      * @param key   键
      * @param index 索引 index>=0时， 0 表头，1 第二个元素，依次类推；index<0时，-1，表尾，-2倒数第二个元素，依次类推
-     * @return
+     * @return 对象
      */
     public Object lGetIndex(String key, long index) {
         try {
@@ -600,7 +605,7 @@ public class RedisUtils {
      * @param key   键
      * @param value 值
      * @param time  时间(秒)
-     * @return
+     * @return true成功，false失败
      */
     public boolean lSet(String key, Object value, long time) {
         try {
@@ -620,7 +625,7 @@ public class RedisUtils {
      *
      * @param key   键
      * @param value 值
-     * @return
+     * @return true成功，false失败
      */
     public boolean lSet(String key, List<Object> value) {
         try {
@@ -638,7 +643,7 @@ public class RedisUtils {
      * @param key   键
      * @param value 值
      * @param time  时间(秒)
-     * @return
+     * @return true成功，false失败
      */
     public boolean lSet(String key, List<Object> value, long time) {
         try {
@@ -659,7 +664,7 @@ public class RedisUtils {
      * @param key   键
      * @param index 索引
      * @param value 值
-     * @return /
+     * @return true成功，false失败
      */
     public boolean lUpdateIndex(String key, long index, Object value) {
         try {
@@ -705,10 +710,150 @@ public class RedisUtils {
         log.debug("--------------------------------------------");
     }
 
-
-    public void geoAdd(){
-
-
+    /**
+     * 添加geo数据
+     * GEOADD key longitude latitude member [longitude latitude member …]
+     *
+     * @param key    key
+     * @param point  点位
+     * @param member member
+     * @return 影响条目数
+     * @see "http://redisdoc.com/geo/geoadd.html"
+     */
+    public Long geoAdd(String key, Point point, String member) {
+        return redisTemplate.opsForGeo().add(key, point, member);
     }
+
+    /**
+     * 添加geo数据
+     *
+     * @param key         key
+     * @param geoLocation geoLocation
+     * @return 影响条目数
+     */
+    public Long geoAdd(String key, RedisGeoCommands.GeoLocation<Object> geoLocation) {
+        return redisTemplate.opsForGeo().add(key, geoLocation);
+    }
+
+    /**
+     * 通过map添加geo数据
+     *
+     * @param key key
+     * @param map map
+     * @return 影响条目数
+     */
+    public Long geoAdd(String key, Map<Object, Point> map) {
+        return redisTemplate.opsForGeo().add(key, map);
+    }
+
+    /**
+     * list数组添加geo数据
+     *
+     * @param key      key
+     * @param iterable map
+     * @return 影响条目数
+     */
+    public Long geoAdd(String key, Iterable<RedisGeoCommands.GeoLocation<Object>> iterable) {
+        return redisTemplate.opsForGeo().add(key, iterable);
+    }
+
+    /**
+     * 从键里面返回所有给定位置元素的位置（经度和纬度）。
+     * GEOPOS key member [member …]
+     *
+     * @param key    key
+     * @param values 需要求距离的位置
+     * @return 数组
+     * @see "http://redisdoc.com/geo/geopos.html"
+     */
+    public List<Point> geoPosition(String key, Object... values) {
+        return redisTemplate.hasKey(key) ? redisTemplate.opsForGeo().position(key, values) : null;
+    }
+
+    /**
+     * 返回两个给定位置之间的距离
+     * GEODIST key member1 member2 [unit]
+     *
+     * @param key key
+     * @param o1  第一个值
+     * @param o2  第二个值
+     * @return 距离
+     * @see "http://redisdoc.com/geo/geodist.html"
+     */
+    public Distance geoDist(String key, String o1, String o2) {
+        return this.geoDist(key, o1, o2, Metrics.KILOMETERS);
+    }
+
+    /**
+     * 返回两个给定位置之间的距离
+     * GEODIST key member1 member2 [unit]
+     *
+     * @param key     key
+     * @param o1      第一个值
+     * @param o2      第二个值
+     * @param metrics 距离指标
+     * @return 距离
+     * @see "http://redisdoc.com/geo/geodist.html"
+     */
+    public Distance geoDist(String key, String o1, String o2, Metrics metrics) {
+        return redisTemplate.hasKey(key) ? redisTemplate.opsForGeo().distance(key, o1, o2, metrics) : null;
+    }
+
+
+    public GeoResults<RedisGeoCommands.GeoLocation<Object>> geoRadius(String key, Point point, double val, long limit, Sort.Direction sort) {
+        return this.geoRadius(key, point, val, limit, RedisGeoCommands.DistanceUnit.KILOMETERS, sort);
+    }
+
+    /**
+     * @param key          key
+     * @param point        创建的新点位
+     * @param val          距离
+     * @param limit        分页数量
+     * @param distanceUnit 距离计算单位
+     * @param sort         排序
+     * @return 结果
+     */
+    public GeoResults<RedisGeoCommands.GeoLocation<Object>> geoRadius(String key, Point point, double val, long limit,
+                                                                      RedisGeoCommands.DistanceUnit distanceUnit, Sort.Direction sort) {
+        Circle circle = new Circle(point, new Distance(val, distanceUnit));
+        RedisGeoCommands.GeoRadiusCommandArgs args = RedisGeoCommands
+                .GeoRadiusCommandArgs
+                .newGeoRadiusArgs()
+                .includeDistance()
+                .includeCoordinates()
+                .sortAscending()
+                .limit(limit);
+        return redisTemplate.opsForGeo().radius(key, circle, args);
+    }
+
+
+    public GeoResults<RedisGeoCommands.GeoLocation<Object>> geoRadiusBySet(String key, String member, double val, long limit) {
+        return this.geoRadiusBySet(key, member, new Distance(val, Metrics.KILOMETERS), limit);
+    }
+
+    public GeoResults<RedisGeoCommands.GeoLocation<Object>> geoRadiusBySet(String key, String member, double val, Metrics metrics, long limit) {
+        return this.geoRadiusBySet(key, member, new Distance(val, metrics), limit);
+    }
+
+    /**
+     * 在现有的集合里，选中一个member做为中心点搜索
+     *
+     * @param key      key
+     * @param member   中心点的key
+     * @param distance 距离长度
+     * @param limit    分页数量
+     * @return 结果
+     */
+    public GeoResults<RedisGeoCommands.GeoLocation<Object>> geoRadiusBySet(String key, String member, Distance distance, long limit) {
+        RedisGeoCommands.GeoRadiusCommandArgs args = RedisGeoCommands
+                .GeoRadiusCommandArgs
+                .newGeoRadiusArgs()
+                .includeDistance()
+                .includeCoordinates()
+                .sortAscending()
+                .limit(limit);
+        return redisTemplate.opsForGeo().radius(key, member, distance, args);
+    }
+
 
 }
