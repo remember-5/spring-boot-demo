@@ -824,7 +824,7 @@ public class RedisUtils {
     }
 
     public GeoResults<RedisGeoCommands.GeoLocation<Object>> geoRadius(String key, Point point, double val) {
-        return this.geoRadius(key, point, val, 10L, RedisGeoCommands.DistanceUnit.KILOMETERS, Sort.Direction.ASC);
+        return this.geoRadius(key, point, val, 0, RedisGeoCommands.DistanceUnit.KILOMETERS, Sort.Direction.ASC);
     }
 
     public GeoResults<RedisGeoCommands.GeoLocation<Object>> geoRadius(String key, Point point, double val, long limit) {
@@ -851,8 +851,7 @@ public class RedisUtils {
                 .GeoRadiusCommandArgs
                 .newGeoRadiusArgs()
                 .includeDistance()
-                .includeCoordinates()
-                .limit(limit);
+                .includeCoordinates();
 
         if (Sort.Direction.ASC.equals(sort)) {
             args.sortAscending();
@@ -860,11 +859,15 @@ public class RedisUtils {
             args.sortDescending();
         }
 
+        if (limit > 0) {
+            args.limit(limit);
+        }
+
         return redisTemplate.opsForGeo().radius(key, circle, args);
     }
 
     public GeoResults<RedisGeoCommands.GeoLocation<Object>> geoRadiusBySet(String key, String member, double val) {
-        return this.geoRadiusBySet(key, member, new Distance(val, Metrics.KILOMETERS), 10, Sort.Direction.ASC);
+        return this.geoRadiusBySet(key, member, new Distance(val, Metrics.KILOMETERS), 0, Sort.Direction.ASC);
     }
 
     public GeoResults<RedisGeoCommands.GeoLocation<Object>> geoRadiusBySet(String key, String member, double val, long limit) {
@@ -894,13 +897,16 @@ public class RedisUtils {
                 .GeoRadiusCommandArgs
                 .newGeoRadiusArgs()
                 .includeDistance()
-                .includeCoordinates()
-                .limit(limit);
+                .includeCoordinates();
 
         if (Sort.Direction.ASC.equals(sort)) {
             args.sortAscending();
         } else {
             args.sortDescending();
+        }
+
+        if (limit > 0) {
+            args.limit(limit);
         }
         return redisTemplate.opsForGeo().radius(key, member, distance, args);
     }
