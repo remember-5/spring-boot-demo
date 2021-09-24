@@ -628,7 +628,7 @@ public class RedisUtils {
      * @param value 值
      * @return true成功，false失败
      */
-    public boolean lSet(String key, List<Object> value) {
+    public boolean lSetList(String key, List<Object> value) {
         try {
             redisTemplate.opsForList().rightPushAll(key, value);
             return true;
@@ -757,6 +757,29 @@ public class RedisUtils {
     public Long geoAdd(String key, Iterable<RedisGeoCommands.GeoLocation<Object>> iterable) {
         return redisTemplate.opsForGeo().add(key, iterable);
     }
+
+    /**
+     * 删除geo set中的数据
+     *
+     * @param key key
+     * @param val members
+     * @return 影响条目数
+     */
+    public Long geoRemove(String key, Object... val) {
+        return redisTemplate.opsForGeo().remove(key, val);
+    }
+
+    /**
+     * 获取members的hash值
+     *
+     * @param key key
+     * @param val members
+     * @return /
+     */
+    public List<String> geoHash(String key, Object... val) {
+        return redisTemplate.opsForGeo().hash(key, val);
+    }
+
 
     /**
      * 从键里面返回所有给定位置元素的位置（经度和纬度）。
