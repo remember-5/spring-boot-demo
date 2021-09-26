@@ -10,7 +10,7 @@
     <packaging>pom</packaging>
 
     <name>spring-boot-demo</name>
-    <url>http://blog.remember5.top</url>
+    <url>https://blog.remember5.top</url>
 
     <modules>
         <module>demo-admin</module>
