@@ -911,5 +911,13 @@ public class RedisUtils {
         return redisTemplate.opsForGeo().radius(key, member, distance, args);
     }
 
+    /**
+     * 查询前缀为xx所有key值
+     *
+     * @return
+     */
+    public Set<Object> getKeys(String key) {
+        return redisTemplate.keys(key);
+    }
 
 }
