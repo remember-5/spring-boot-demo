@@ -39,17 +39,27 @@ class SpringBootDemoRedisApplicationTests {
     @Test
     public void lockTest() throws InterruptedException {
         String key = "ORDER1";
-        redisUtils.set(key,1);
-        for (int i = 0; i < 10; i++) {
+        redisUtils.set(key, 2);
+        for (int i = 0; i < 20; i++) {
             new Thread(() -> {
-                redisLockService.lock(key);
                 try {
-                    Thread.sleep(3000L);
-                } catch (InterruptedException e) {
+                    redisLockService.lock(key);
+                    int a = Integer.parseInt(redisUtils.get(key).toString());
+                    if (a > 0) {
+                        --a;
+                        System.err.println("抢到了，当前剩下" + a);
+                        redisUtils.set(key, a);
+                    } else {
+                        System.err.println("没抢到");
+                    }
+//                    Thread.sleep(3000L);
+                } catch (Exception e) {
                     e.printStackTrace();
+                } finally {
+                    redisLockService.unlock(key);
                 }
                 System.out.println(DateUtil.now());
-                redisLockService.unlock(key);
+
             }
             ).start();
         }
