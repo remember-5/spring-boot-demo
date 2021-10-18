@@ -47,7 +47,7 @@ public class RedisConfig {
      * @param redisConnectionFactory factory
      * @return /
      */
-    @Bean(name="redisLockRegistry")
+    @Bean(name = "redisLockRegistry")
     public RedisLockRegistry redisLockRegistry(RedisConnectionFactory redisConnectionFactory) {
         return new RedisLockRegistry(redisConnectionFactory, "lock");
     }

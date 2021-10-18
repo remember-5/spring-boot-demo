@@ -9,13 +9,13 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/spring_boot_demo?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&useSSL=false
     username: root
     password: root
-#  data:
-#    elasticsearch: # es6.x springboot 2.2.x使用这个配置
-#      cluster-name: node-1
-#      cluster-nodes: 192.168.161.196:9300
+  #  data:
+  #    elasticsearch: # es6.x springboot 2.2.x使用这个配置
+  #      cluster-name: node-1
+  #      cluster-nodes: 192.168.161.196:9300
   elasticsearch:
     rest:
-      uris: ["http://192.168.161.196:9200"]
+      uris: [ "http://192.168.161.196:9200" ]
 
 
 

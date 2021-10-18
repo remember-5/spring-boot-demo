@@ -27,7 +27,7 @@ public class CallbackController {
 
 
     @GetMapping("callback")
-    public OAuth2AccessToken login(@RequestParam("code") String code){
+    public OAuth2AccessToken login(@RequestParam("code") String code) {
         // 创建 AuthorizationCodeResourceDetails 对象
         AuthorizationCodeResourceDetails resourceDetails = new AuthorizationCodeResourceDetails();
         resourceDetails.setAccessTokenUri(accessTokenUri);
@@ -42,12 +42,7 @@ public class CallbackController {
         return restTemplate.getAccessToken();
 
 
-
-
     }
-
-
-
 
 
 }

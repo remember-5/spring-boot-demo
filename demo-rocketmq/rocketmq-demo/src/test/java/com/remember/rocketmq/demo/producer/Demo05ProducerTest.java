@@ -23,7 +23,6 @@ public class Demo05ProducerTest {
     private Demo05Producer producer;
 
 
-
     @Test
     public void test() throws InterruptedException {
         // 阻塞等待，保证消费

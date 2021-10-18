@@ -48,32 +48,10 @@
         <skipTests>true</skipTests>
 
         <spring.boot.version>2.3.6.RELEASE</spring.boot.version>
-        <hutool.version>5.5.1</hutool.version>
-        <guava.version>30.0-jre</guava.version>
-        <user.agent.version>1.20</user.agent.version>
-        <fastjson.version>1.2.73</fastjson.version>
-        <lombok.version>1.18.12</lombok.version>
     </properties>
 
     <dependencies>
-        <!-- hutool工具类 -->
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
-            <version>${hutool.version}</version>
-        </dependency>
-        <!-- guava工具类 -->
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>${guava.version}</version>
-        </dependency>
-        <!-- fastjson -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>${fastjson.version}</version>
-        </dependency>
+
     </dependencies>
 
 
@@ -99,12 +77,6 @@
                 <version>${spring.boot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
-            <!-- 解析 UserAgent 信息 -->
-            <dependency>
-                <groupId>eu.bitwalker</groupId>
-                <artifactId>UserAgentUtils</artifactId>
-                <version>${user.agent.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

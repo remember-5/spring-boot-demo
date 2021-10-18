@@ -6,6 +6,7 @@ import com.github.davidfantasy.mybatisplus.generatorui.mbp.NameConverter;
 
 /**
  * 代码生成测试
+ *
  * @autho wangjiahao
  * @date 2020/10/28
  */
@@ -29,6 +30,7 @@ public class GeneratorTest {
                     public String serviceNameConvert(String tableName) {
                         return this.entityNameConvert(tableName) + "Service";
                     }
+
                     /**
                      * 自定义Controller类文件的名称规则
                      */
@@ -44,7 +46,6 @@ public class GeneratorTest {
 
 
     }
-
 
 
 }

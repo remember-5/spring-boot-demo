@@ -33,12 +33,12 @@ public class RECT {
         this.height = height;
     }
 
-    public long Area(){
+    public long Area() {
         return this.height * this.width;
     }
 
     public static void main(String[] args) {
-        RECT rect = new RECT(10,20);
+        RECT rect = new RECT(10, 20);
         long area = rect.Area();
         System.err.println(area);
     }

@@ -26,4 +26,12 @@
         <module>resource-server-sso</module>
     </modules>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.remember</groupId>
+            <artifactId>demo-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
 </project>

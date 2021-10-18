@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * Postgres基本操作
+ *
  * @author wangjiahao
  */
 @SpringBootApplication

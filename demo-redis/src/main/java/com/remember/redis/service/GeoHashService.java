@@ -18,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GeoHashService {
 
-//    private final RedisUtils redisUtils;
+    //    private final RedisUtils redisUtils;
     private final RedisTemplate<Object, Object> redisTemplate;
 
     private final static String KEY = "home:geo";

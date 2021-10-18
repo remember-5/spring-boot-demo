@@ -92,34 +92,32 @@ public class HospitalRepositoryTest extends ElasticSearchDemoApplicationTests {
     }
 
 
-
     @Test
-    public void query(){
+    public void query() {
         // 查询所有，按照id排序
         for (Hospital id : repository.findAll(Sort.by(Sort.Direction.DESC, "id"))) {
-            log.info("查询所有，按照id排序 {}",id);
+            log.info("查询所有，按照id排序 {}", id);
         }
 
         // 模糊匹配
         for (Hospital search : repository.search(QueryBuilders.wildcardQuery("name", String.format("*%s*", "服务中心")))) {
-            log.info("模糊匹配 {}",search);
+            log.info("模糊匹配 {}", search);
         }
 
         // 分词1
         for (Hospital search : repository.search(QueryBuilders.prefixQuery("name", "服务中心"))) {
-            log.info("分词1 {}",search);
+            log.info("分词1 {}", search);
         }
 
 //        log.error("-----");
 
         // 分词
         for (Hospital search : repository.search(QueryBuilders.prefixQuery("name", "街道"))) {
-            log.info("分词2 {}",search);
+            log.info("分词2 {}", search);
         }
 
 
     }
-
 
 
 }

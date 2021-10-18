@@ -14,6 +14,7 @@ import java.util.Collection;
 
 /**
  * 批量发送
+ *
  * @author wangjihao
  * @date 2020/12/2
  */

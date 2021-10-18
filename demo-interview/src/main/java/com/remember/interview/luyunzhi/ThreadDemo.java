@@ -12,7 +12,7 @@ public class ThreadDemo {
 
 }
 
-class ThreadA implements Runnable{
+class ThreadA implements Runnable {
 
     @Override
     public void run() {
@@ -21,7 +21,7 @@ class ThreadA implements Runnable{
     }
 }
 
-class ThreadB implements Runnable{
+class ThreadB implements Runnable {
 
     @Override
     public void run() {

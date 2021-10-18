@@ -2,9 +2,9 @@ spring:
   application:
     name: spring-boot-demo-jedis
   redis:
-#    sentinel:
-#      master: #master节点
-#      nodes: # 地址
+    #    sentinel:
+    #      master: #master节点
+    #      nodes: # 地址
     host:
     port: 6379
     password:

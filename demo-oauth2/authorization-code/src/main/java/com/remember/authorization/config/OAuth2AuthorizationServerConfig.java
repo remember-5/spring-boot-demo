@@ -40,7 +40,7 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
                 .withClient("clientapp").secret("112233") // <4.2> Client 账号、密码。
                 .authorizedGrantTypes("authorization_code") // <4.2> 授权码模式
                 .redirectUris("http://127.0.0.1:9091/callback") // 配置会掉地址
-                .scopes("read_userinfo","read_contacts") // 可授权的scope
+                .scopes("read_userinfo", "read_contacts") // 可授权的scope
         ;
     }
 

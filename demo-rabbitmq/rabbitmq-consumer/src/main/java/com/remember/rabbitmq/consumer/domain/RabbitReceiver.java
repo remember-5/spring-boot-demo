@@ -26,6 +26,7 @@ public class RabbitReceiver {
     /**
      * 1.@Argument(name = "x-message-ttl",value = "3000") 绑定业务队列的时候，增加消息的过期时长，当消息过期后，消息将被转发到死信队列中。
      * 2.@Argument(name = "x-max-length",value = "3") 设置消息队列长度，当队列中的消息达到最大长度后，继续发送消息，消息将被转发到死信队列中
+     *
      * @param message
      * @param channel
      * @throws Exception
@@ -98,7 +99,6 @@ public class RabbitReceiver {
 
 
     /**
-     *
      * @param message
      * @param channel
      * @param headers
