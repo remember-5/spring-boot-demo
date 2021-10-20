@@ -6,12 +6,14 @@ import io.minio.errors.InvalidPortException;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author wangjiahao
  * @date 2020/5/31
  */
 @Data
+@Configuration
 @ConfigurationProperties(prefix = "spring.minio")
 public class MinIOConfig {
 

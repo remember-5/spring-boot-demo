@@ -3,7 +3,7 @@ package com.remember.elasticsearch.template;
 import com.remember.elasticsearch.ElasticSearchDemoApplicationTests;
 import com.remember.elasticsearch.entity.AssociateWord;
 import com.remember.elasticsearch.repository.AssociateWordRepository;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 

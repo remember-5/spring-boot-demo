@@ -2,7 +2,7 @@ package com.remember.postgresql.service;
 
 
 import com.remember.postgresql.SpringBootDemoPostgresqlApplicationTests;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 public class PersonServiceTest extends SpringBootDemoPostgresqlApplicationTests {
 

@@ -4,7 +4,7 @@ import com.remember.elasticsearch.ElasticSearchDemoApplicationTests;
 import com.remember.elasticsearch.entity.CustomerComplain;
 import com.remember.elasticsearch.service.CustomerComplainService;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;

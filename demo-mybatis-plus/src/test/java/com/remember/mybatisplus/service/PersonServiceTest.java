@@ -3,7 +3,7 @@ package com.remember.mybatisplus.service;
 
 import com.remember.mybatisplus.MybatisPlusDemoApplicationTests;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Slf4j

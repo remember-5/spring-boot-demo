@@ -4,7 +4,7 @@ import cn.hutool.core.date.DateUtil;
 import com.remember.redis.entity.User;
 import com.remember.redis.service.RedisLockService;
 import com.remember.redis.utils.RedisUtils;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;

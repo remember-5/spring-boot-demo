@@ -3,7 +3,7 @@ package com.remember.sentinel.service.impl;
 import com.remember.sentinel.SentinelApplicationTests;
 import com.remember.sentinel.entity.UserAddDTO;
 import com.remember.sentinel.service.UserService;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class UserServiceImplTest extends SentinelApplicationTests {

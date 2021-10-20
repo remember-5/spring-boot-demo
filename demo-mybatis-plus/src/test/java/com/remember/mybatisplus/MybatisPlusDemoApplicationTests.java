@@ -3,7 +3,7 @@ package com.remember.mybatisplus;
 import com.remember.mybatisplus.entity.HotWireKbTest;
 import com.remember.mybatisplus.service.HotWireKbService;
 import com.remember.mybatisplus.service.HotWireKbServiceTest;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
