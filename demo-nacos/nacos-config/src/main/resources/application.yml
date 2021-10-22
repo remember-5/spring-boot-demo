@@ -1,0 +1,31 @@
+server:
+  port: 9190
+
+spring:
+  application:
+    name: nacos-config # 服务名称
+
+# Nacos帮助文档: https://nacos.io/zh-cn/docs/concepts.html
+# Nacos认证信息
+nacos:
+  # Nacos 配置中心的配置项，对应 NacosConfigProperties 配置类
+  config:
+    # 设置配置中心服务端地址
+    server-addr: 127.0.0.1:8848
+    # 用户名账号
+    username: nacos
+    # 用户名密码
+    password: nacos
+    bootstrap:
+      enable: true # 是否开启 Nacos 配置预加载功能。默认为 false。
+      log-enable: true # 是否开启 Nacos 支持日志级别的加载时机。默认为 false。
+    # Nacos 配置中心的namespace。需要注意，如果使用 public 的 namcespace ，请不要填写这个值，直接留空即可
+    ## 使用的 Nacos 的命名空间，默认为 null。
+    namespace:
+    # 使用的 Nacos 配置集的 dataId。
+    data-id: nacos-config-dev
+    # 使用的 Nacos 配置分组，默认为 DEFAULT_GROUP。
+    group: DEFAULT_GROUP
+    # 使用的 Nacos 配置集的配置格式。默认为 PROPERTIES。
+    type: YAML
+

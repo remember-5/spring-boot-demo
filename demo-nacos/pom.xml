@@ -21,7 +21,9 @@
     </properties>
 
     <modules>
-        <module>config</module>
+        <module>nacos-config</module>
+        <module>nacos-dubbo-provide</module>
+        <module>nacos-dubbo-consumer</module>
     </modules>
 
     <dependencyManagement>
