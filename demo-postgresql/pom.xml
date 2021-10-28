@@ -5,11 +5,11 @@
     <parent>
         <groupId>com.remember</groupId>
         <artifactId>spring-boot-demo</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.0</version>
     </parent>
 
     <artifactId>demo-postgresql</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>spring-boot-demo-postgresql</name>
     <description>Demo project for Spring Boot</description>
 
@@ -24,7 +24,7 @@
         <dependency>
             <groupId>com.remember</groupId>
             <artifactId>demo-common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.0.1</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

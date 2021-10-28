@@ -5,11 +5,11 @@
     <parent>
         <artifactId>demo-nacos</artifactId>
         <groupId>com.remember</groupId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.0</version>
     </parent>
 
     <artifactId>config</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>nacos-config</name>
     <description>Demo project for Spring Boot</description>
 
@@ -23,7 +23,7 @@
         <dependency>
             <groupId>com.remember</groupId>
             <artifactId>demo-common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.0.1</version>
         </dependency>
 
         <dependency>

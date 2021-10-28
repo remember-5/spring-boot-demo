@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.remember</groupId>
     <artifactId>demo-websocket</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>demo-websocket</name>
     <description>demo-websocket</description>
 
@@ -20,7 +20,7 @@
         <dependency>
             <groupId>com.remember</groupId>
             <artifactId>demo-common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.0.1</version>
         </dependency>
 
         <dependency>
