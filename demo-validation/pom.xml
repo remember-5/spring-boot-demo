@@ -11,7 +11,7 @@
 
     <artifactId>demo-validation</artifactId>
     <version>0.0.1</version>
-    <name>spring-boot-demo-validation</name>
+    <name>demo-validation</name>
     <description>数据校验</description>
 
     <properties>

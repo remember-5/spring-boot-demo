@@ -10,7 +10,7 @@
 
     <artifactId>demo-mybatis-plus</artifactId>
     <version>1.0.0</version>
-    <name>spring-boot-demo-mybatis-plus</name>
+    <name>demo-mybatis-plus</name>
     <description>spring-boot-demo-mybatis-plus</description>
     <packaging>jar</packaging>
 

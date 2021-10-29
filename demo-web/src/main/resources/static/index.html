@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title v-model="title"></title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta content="width=device-width,initial-scale=1,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="format-detection" content="telephone=no,address=no">
+    <meta name="apple-mobile-web-app-status-bar-style" content="white">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vant@2.12/lib/index.css"/>
+</head>
+
+<script>
+    !function (x) {
+        function w() {
+            var v, u, t, tes, s = x.document, r = s.documentElement, a = r.getBoundingClientRect().width;
+            if (!v && !u) {
+                var n = !!x.navigator.appVersion.match(/AppleWebKit.*Mobile.*/);
+                v = x.devicePixelRatio;
+                tes = x.devicePixelRatio;
+                v = n ? v : 1, u = 1 / v
+            }
+            if (a >= 640) {
+                r.style.fontSize = "40px"
+            } else {
+                if (a <= 320) {
+                    r.style.fontSize = "20px"
+                } else {
+                    r.style.fontSize = a / 320 * 20 + "px"
+                }
+            }
+        }
+
+        x.addEventListener("resize", function () {
+            w()
+        });
+        w()
+    }(window);
+</script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6/dist/vue.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vant@2.12/lib/vant.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<body>
+
+<!--15 18-->
+<div id="app">
+    <van-cell-group>
+        <van-cell>
+            <van-field
+                    label-width="7em"
+                    v-model="content"
+                    rows="4"
+                    autosize
+                    label="请输入分享地址"
+                    type="textarea"
+                    placeholder="请输入分享地址"
+            />
+        </van-cell>
+
+        <van-cell>
+            是否下载到服务器
+            <van-switch v-model="checked"/>
+        </van-cell>
+
+        <van-cell v-show="checked">
+            <van-field
+                    v-model="fileName"
+                    rows="2"
+                    autosize
+                    label="请输入文件名"
+                    type="textarea"
+                    placeholder="请输入文件名"
+            />
+        </van-cell>
+
+        <van-cell>
+            <van-field
+                    v-model="downloadUrl"
+                    rows="4"
+                    autosize
+                    label="下载地址"
+                    type="textarea"
+                    placeholder="下载地址"
+            />
+        </van-cell>
+        <van-cell>
+            <van-button type="primary" @click="onSubmit" :loading="loading">获取地址</van-button>
+        </van-cell>
+    </van-cell-group>
+
+</div>
+
+</body>
+
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            content: '',
+            downloadUrl: '',
+            checked: false,
+            fileName: '',
+            loading: false
+        },
+        created() {
+        },
+        methods: {
+            onSubmit() {
+                this.downloadUrl = ''
+                this.loading = true
+                // 为给定 ID 的 user 创建请求
+                let that = this
+                // axios.post(`http://home.remember5.com/my/tiktok`, {
+                axios.post(`http://127.0.0.1:8902/tiktok`, {
+                    shareContent: this.content,
+                    saveEnable: this.checked,
+                    fileName: this.fileName
+                }).then(function (response) {
+                    that.loading = false
+                    if (response.status === 200) {
+                        if (response.data.code == 200) {
+                            if (that.checked) {
+                                that.$toast('下载成功')
+                            }
+                            that.downloadUrl = response.data.data
+                        } else {
+                            that.$toast(response.data.message)
+                        }
+
+
+                    } else {
+                        that.$toast('请求异常！')
+                    }
+
+                })
+                    .catch(function (error) {
+                        console.log(error);
+                        that.$toast('获取失败')
+                    });
+            }
+        }
+    })
+</script>
+</html>

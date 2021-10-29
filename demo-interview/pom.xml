@@ -11,7 +11,7 @@
     <groupId>com.remember.interview</groupId>
     <artifactId>demo-interview</artifactId>
     <version>0.0.1</version>
-    <name>spring-boot-demo-interview</name>
+    <name>demo-interview</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>

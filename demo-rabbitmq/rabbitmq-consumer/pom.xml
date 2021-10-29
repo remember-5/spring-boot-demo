@@ -10,7 +10,7 @@
 
     <artifactId>rabbitmq-consumer</artifactId>
     <version>0.0.1</version>
-    <name>spring-boot-demo-rabbitmq-consumer</name>
+    <name>demo-rabbitmq-consumer</name>
     <description>rabbitmq练习</description>
 
     <properties>

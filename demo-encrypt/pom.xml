@@ -11,7 +11,7 @@
 
     <artifactId>demo-encrypt</artifactId>
     <version>0.0.1</version>
-    <name>spring-boot-demo-encrypt</name>
+    <name>demo-encrypt</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>

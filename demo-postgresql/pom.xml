@@ -10,7 +10,7 @@
 
     <artifactId>demo-postgresql</artifactId>
     <version>0.0.1</version>
-    <name>spring-boot-demo-postgresql</name>
+    <name>demo-postgresql</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>

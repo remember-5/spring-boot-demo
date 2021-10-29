@@ -10,7 +10,7 @@
     <groupId>com.remember</groupId>
     <artifactId>demo-jwt</artifactId>
     <version>1.0.0</version>
-    <name>spring-boot-demo-jwt</name>
+    <name>demo-jwt</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>

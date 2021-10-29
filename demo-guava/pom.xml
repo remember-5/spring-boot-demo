@@ -9,7 +9,7 @@
     </parent>
     <artifactId>demo-guava</artifactId>
     <version>0.0.1</version>
-    <name>spring-boot-demo-guava</name>
+    <name>demo-guava</name>
     <description>guava缓存和集合的使用</description>
 
     <properties>

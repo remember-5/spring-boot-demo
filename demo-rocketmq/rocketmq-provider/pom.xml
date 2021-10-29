@@ -10,7 +10,7 @@
 
     <artifactId>rocketmq-provider</artifactId>
     <version>0.0.1</version>
-    <name>spring-boot-demo-rocketmq</name>
+    <name>demo-rocketmq</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>

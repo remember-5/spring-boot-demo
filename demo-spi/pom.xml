@@ -11,7 +11,7 @@
 
     <artifactId>demo-spi</artifactId>
     <version>0.0.1</version>
-    <name>spring-boot-demo-spi</name>
+    <name>demo-spi</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>

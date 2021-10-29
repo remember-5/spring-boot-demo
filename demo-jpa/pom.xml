@@ -11,7 +11,7 @@
 
     <artifactId>demo-jpa</artifactId>
     <version>0.0.1</version>
-    <name>spring-boot-demo-jpa</name>
+    <name>demo-jpa</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>

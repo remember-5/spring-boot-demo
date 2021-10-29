@@ -11,7 +11,7 @@
 
     <artifactId>rabbitmq-provider</artifactId>
     <version>0.0.1</version>
-    <name>spring-boot-demo-rabbitmq-provider</name>
+    <name>demo-rabbitmq-provider</name>
     <description>rabbitmq演示</description>
 
     <properties>

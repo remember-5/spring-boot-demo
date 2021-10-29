@@ -12,7 +12,7 @@
 
     <artifactId>demo-swagger</artifactId>
     <version>0.0.1</version>
-    <name>spring-boot-demo-swagger</name>
+    <name>demo-swagger</name>
     <description>整合swagger</description>
 
     <properties>
