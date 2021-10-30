@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title v-model="title"></title>
+    <title title="无水印下载"></title>
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
     <meta content="width=device-width,initial-scale=1,user-scalable=no" name="viewport">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -43,53 +43,72 @@
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6/dist/vue.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vant@2.12/lib/vant.min.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/vue-clipboard2/0.3.1/vue-clipboard.js"></script>
+
 <body>
 
 <!--15 18-->
 <div id="app">
-    <van-cell-group>
-        <van-cell>
-            <van-field
-                    label-width="7em"
-                    v-model="content"
-                    rows="4"
-                    autosize
-                    label="请输入分享地址"
-                    type="textarea"
-                    placeholder="请输入分享地址"
-            />
-        </van-cell>
 
-        <van-cell>
-            是否下载到服务器
-            <van-switch v-model="checked"/>
-        </van-cell>
+    <div>
+        <van-cell-group title="请输入分享地址">
+            <van-cell>
+                <van-field
+                        label-width="7em"
+                        v-model="content"
+                        rows="4"
+                        autosize
+                        type="textarea"
+                        placeholder="请输入分享地址"
+                />
+            </van-cell>
+        </van-cell-group>
 
-        <van-cell v-show="checked">
-            <van-field
-                    v-model="fileName"
-                    rows="2"
-                    autosize
-                    label="请输入文件名"
-                    type="textarea"
-                    placeholder="请输入文件名"
-            />
-        </van-cell>
 
-        <van-cell>
-            <van-field
-                    v-model="downloadUrl"
-                    rows="4"
-                    autosize
-                    label="下载地址"
-                    type="textarea"
-                    placeholder="下载地址"
-            />
-        </van-cell>
-        <van-cell>
-            <van-button type="primary" @click="onSubmit" :loading="loading">获取地址</van-button>
-        </van-cell>
-    </van-cell-group>
+        <van-cell-group>
+            <van-cell title="是否下载到服务器">
+                <!-- 使用 right-icon 插槽来自定义右侧图标 -->
+                <template #right-icon>
+                    <van-switch v-model="checked" size="25px"/>
+                </template>
+            </van-cell>
+        </van-cell-group>
+
+        <div v-show="checked">
+            <van-cell-group title="请输入文件名">
+                <van-cell>
+                    <van-field
+                            v-model="fileName"
+                            rows="2"
+                            autosize
+                            type="textarea"
+                            placeholder="请输入文件名"
+                    />
+                </van-cell>
+            </van-cell-group>
+        </div>
+        <van-cell-group title="下载地址">
+            <van-cell>
+                <van-field
+                        v-model="downloadUrl"
+                        rows="4"
+                        autosize
+                        type="textarea"
+                        placeholder="下载地址"
+                />
+            </van-cell>
+        </van-cell-group>
+
+        <van-cell-group>
+            <van-cell>
+                <van-button type="primary" @click="onSubmit" :loading="loading">获取地址</van-button>
+                <van-button @click="onReset">重置</van-button>
+                <van-button @click="doCopy">复制连接</van-button>
+            </van-cell>
+        </van-cell-group>
+
+    </div>
+
 
 </div>
 
@@ -99,47 +118,59 @@
     var app = new Vue({
         el: '#app',
         data: {
-            content: '',
-            downloadUrl: '',
-            checked: false,
-            fileName: '',
-            loading: false
+            content: '', // 分享内容
+            downloadUrl: '', // 下载地址
+            checked: false, // 是否选中下载到服务器
+            fileName: '', // 文件名称
+            loading: false // 请求中的loading
         },
         created() {
         },
         methods: {
+            doCopy() {
+                this.$copyText(this.downloadUrl).then((e) => {
+                    this.$toast("复制成功")
+                })
+            },
+            onReset() {
+                this.content = ''
+                this.downloadUrl = ''
+                this.checked = false
+                this.fileName = ''
+                this.loading = false
+            },
             onSubmit() {
+                if (!this.content) {
+                    this.$toast("请先输入分享地址")
+                    return
+                }
                 this.downloadUrl = ''
                 this.loading = true
                 // 为给定 ID 的 user 创建请求
-                let that = this
-                // axios.post(`http://home.remember5.com/my/tiktok`, {
-                axios.post(`http://127.0.0.1:8902/tiktok`, {
+                axios.post(`https://home.remember5.com/my/tiktok`, {
+                    // axios.post(`http://127.0.0.1:8902/tiktok`, {
                     shareContent: this.content,
                     saveEnable: this.checked,
                     fileName: this.fileName
-                }).then(function (response) {
-                    that.loading = false
+                }).then((response) => {
+                    this.loading = false
                     if (response.status === 200) {
                         if (response.data.code == 200) {
-                            if (that.checked) {
-                                that.$toast('下载成功')
+                            this.downloadUrl = response.data.data
+                            if (this.checked) {
+                                this.$toast('下载成功')
+                                return
                             }
-                            that.downloadUrl = response.data.data
-                        } else {
-                            that.$toast(response.data.message)
+                            this.$toast('获取成功')
+                            return
                         }
-
-
-                    } else {
-                        that.$toast('请求异常！')
+                        this.$toast(response.data.message)
+                        return
                     }
-
-                })
-                    .catch(function (error) {
-                        console.log(error);
-                        that.$toast('获取失败')
-                    });
+                    this.$toast('请求异常！')
+                }).catch(function (error) {
+                    this.$toast('获取失败')
+                });
             }
         }
     })
