@@ -15,12 +15,15 @@ import java.util.concurrent.locks.Lock;
  */
 @Slf4j
 @Component
-@RequiredArgsConstructor
 public class RedisLockService {
 
-    private static final long DEFAULT_EXPIRE_UNUSED = 60000L;
+    public static final long DEFAULT_EXPIRE_UNUSED = 60000L;
 
     private final RedisLockRegistry redisLockRegistry;
+
+    public RedisLockService(RedisLockRegistry redisLockRegistry) {
+        this.redisLockRegistry = redisLockRegistry;
+    }
 
     public void lock(String lockKey) {
         Lock lock = obtainLock(lockKey);
@@ -47,7 +50,7 @@ public class RedisLockService {
             lock.unlock();
             redisLockRegistry.expireUnusedOlderThan(DEFAULT_EXPIRE_UNUSED);
         } catch (Exception e) {
-            log.error("分布式锁 [{}] 释放异常", lockKey, e);
+//            log.error("分布式锁 {} 释放异常, {}", lockKey, e);
         }
     }
 

@@ -1,10 +1,9 @@
 package com.remember.redis;
 
 import cn.hutool.core.date.DateUtil;
-import com.remember.redis.entity.User;
 import com.remember.redis.service.RedisLockService;
 import com.remember.redis.utils.RedisUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
@@ -19,13 +18,16 @@ class SpringBootDemoRedisApplicationTests {
     RedisLockService redisLockService;
 
 
-    @Test
-    void contextLoads() {
-        for (int i = 0; i < 100; i++) {
-            User user = new User("wangjiahao" + i, i, "上海浦东" + i);
-            System.err.println(redisUtils.set("USER:ADMIN:" + i, user));
-        }
-    }
+//    @Test
+//    void contextLoads() {
+//        for (int i = 0; i < 100; i++) {
+//            User user = new User();
+//            user.setAddress("上海浦东" + i);
+//            user.setAge(i);
+//            user.setName("wangjiahao"+String.valueOf(i));
+//            System.err.println(redisUtils.set("USER:ADMIN:" + i, user));
+//        }
+//    }
 
     @Test
     void getKeys() {
