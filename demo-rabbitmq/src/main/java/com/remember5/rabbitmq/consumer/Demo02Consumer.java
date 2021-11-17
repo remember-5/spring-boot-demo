@@ -1,13 +1,9 @@
 package com.remember5.rabbitmq.consumer;
 
-import com.rabbitmq.client.Channel;
-import com.remember5.rabbitmq.message.Demo1Message;
-import com.remember5.rabbitmq.message.Demo2Message;
+import com.remember5.rabbitmq.message.Demo02Message;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.ExchangeTypes;
 import org.springframework.amqp.rabbit.annotation.*;
-import org.springframework.amqp.support.AmqpHeaders;
-import org.springframework.messaging.Message;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -28,13 +24,13 @@ import java.io.IOException;
 @RabbitListener(
         bindings = @QueueBinding(
                 // type: exchange 类型，
-                exchange = @Exchange(value = Demo2Message.EXCHENGE, type = ExchangeTypes.TOPIC, durable = "true"),
+                exchange = @Exchange(value = Demo02Message.EXCHANGE, type = ExchangeTypes.TOPIC, durable = "true"),
                 // durable: 是否持久化  exclusive: 是否排它  autoDelete: 是否自动删除
-                value = @Queue(value = Demo2Message.QUEUE, durable = "true", exclusive = "false", autoDelete = "false"),
-                key = Demo2Message.ROUTING_KEY
+                value = @Queue(value = Demo02Message.QUEUE, durable = "true", exclusive = "false", autoDelete = "false"),
+                key = Demo02Message.ROUTING_KEY
         )
 )
-public class Demo2Consumer {
+public class Demo02Consumer {
 
 
     /**
@@ -43,7 +39,7 @@ public class Demo2Consumer {
      * @param message 具体的消息
      */
     @RabbitHandler
-    public void onDeadMessage(Demo2Message message) throws IOException {
+    public void onDeadMessage(Demo02Message message) throws IOException {
         log.info("[onMessage][线程编号:{} 消息内容：{}]", Thread.currentThread().getId(), message);
     }
 }

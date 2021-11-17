@@ -15,17 +15,20 @@ import java.util.concurrent.CountDownLatch;
  */
 @Slf4j
 @SpringBootTest
-public class Send3Test implements Serializable {
+public class Send01Test implements Serializable {
 
     @Resource
-    private Demo3Provider demo3Privider;
+    private Demo01Provider demo1Privider;
 
     private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 
     @Test
     void test() throws InterruptedException {
         for (int i = 0; i < 10; i++) {
-            demo3Privider.send("【send】 Hello RabbitMQ For Spring Boot! " + i);
+            // 创建 Demo01Message 消息
+            demo1Privider.sendByExchangeAndRoutingKey("【sendByExchangeAndRoutingKey】 Hello RabbitMQ For Spring Boot!" + i);
+            demo1Privider.sendByRoutingKey("【sendByRoutingKey】 Hello RabbitMQ For Spring Boot!" + i);
+            demo1Privider.asyncSend("【asyncSend】 Hello RabbitMQ For Spring Boot!" + i);
         }
         new CountDownLatch(1).await();
     }

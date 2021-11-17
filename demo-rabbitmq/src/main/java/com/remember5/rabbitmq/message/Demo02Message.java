@@ -8,9 +8,9 @@ import lombok.Data;
  * @date 2021/11/10
  */
 @Data
-public class Demo2Message {
+public class Demo02Message {
 
-    public static final String EXCHENGE = "EXCAHNGE_DEMO_02";
+    public static final String EXCHANGE = "EXCHANGE_DEMO_02";
 
     public static final String QUEUE = "QUEUE_DEMO_02";
 

@@ -1,11 +1,11 @@
 package com.remember5.rabbitmq.provider;
 
+import com.remember5.rabbitmq.message.Demo04Message;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
-import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.concurrent.CountDownLatch;
 
@@ -15,22 +15,27 @@ import java.util.concurrent.CountDownLatch;
  */
 @Slf4j
 @SpringBootTest
-public class Send1Test implements Serializable {
+public class Send04Test {
 
     @Resource
-    private Demo1Provider demo1Privider;
+    private Demo04Provider demo4Privider;
 
     private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 
     @Test
-    void test() throws InterruptedException {
+    void test1() throws InterruptedException {
         for (int i = 0; i < 10; i++) {
-            // 创建 Demo01Message 消息
-            demo1Privider.sendByExchangeAndRoutingKey("【sendByExchangeAndRoutingKey】 Hello RabbitMQ For Spring Boot!" + i);
-            demo1Privider.sendByRoutingKey("【sendByRoutingKey】 Hello RabbitMQ For Spring Boot!" + i);
-            demo1Privider.asyncSend("【asyncSend】 Hello RabbitMQ For Spring Boot!" + i);
+            demo4Privider.send("【send】 Hello RabbitMQ For Spring Boot! " + i, Demo04Message.HEADER_VALUE);
         }
         new CountDownLatch(1).await();
     }
 
+
+    @Test
+    void test2() throws InterruptedException {
+        for (int i = 0; i < 10; i++) {
+            demo4Privider.send("【send】 Hello RabbitMQ For Spring Boot! " + i, "error");
+        }
+        new CountDownLatch(1).await();
+    }
 }

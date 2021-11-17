@@ -1,6 +1,6 @@
 package com.remember5.rabbitmq.provider;
 
-import com.remember5.rabbitmq.message.Demo1Message;
+import com.remember5.rabbitmq.message.Demo01Message;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -16,7 +16,7 @@ import org.springframework.util.concurrent.ListenableFuture;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class Demo1Provider {
+public class Demo01Provider {
 
     /**
      * 自动注入RabbitTemplate模板类
@@ -31,9 +31,9 @@ public class Demo1Provider {
      * @param properties properties
      */
     public void sendByExchangeAndRoutingKey(String msg) {
-        Demo1Message message= new Demo1Message();
+        Demo01Message message= new Demo01Message();
         message.setMessage(msg);
-        rabbitTemplate.convertAndSend(Demo1Message.EXCHENGE, Demo1Message.ROUTING_KEY, message);
+        rabbitTemplate.convertAndSend(Demo01Message.EXCHANGE, Demo01Message.ROUTING_KEY, message);
         log.info("[sendByExchangeAndRoutingKey][发送消息：[{}] 发送成功]",message);
     }
 
@@ -43,9 +43,9 @@ public class Demo1Provider {
      * @param message
      */
     public void sendByRoutingKey(String msg) {
-        Demo1Message message= new Demo1Message();
+        Demo01Message message= new Demo01Message();
         message.setMessage(msg);
-        rabbitTemplate.convertAndSend(Demo1Message.QUEUE, message);
+        rabbitTemplate.convertAndSend(Demo01Message.QUEUE, message);
         log.info("[sendByRoutingKey][发送消息：[{}] 发送成功]",message);
     }
 

@@ -1,7 +1,6 @@
 package com.remember5.rabbitmq.provider;
 
-import com.remember5.rabbitmq.message.Demo2Message;
-import com.remember5.rabbitmq.message.Demo3Message;
+import com.remember5.rabbitmq.message.Demo03Message;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -14,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class Demo3Provider {
+public class Demo03Provider {
 
     /**
      * 自动注入RabbitTemplate模板类
@@ -29,9 +28,9 @@ public class Demo3Provider {
      * @param properties properties
      */
     public void send(String msg) {
-        Demo3Message message = new Demo3Message();
+        Demo03Message message = new Demo03Message();
         message.setMessage(msg);
-        rabbitTemplate.convertAndSend(Demo3Message.EXCHENGE, null, message);
+        rabbitTemplate.convertAndSend(Demo03Message.EXCHANGE, null, message);
         log.info("[send1][发送消息：[{}] 发送成功]",message);
     }
 
