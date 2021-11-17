@@ -30,8 +30,11 @@ public class Demo1Provider {
      * @param message    message
      * @param properties properties
      */
-    public void sendByExchangeAndRoutingKey(String message) {
+    public void sendByExchangeAndRoutingKey(String msg) {
+        Demo1Message message= new Demo1Message();
+        message.setMessage(msg);
         rabbitTemplate.convertAndSend(Demo1Message.EXCHENGE, Demo1Message.ROUTING_KEY, message);
+        log.info("[sendByExchangeAndRoutingKey][发送消息：[{}] 发送成功]",message);
     }
 
     /**
@@ -39,8 +42,11 @@ public class Demo1Provider {
      *
      * @param message
      */
-    public void sendByRoutingKey(String message) {
+    public void sendByRoutingKey(String msg) {
+        Demo1Message message= new Demo1Message();
+        message.setMessage(msg);
         rabbitTemplate.convertAndSend(Demo1Message.QUEUE, message);
+        log.info("[sendByRoutingKey][发送消息：[{}] 发送成功]",message);
     }
 
     /**
@@ -55,6 +61,7 @@ public class Demo1Provider {
             // 发送消息
             this.sendByExchangeAndRoutingKey(message);
             // 返回成功的 Future
+            log.info("[ListenableFuture][发送消息：[{}] 发送成功]",message);
             return AsyncResult.forValue(null);
         } catch (Throwable ex) {
             // 返回异常的 Future

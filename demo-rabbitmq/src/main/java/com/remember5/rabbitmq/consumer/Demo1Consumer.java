@@ -1,6 +1,7 @@
 package com.remember5.rabbitmq.consumer;
 
 import com.remember5.rabbitmq.message.Demo1Message;
+import com.remember5.rabbitmq.provider.Demo1Provider;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.ExchangeTypes;
 import org.springframework.amqp.rabbit.annotation.*;
@@ -31,8 +32,7 @@ public class Demo1Consumer {
      * @param message 具体的消息
      */
     @RabbitHandler
-    public void onMessage(String message) {
+    public void onMessage(Demo1Provider message) {
         log.info("[onMessage][线程编号:{} 消息内容：{}]", Thread.currentThread().getId(), message);
-
     }
 }

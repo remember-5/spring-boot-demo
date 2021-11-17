@@ -1,7 +1,10 @@
 package com.remember5.rabbitmq.consumer;
 
 import com.rabbitmq.client.Channel;
+import com.remember5.rabbitmq.message.Demo1Message;
+import com.remember5.rabbitmq.message.Demo2Message;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.core.ExchangeTypes;
 import org.springframework.amqp.rabbit.annotation.*;
 import org.springframework.amqp.support.AmqpHeaders;
 import org.springframework.messaging.Message;
@@ -20,32 +23,27 @@ import java.io.IOException;
  * @author wangjiahao
  * @date 2021/11/10
  */
-//@Slf4j
-//@Component
-//@RabbitListener(
-//        bindings = @QueueBinding(
-//                exchange = @Exchange(value = "exchange-1", type = "topic"),
-//                value = @Queue(value = "queue-1", durable = "true"),
-//                key = "dead.*",
-//                arguments = {
-//                        @Argument(name = "x-message-ttl", value = "2000"),
-//                        @Argument(name = "x-dead-letter-exchange", value = "deadExchange"),
-//                        @Argument(name = "x-dead-letter-routing-key", value = "deadQueue")
-//                }
-//        )
-//)
+@Slf4j
+@Component
+@RabbitListener(
+        bindings = @QueueBinding(
+                // type: exchange 类型，
+                exchange = @Exchange(value = Demo2Message.EXCHENGE, type = ExchangeTypes.TOPIC, durable = "true"),
+                // durable: 是否持久化  exclusive: 是否排它  autoDelete: 是否自动删除
+                value = @Queue(value = Demo2Message.QUEUE, durable = "true", exclusive = "false", autoDelete = "false"),
+                key = Demo2Message.ROUTING_KEY
+        )
+)
 public class Demo2Consumer {
 
-//    @RabbitHandler
-//    public void onDeadMessage(Message message, Channel channel) throws IOException {
-//        log.info("--------------------------------------");
-//        log.info("消费端Payload: {}", message.getPayload());
-//        Long deliveryTag = (Long) message.getHeaders().get(AmqpHeaders.DELIVERY_TAG);
-//        try {
-//            //手工ACK
-////            channel.basicAck(deliveryTag, true);
-//            channel.basicNack(deliveryTag, false, false);
-//        } catch (Exception e) {
-//        }
-//    }
+
+    /**
+     * 监听普通消息
+     *
+     * @param message 具体的消息
+     */
+    @RabbitHandler
+    public void onDeadMessage(Demo2Message message) throws IOException {
+        log.info("[onMessage][线程编号:{} 消息内容：{}]", Thread.currentThread().getId(), message);
+    }
 }
