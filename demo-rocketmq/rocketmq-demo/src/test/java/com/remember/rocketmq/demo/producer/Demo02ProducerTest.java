@@ -34,7 +34,4 @@ public class Demo02ProducerTest {
     }
 
 
-
-
-
 }

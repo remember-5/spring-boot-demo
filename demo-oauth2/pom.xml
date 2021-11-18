@@ -5,17 +5,21 @@
     <parent>
         <artifactId>spring-boot-demo</artifactId>
         <groupId>com.remember</groupId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>demo-oauth2</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>pom</packaging>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
+        <java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <spring-boot.version>2.1.18.RELEASE</spring-boot.version>
     </properties>
 
     <modules>
@@ -25,5 +29,26 @@
         <module>authorization-by-jdbc-store</module>
         <module>resource-server-sso</module>
     </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.remember</groupId>
+            <artifactId>demo-common</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
 
 </project>

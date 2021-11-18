@@ -29,13 +29,13 @@ public class Hospital {
     /**
      * 名称
      */
-    @Field(type = FieldType.Text,analyzer = "ik_smart")
+    @Field(type = FieldType.Text, analyzer = "ik_smart")
     private String name;
 
     /**
      * 地址
      */
-    @Field(type = FieldType.Text,analyzer = "ik_smart")
+    @Field(type = FieldType.Text, analyzer = "ik_smart")
     private String address;
 
     /**
@@ -59,13 +59,13 @@ public class Hospital {
     /**
      * 创建时间
      */
-    @Field(type = FieldType.Date,format = DateFormat.custom, pattern = "uuuu-MM-dd HH:mm:ss")
+    @Field(type = FieldType.Date, format = DateFormat.custom, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
 
     /**
      * 修改时间
      */
-    @Field(type = FieldType.Date,format = DateFormat.custom, pattern = "uuuu-MM-dd HH:mm:ss")
+    @Field(type = FieldType.Date, format = DateFormat.custom, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updateTime;
 
 

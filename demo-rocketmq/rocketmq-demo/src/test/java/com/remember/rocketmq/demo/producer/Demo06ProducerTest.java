@@ -64,15 +64,4 @@ public class Demo06ProducerTest {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
 }

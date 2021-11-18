@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * 通用web服务
+ *
  * @author wangjiahao
  */
 @SpringBootApplication

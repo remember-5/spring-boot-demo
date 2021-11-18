@@ -27,3 +27,7 @@
 | spring-boot-demo-spi | 整合spi
 | spring-boot-demo-swagger | swagger2 knife4j-ui
 | spring-boot-demo-validation | spring数据校验
+
+
+## FAQ
+如果遇到Lombok失效，请升级Lombok的版本

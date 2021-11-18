@@ -40,9 +40,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         log.info("拦截器已设置");
-        registry.addInterceptor(jwtInterceptor)
-                .addPathPatterns("/**")
-                .excludePathPatterns("/test/auth");
+//        registry.addInterceptor(jwtInterceptor)
+//                .addPathPatterns("/**")
+//                .excludePathPatterns("/test/auth");
 //                .excludePathPatterns(Lists.newArrayList(apiConstant.getExcludePathList().split(StrUtil.COMMA)));
     }
 

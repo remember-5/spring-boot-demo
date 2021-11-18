@@ -25,15 +25,12 @@ public class Demo03ProducerTest {
     @Test
     public void testSendDelay() throws InterruptedException {
         int id = (int) (System.currentTimeMillis() / 1000);
-        SendResult result = producer.syncSendDelay(id,3);// 延迟级别 3 ，即 10 秒后消费
+        SendResult result = producer.syncSendDelay(id, 3);// 延迟级别 3 ，即 10 秒后消费
         log.info("[testSendBatch][发送编号：[{}] 发送结果：[{}]]", id, result);
 
         // 阻塞等待，保证消费
         new CountDownLatch(1).await();
     }
-
-
-
 
 
 }

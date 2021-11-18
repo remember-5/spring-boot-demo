@@ -16,6 +16,6 @@ public class Simple {
         System.err.println("请输入第二个数字");
         long s2 = scanner.nextInt();
         long s = s1 * s2;
-        System.err.println("两个数的乘积 ="+s);
+        System.err.println("两个数的乘积 =" + s);
     }
 }

@@ -1,0 +1,38 @@
+server:
+  port: 9091
+
+spring:
+  application:
+    name: demo-rabbitmq-demo1
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest # RabbitMQ 服务的账号
+    password: guest # RabbitMQ 服务的密码
+    virtual-host: guest
+#    listener: # 手动提交消息
+#      simple:
+#        # 签收模式为手动签收-那么需要在代码中手动ACK
+#        acknowledge-mode: manual
+#        # 每次从RabbitMQ获取的消息数量
+#        prefetch: 1
+#        # 每个队列启动的消费者数量
+#        concurrency: 1
+#        # 每个队列最大的消费者数量
+#        max-concurrency: 1
+#        default-requeue-rejected: false
+#        retry:
+#          enabled: true # 开启消费重试机制
+#          max-attempts: 3 # 最大重试次数。默认为 3 。
+#          initial-interval: 1000 # 重试间隔，单位为毫秒。默认为 1000 。
+#      direct:
+#        # 手动ack
+#        acknowledge-mode: manual
+#    template:
+#      # 必须设置成true 消息路由失败通知监听者，而不是将消息丢弃
+#      mandatory: true
+#      # 对应 RabbitProperties.Retry 类
+#      retry:
+#        enabled: true # 开启发送机制
+#        max-attempts: 3 # 最大重试次数。默认为 3 。
+#        initial-interval: 1000 # 重试间隔，单位为毫秒。默认为 1000

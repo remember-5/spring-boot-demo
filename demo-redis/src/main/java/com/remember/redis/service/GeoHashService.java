@@ -6,6 +6,7 @@ import org.springframework.data.redis.connection.RedisGeoCommands;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -15,13 +16,15 @@ import java.util.List;
  * @date 2021/9/24
  */
 @Component
-@RequiredArgsConstructor
 public class GeoHashService {
 
-    //    private final RedisUtils redisUtils;
-    private final RedisTemplate<String, Object> redisTemplate;
+    private final RedisTemplate<Object, Object> redisTemplate;
 
-    private final static String KEY = "home:geo";
+    public GeoHashService(RedisTemplate<Object, Object> redisTemplate) {
+        this.redisTemplate = redisTemplate;
+    }
+
+    public final String KEY = "home:geo";
 
     /**
      * save geo hash data

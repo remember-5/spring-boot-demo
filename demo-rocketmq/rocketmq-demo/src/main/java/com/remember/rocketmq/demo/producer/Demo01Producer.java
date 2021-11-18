@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 /**
  * 同步发送
  * 异步发送
+ *
  * @author wangjiahao
  * @date 2020/12/2
  */
@@ -22,24 +23,22 @@ public class Demo01Producer {
         // 创建Demo01Message
         Demo01Message message = new Demo01Message();
         message.setId(id);
-        return rocketMQTemplate.syncSend(Demo01Message.TOPIC,message);
+        return rocketMQTemplate.syncSend(Demo01Message.TOPIC, message);
     }
 
-    public void asyncSend(Integer id, SendCallback callback){
+    public void asyncSend(Integer id, SendCallback callback) {
         // 创建 Demo01Message消息
         Demo01Message message = new Demo01Message();
         message.setId(id);
-        rocketMQTemplate.asyncSend(Demo01Message.TOPIC,message,callback);
+        rocketMQTemplate.asyncSend(Demo01Message.TOPIC, message, callback);
     }
 
 
-    public void onewaySend(Integer id ){
+    public void onewaySend(Integer id) {
         Demo01Message message = new Demo01Message();
         message.setId(id);
-        rocketMQTemplate.sendOneWay(Demo01Message.TOPIC,message);
+        rocketMQTemplate.sendOneWay(Demo01Message.TOPIC, message);
     }
-
-
 
 
 }

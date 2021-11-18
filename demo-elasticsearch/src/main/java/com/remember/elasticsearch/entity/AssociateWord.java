@@ -53,13 +53,13 @@ public class AssociateWord {
     /**
      * 创建时间
      */
-    @Field(type = FieldType.Date,format = DateFormat.basic_date)
+    @Field(type = FieldType.Date, format = DateFormat.basic_date)
     private Date createTime;
 
     /**
      * 修改时间
      */
-    @Field(type = FieldType.Date,format = DateFormat.basic_date)
+    @Field(type = FieldType.Date, format = DateFormat.basic_date)
     private Date updateTime;
 
 

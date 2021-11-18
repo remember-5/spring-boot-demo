@@ -9,5 +9,5 @@ import org.springframework.stereotype.Component;
  * @date 2020/12/18
  */
 @Component
-public interface HospitalRepository extends ElasticsearchRepository<Hospital,Long> {
+public interface HospitalRepository extends ElasticsearchRepository<Hospital, Long> {
 }

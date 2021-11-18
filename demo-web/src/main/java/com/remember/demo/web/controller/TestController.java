@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
 
     @GetMapping("${api.a}")
-    public String test(){
+    public String test() {
         return "aaa";
     }
 
     @GetMapping("${api.b}")
-    public String test1(){
+    public String test1() {
         return "bbb";
     }
 }

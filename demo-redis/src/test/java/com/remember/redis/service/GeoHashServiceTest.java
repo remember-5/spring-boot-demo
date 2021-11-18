@@ -7,14 +7,14 @@ import javax.annotation.Resource;
 
 
 @SpringBootTest
-public class GeoHashServiceTest {
+class GeoHashServiceTest {
 
 
     @Resource
     private GeoHashService geoHashService;
 
     @Test
-    public void saveGeoHash() {
+    void saveGeoHash() {
         geoHashService.saveGeoHash();
     }
 

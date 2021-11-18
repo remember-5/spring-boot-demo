@@ -30,7 +30,7 @@ public class LoginController {
     public OAuth2AccessToken login(
             @RequestParam("username") String username,
             @RequestParam("password") String password
-    ){
+    ) {
         // 创建ResourceOwnerPasswordResourceDetails对象
         ResourceOwnerPasswordResourceDetails resourceDetails = new ResourceOwnerPasswordResourceDetails();
         resourceDetails.setAccessTokenUri(accessTokenUri);
@@ -44,13 +44,6 @@ public class LoginController {
         // 获取访问令牌
         return restTemplate.getAccessToken();
     }
-
-
-
-
-
-
-
 
 
 }

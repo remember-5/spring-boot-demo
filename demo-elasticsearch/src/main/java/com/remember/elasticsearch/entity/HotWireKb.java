@@ -151,14 +151,14 @@ public class HotWireKb {
     /**
      * 发布时间
      */
-    @Field(type = FieldType.Date,format = DateFormat.basic_date)
+    @Field(type = FieldType.Date, format = DateFormat.basic_date)
     @TableField(value = "release_date")
     private Date releaseDate;
 
     /**
      * 创建时间
      */
-    @Field(type = FieldType.Date,format = DateFormat.basic_date)
+    @Field(type = FieldType.Date, format = DateFormat.basic_date)
     @TableField(value = "create_date")
     private Date createDate;
 
@@ -172,7 +172,7 @@ public class HotWireKb {
     /**
      * 更新时间
      */
-    @Field(type = FieldType.Date,format = DateFormat.basic_date)
+    @Field(type = FieldType.Date, format = DateFormat.basic_date)
     @TableField(value = "update_date")
     private Date updateDate;
 

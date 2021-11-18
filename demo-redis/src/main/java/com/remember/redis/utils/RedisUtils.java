@@ -646,7 +646,7 @@ public class RedisUtils {
      * @param time  时间(秒)
      * @return true成功，false失败
      */
-    public boolean lSet(String key, List<Object> value, long time) {
+    public boolean lSetList(String key, List<Object> value, long time) {
         try {
             redisTemplate.opsForList().rightPushAll(key, value);
             if (time > 0) {
@@ -823,9 +823,17 @@ public class RedisUtils {
         return redisTemplate.hasKey(key) ? redisTemplate.opsForGeo().distance(key, o1, o2, metrics) : null;
     }
 
+    public GeoResults<RedisGeoCommands.GeoLocation<Object>> geoRadius(String key, Point point, double val) {
+        return this.geoRadius(key, point, val, 0, RedisGeoCommands.DistanceUnit.KILOMETERS, Sort.Direction.ASC);
+    }
 
-    public GeoResults<RedisGeoCommands.GeoLocation<Object>> geoRadius(String key, Point point, double val, long limit, Sort.Direction sort) {
-        return this.geoRadius(key, point, val, limit, RedisGeoCommands.DistanceUnit.KILOMETERS, sort);
+    public GeoResults<RedisGeoCommands.GeoLocation<Object>> geoRadius(String key, Point point, double val, long limit) {
+        return this.geoRadius(key, point, val, limit, RedisGeoCommands.DistanceUnit.KILOMETERS, Sort.Direction.ASC);
+    }
+
+
+    public GeoResults<RedisGeoCommands.GeoLocation<Object>> geoRadius(String key, Point point, double val, long limit, RedisGeoCommands.DistanceUnit distanceUnit) {
+        return this.geoRadius(key, point, val, limit, distanceUnit, Sort.Direction.ASC);
     }
 
     /**
@@ -837,26 +845,41 @@ public class RedisUtils {
      * @param sort         排序
      * @return 结果
      */
-    public GeoResults<RedisGeoCommands.GeoLocation<Object>> geoRadius(String key, Point point, double val, long limit,
-                                                                      RedisGeoCommands.DistanceUnit distanceUnit, Sort.Direction sort) {
+    public GeoResults<RedisGeoCommands.GeoLocation<Object>> geoRadius(String key, Point point, double val, long limit, RedisGeoCommands.DistanceUnit distanceUnit, Sort.Direction sort) {
         Circle circle = new Circle(point, new Distance(val, distanceUnit));
         RedisGeoCommands.GeoRadiusCommandArgs args = RedisGeoCommands
                 .GeoRadiusCommandArgs
                 .newGeoRadiusArgs()
                 .includeDistance()
-                .includeCoordinates()
-                .sortAscending()
-                .limit(limit);
+                .includeCoordinates();
+
+        if (Sort.Direction.ASC.equals(sort)) {
+            args.sortAscending();
+        } else {
+            args.sortDescending();
+        }
+
+        if (limit > 0) {
+            args.limit(limit);
+        }
+
         return redisTemplate.opsForGeo().radius(key, circle, args);
     }
 
-
-    public GeoResults<RedisGeoCommands.GeoLocation<Object>> geoRadiusBySet(String key, String member, double val, long limit) {
-        return this.geoRadiusBySet(key, member, new Distance(val, Metrics.KILOMETERS), limit);
+    public GeoResults<RedisGeoCommands.GeoLocation<Object>> geoRadiusBySet(String key, String member, double val) {
+        return this.geoRadiusBySet(key, member, new Distance(val, Metrics.KILOMETERS), 0, Sort.Direction.ASC);
     }
 
-    public GeoResults<RedisGeoCommands.GeoLocation<Object>> geoRadiusBySet(String key, String member, double val, Metrics metrics, long limit) {
-        return this.geoRadiusBySet(key, member, new Distance(val, metrics), limit);
+    public GeoResults<RedisGeoCommands.GeoLocation<Object>> geoRadiusBySet(String key, String member, double val, long limit) {
+        return this.geoRadiusBySet(key, member, new Distance(val, Metrics.KILOMETERS), limit, Sort.Direction.ASC);
+    }
+
+    public GeoResults<RedisGeoCommands.GeoLocation<Object>> geoRadiusBySet(String key, String member, double val, long limit, Sort.Direction sort) {
+        return this.geoRadiusBySet(key, member, new Distance(val, Metrics.KILOMETERS), limit, sort);
+    }
+
+    public GeoResults<RedisGeoCommands.GeoLocation<Object>> geoRadiusBySet(String key, String member, double val, Metrics metrics, long limit, Sort.Direction sort) {
+        return this.geoRadiusBySet(key, member, new Distance(val, metrics), limit, sort);
     }
 
     /**
@@ -866,18 +889,35 @@ public class RedisUtils {
      * @param member   中心点的key
      * @param distance 距离长度
      * @param limit    分页数量
+     * @param sort     排序
      * @return 结果
      */
-    public GeoResults<RedisGeoCommands.GeoLocation<Object>> geoRadiusBySet(String key, String member, Distance distance, long limit) {
+    public GeoResults<RedisGeoCommands.GeoLocation<Object>> geoRadiusBySet(String key, String member, Distance distance, long limit, Sort.Direction sort) {
         RedisGeoCommands.GeoRadiusCommandArgs args = RedisGeoCommands
                 .GeoRadiusCommandArgs
                 .newGeoRadiusArgs()
                 .includeDistance()
-                .includeCoordinates()
-                .sortAscending()
-                .limit(limit);
+                .includeCoordinates();
+
+        if (Sort.Direction.ASC.equals(sort)) {
+            args.sortAscending();
+        } else {
+            args.sortDescending();
+        }
+
+        if (limit > 0) {
+            args.limit(limit);
+        }
         return redisTemplate.opsForGeo().radius(key, member, distance, args);
     }
 
+    /**
+     * 查询前缀为xx所有key值
+     *
+     * @return
+     */
+    public Set<Object> getKeys(String key) {
+        return redisTemplate.keys(key);
+    }
 
 }

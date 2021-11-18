@@ -1,0 +1,19 @@
+server:
+  port: 9091
+
+spring:
+  application:
+    name: demo-rabbitmq-demo1
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest # RabbitMQ 服务的账号
+    password: guest # RabbitMQ 服务的密码
+    virtual-host: guest
+    listener:
+      simple:
+        # 对应 RabbitProperties.ListenerRetry 类
+        retry:
+          enabled: true # 开启消费重试机制
+          max-attempts: 3 # 最大重试次数。默认为 3 。
+          initial-interval: 1000 # 重试间隔，单位为毫秒。默认为 1000 。

@@ -18,13 +18,12 @@ public class Demo04Producer {
 
     private final RocketMQTemplate rocketMQTemplate;
 
-    public SendResult syncSend(Integer id ){
+    public SendResult syncSend(Integer id) {
         Demo04Message message = new Demo04Message(id);
-        return rocketMQTemplate.syncSend(Demo04Message.TOPIC,message);
+        return rocketMQTemplate.syncSend(Demo04Message.TOPIC, message);
 
 
     }
-
 
 
 }
