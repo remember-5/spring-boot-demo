@@ -1,8 +1,0 @@
-server:
-  port: 9091
-
-spring:
-  application:
-    name: demo-rabbitmq
-  profiles:
-    active: 1

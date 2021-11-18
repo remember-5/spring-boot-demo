@@ -1,3 +1,16 @@
+## 功能分布
+rabbitmq-demo1 (demo1=DIRECT,demo2=TOPIC,demo3=FANOUT,demo4=HEADERS)  
+rabbitmq-demo2 (demo5=batchSend，这个是批量发送，消费者一条一条消费)  
+rabbitmq-demo3 (demo6A，这个是定时没有消息的话，才发送，消费者批量消费)   
+rabbitmq-demo4 (demo6B，这个是优化版本，如果条目数量超过多少，也会发送，消费者批量消费)    
+rabbitmq-demo5 (demo7，消费重试,死信队列)    
+rabbitmq-demo6 (demo8，定时消息)    
+
+
+
+
+
+
 ## 功能清单
 - [x] 发送普通文本消息
 - [ ] 发送json消息
@@ -11,14 +24,13 @@
 
 最基本的发送，不考虑其他因素
 
-
 修改配置
 ```yaml
 rabbitmq:
-    host: 116.236.68.213
-    port: 5672
-    username: test # RabbitMQ 服务的账号
-    password: i0EVRVko6B7A # RabbitMQ 服务的密码
+    host: 
+    port: 
+    username:  # RabbitMQ 服务的账号
+    password:  # RabbitMQ 服务的密码
     virtual-host: test
 ```
 

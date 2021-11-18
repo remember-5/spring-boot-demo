@@ -1,7 +1,0 @@
-spring:
-  rabbitmq:
-    host: 127.0.0.1
-    port: 5672
-    username: guest # RabbitMQ 服务的账号
-    password: guest # RabbitMQ 服务的密码
-    virtual-host: test
