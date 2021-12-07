@@ -39,6 +39,7 @@ public class CommonServiceImpl implements CommonService {
          */
         Map<String, Object> dataMap = new HashMap<>(16);
         dataMap.put("statisticalTime",new Date().toString());
+        dataMap.put("imageUrl","http://118.25.95.207:9000/ahtc/2021-08-10/4dba6307-fde7-4c62-b825-ff921c932464.png");
 
         String htmlStr = PDFUtil.freemarkerRender(dataMap, pdfExportConfig.getEmployeeKpiFtl());
         byte[] pdfBytes = PDFUtil.createPDF(htmlStr, pdfExportConfig.getFontSimsun());

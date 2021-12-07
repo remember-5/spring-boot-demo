@@ -481,6 +481,7 @@
     <tr style="height: 100px;" >
         <td colspan="2">
             自我总结
+            <img src="${imageUrl}" alt="" />
         </td>
         <td colspan="8" class="content value">
             <#if selfSummary??>
