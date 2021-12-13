@@ -72,23 +72,6 @@
             <scope>test</scope>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>com.aspose</groupId>-->
-<!--            <artifactId>aspose-cells</artifactId>-->
-<!--            <version>20.7</version>-->
-<!--            <systemPath>${project.basedir}/jar/aspose-cells-20.7.jar</systemPath>-->
-<!--            <scope>system</scope>-->
-<!--        </dependency>-->
-<!--    <dependency>-->
-<!--        <groupId>e-iceblue</groupId>-->
-<!--        <artifactId>spire.xls.free</artifactId>-->
-<!--        <version>2.2.0</version>-->
-<!--        <systemPath>${project.basedir}/jar/spire.xls.free-2.2.0.jar</systemPath>-->
-<!--        <scope>system</scope>-->
-<!--    </dependency>-->
-
-
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-freemarker</artifactId>
