@@ -26,7 +26,7 @@ public class TestController {
 
 
     @GetMapping("observer")
-    public String test2(){
+    public String test2() {
         EventBusCenter.post(new NotifyEvent("13372817283", "123@qq.com", "666"));
         return "success";
     }
