@@ -30,7 +30,10 @@ public class WebSocketRabbitMQMessageBrokerConfigurer extends AbstractWebSocketM
          * addEndpoint：添加STOMP协议的端点。这个HTTP URL是供WebSocket或SockJS客户端访问的地址
          * withSockJS：指定端点使用SockJS协议
          */
-        registry.addEndpoint("/websocket-rabbitmq").withSockJS();
+        registry.addEndpoint("/ws/stomp/websocket")
+                .addInterceptors(sessionAuthHandshakeInterceptor)
+                .setHandshakeHandler(myDefaultHandshakeHandler)
+                .withSockJS();
     }
 
     @Override
@@ -40,16 +43,17 @@ public class WebSocketRabbitMQMessageBrokerConfigurer extends AbstractWebSocketM
          * 使用RabbitMQ做为消息代理，替换默认的Simple Broker
          */
         registry
+                .setApplicationDestinationPrefixes("/mq") // 指服务端接收地址的前缀，意思就是说客户端给服务端发消息的地址的前缀
                 // "STOMP broker relay"处理所有消息将消息发送到外部的消息代理
                 .enableStompBrokerRelay("/exchange","/topic","/queue","/amq/queue")
-                .setRelayHost("192.168.0.113")
-                .setClientLogin("hry")
-                .setClientPasscode("hry")
-                .setSystemLogin("hry")
-                .setSystemPasscode("hry")
+                .setVirtualHost("/websocket-test")
+                .setRelayHost("101.33.205.148")
+                .setClientLogin("root")
+                .setClientPasscode("RLCDRpNvMAimv42Xii0Y")
+                .setSystemLogin("root")
+                .setSystemPasscode("RLCDRpNvMAimv42Xii0Y")
                 .setSystemHeartbeatSendInterval(5000)
                 .setSystemHeartbeatReceiveInterval(4000);
-        ;
     }
 
     /**

@@ -1,12 +1,12 @@
 spring:
   rabbitmq:
-    host:
-    virtual-host:
-    username:
-    password:
+    host: 101.33.205.148
+    virtual-host: /websocket-test
+    username: root
+    password: RLCDRpNvMAimv42Xii0Y
 
   redis:
-    host:
-    port:
-    database:
-    password:
+    host: 101.33.205.148
+    port: 6379
+    database: 0
+    password: remember5
