@@ -3,46 +3,25 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <parent>
-        <artifactId>spring-boot-demo</artifactId>
+        <artifactId>demo-websocket</artifactId>
         <groupId>com.remember</groupId>
-        <version>1.0.0</version>
+        <version>0.0.1</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-
-    <artifactId>demo-websocket</artifactId>
-    <version>0.0.1</version>
-    <name>demo-websocket</name>
-    <description>demo-websocket</description>
-    <packaging>pom</packaging>
-
-    <modules>
-        <module>websocket-single</module>
-        <module>websocket-cluster</module>
-    </modules>
+    <artifactId>websocket-single</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>websocket-single</name>
+    <description>websocket-single</description>
 
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <spring-boot.version>2.2.0.RELEASE</spring-boot.version>
+        <spring-boot.version>2.1.18.RELEASE</spring-boot.version>
     </properties>
 
     <dependencies>
-
-        <dependency>
-            <groupId>com.remember</groupId>
-            <artifactId>demo-common</artifactId>
-            <version>0.0.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.20</version>
-            <scope>provided</scope>
-        </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
@@ -53,24 +32,7 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-websocket</artifactId>
-        </dependency>
     </dependencies>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring-boot.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <build>
         <plugins>
@@ -87,9 +49,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.1.18.RELEASE</version>
+                <version>${spring-boot.version}</version>
                 <configuration>
-                    <mainClass>com.remember.websocket.DemoWebsocketApplication</mainClass>
+                    <mainClass>com.remember.websocket.single.WebsocketSingleApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>

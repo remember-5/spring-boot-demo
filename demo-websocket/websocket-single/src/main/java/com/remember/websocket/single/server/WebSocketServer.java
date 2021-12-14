@@ -1,4 +1,5 @@
-package com.remember.websocket.server;
+package com.remember.websocket.single.server;
+
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -50,7 +51,6 @@ public class WebSocketServer {
      *
      * @param session 可选的参数。session为与某个客户端的连接会话，需要通过它来给客户端发送数据
      * @param name    /
-     * @param toName  /
      * @throws IOException /
      */
     @OnOpen

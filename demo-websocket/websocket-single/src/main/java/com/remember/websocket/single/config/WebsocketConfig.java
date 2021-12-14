@@ -1,4 +1,4 @@
-package com.remember.websocket.config;
+package com.remember.websocket.single.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
