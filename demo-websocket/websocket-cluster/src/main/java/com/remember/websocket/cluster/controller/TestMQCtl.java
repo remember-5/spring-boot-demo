@@ -3,13 +3,12 @@ package com.remember.websocket.cluster.controller;
 import com.alibaba.fastjson.JSON;
 import com.remember.websocket.cluster.domain.RequestMessage;
 import com.remember.websocket.cluster.service.IRedisSessionService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.AmqpTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,13 +22,12 @@ import javax.servlet.http.HttpSession;
 @Slf4j
 @Controller
 @RequestMapping(value = "/ws")
+@RequiredArgsConstructor
 public class TestMQCtl {
 
     // 实现spring websocket需要引入AmqpTemplate类
-    @Autowired
-    private AmqpTemplate amqpTemplate;
-    @Autowired
-    private IRedisSessionService redisSessionService;
+    private final AmqpTemplate amqpTemplate;
+    private final IRedisSessionService redisSessionService;
 
 
     /**

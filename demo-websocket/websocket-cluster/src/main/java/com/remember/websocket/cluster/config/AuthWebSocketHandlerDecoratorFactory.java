@@ -1,8 +1,8 @@
 package com.remember.websocket.cluster.config;
 
 import com.remember.websocket.cluster.service.IRedisSessionService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.WebSocketHandler;
@@ -18,9 +18,10 @@ import java.security.Principal;
  */
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class AuthWebSocketHandlerDecoratorFactory implements WebSocketHandlerDecoratorFactory {
-    @Autowired
-    private IRedisSessionService redisSessionService;
+
+    private final IRedisSessionService redisSessionService;
 
     @Override
     public WebSocketHandler decorate(WebSocketHandler webSocketHandler) {
