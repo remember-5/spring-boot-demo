@@ -19,6 +19,7 @@
     <modules>
         <module>websocket-single</module>
         <module>websocket-cluster</module>
+        <module>websocket-route</module>
     </modules>
 
     <properties>
