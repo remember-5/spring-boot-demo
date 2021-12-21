@@ -1,8 +1,7 @@
 package com.remember.validation.controller;
 
-import com.alibaba.fastjson.JSONObject;
-import com.remember.validation.entity.UserVO;
 import com.remember.validation.entity.UserAddDTO;
+import com.remember.validation.entity.UserVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -30,56 +29,34 @@ public class UserController {
         log.info("name = {}", name);
     }
 
+    @GetMapping("notNull")
+    public void notNull(@NotNull String id) {
+        log.info("id = {}", id);
+    }
 
-    @GetMapping("/get")
+    @GetMapping("/min")
     public void min(@RequestParam("id") @Min(value = 1L, message = "编号必须大于 0") Integer id) {
         log.info("[get][id: {}]", id);
     }
 
-    @PostMapping("/add")
-    public void add(@Valid UserAddDTO addDTO) {
+    @PostMapping("/valid")
+    public void valid(@Valid UserAddDTO addDTO) {
         log.info("[add][addDTO: {}]", addDTO);
     }
 
-
-    @GetMapping
-    public JSONObject test1(@NotNull String id) {
-        log.info("id = {}", id);
-        JSONObject result = new JSONObject();
-        result.put("code", 200);
-        result.put("message", "success");
-        result.put("data", "noting");
-        return result;
-    }
-
     @PostMapping
-    public JSONObject test2(@Valid UserVO user) {
+    public void test2(@Valid UserVO user) {
         log.info("user = {}", user);
-        JSONObject result = new JSONObject();
-        result.put("code", 200);
-        result.put("message", "success");
-        result.put("data", "noting");
-        return result;
     }
 
     @PostMapping("getArray")
-    public JSONObject getArray(List<String> list) {
+    public void getArray(List<String> list) {
         log.info("list = {}", list);
-        JSONObject result = new JSONObject();
-        result.put("code", 200);
-        result.put("message", "success");
-        result.put("data", "noting");
-        return result;
     }
 
     @PostMapping("getArray1")
-    public JSONObject getArray(String ids) {
+    public void getArray(String ids) {
         List<String> split = Arrays.asList(ids.split(","));
         log.info("list = {}", split);
-        JSONObject result = new JSONObject();
-        result.put("code", 200);
-        result.put("message", "success");
-        result.put("data", "noting");
-        return result;
     }
 }

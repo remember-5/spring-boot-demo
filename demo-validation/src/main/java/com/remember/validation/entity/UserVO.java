@@ -16,11 +16,11 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserVO implements Serializable {
+
     private static final long serialVersionUID = -6130414118159979433L;
 
     @NotNull
     private Integer id;
-
 
     @NotNull(message = "{required}")
     @Size(min = 2, max = 10, message = "{range}")
