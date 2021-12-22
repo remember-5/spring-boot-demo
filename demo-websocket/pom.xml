@@ -20,6 +20,7 @@
         <module>websocket-single</module>
         <module>websocket-cluster</module>
         <module>websocket-route</module>
+        <module>netty</module>
     </modules>
 
     <properties>
