@@ -13,6 +13,7 @@ import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.codec.serialization.ObjectEncoder;
 import io.netty.handler.stream.ChunkedWriteHandler;
 import io.netty.handler.timeout.IdleStateHandler;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +28,10 @@ import java.net.InetSocketAddress;
  * @author sixiaojie
  * @date 2020-03-28-13:44
  */
-
+@Slf4j
 @Component
 public class NettyServer{
-    private static final Logger log = LoggerFactory.getLogger(NettyServer.class);
+
     /**
      * webSocket协议名
      */

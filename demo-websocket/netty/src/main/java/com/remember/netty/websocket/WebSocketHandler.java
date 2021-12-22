@@ -8,6 +8,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.util.AttributeKey;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -18,10 +19,10 @@ import org.springframework.stereotype.Component;
  * @author sixiaojie
  * @date 2020-03-28-13:47
  */
+@Slf4j
 @Component
 @ChannelHandler.Sharable
 public class WebSocketHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
-    private static final Logger log = LoggerFactory.getLogger(NettyServer.class);
 
     /**
      * 一旦连接，第一个被执行
