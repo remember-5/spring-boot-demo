@@ -13,10 +13,8 @@ import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.codec.serialization.ObjectEncoder;
 import io.netty.handler.stream.ChunkedWriteHandler;
 import io.netty.handler.timeout.IdleStateHandler;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -30,7 +28,10 @@ import java.net.InetSocketAddress;
  */
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class NettyServer{
+
+    private final WebSocketHandler webSocketHandler;
 
     /**
      * webSocket协议名
@@ -49,15 +50,12 @@ public class NettyServer{
     @Value("${webSocket.netty.path:/webSocket}")
     private String webSocketPath;
 
-    @Autowired
-    private WebSocketHandler webSocketHandler;
-
     private EventLoopGroup bossGroup;
     private EventLoopGroup workGroup;
 
     /**
      * 启动
-     * @throws InterruptedException
+     * @throws InterruptedException /
      */
     private void start() throws InterruptedException {
         bossGroup = new NioEventLoopGroup();
@@ -112,7 +110,7 @@ public class NettyServer{
 
     /**
      * 释放资源
-     * @throws InterruptedException
+     * @throws InterruptedException /
      */
     @PreDestroy
     public void destroy() throws InterruptedException {
@@ -123,6 +121,7 @@ public class NettyServer{
             workGroup.shutdownGracefully().sync();
         }
     }
+
     @PostConstruct()
     public void init() {
         //需要开启一个新的线程来执行netty server 服务器

@@ -1,53 +1,79 @@
 package com.remember.common.entity;
 
-import java.util.HashMap;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.io.Serializable;
 
 /**
+ * 统一返回
  * @author wangjiahao
+ * @date 2021/12/30
  */
-public class R extends HashMap<String, Object> {
+@Getter
+@Setter
+public class R<T> implements Serializable {
 
-    private static final long serialVersionUID = -8713837118340960775L;
-    private static final String MESSAGE = "message";
-    private static final String DATA = "data";
-    private static final String CODE = "code";
+    private static final long serialVersionUID = 1L;
 
-    public R() {
-        this.put(DATA, "");
+    /**
+     * 状态码
+     */
+    private String code;
+
+    /**
+     * 返回数据
+     */
+    private T data;
+
+    /**
+     * 返回信息
+     */
+    private String message;
+
+    public R(T data) {
+        this(ResultEnum.A00000, data);
     }
 
-    public R message(String message) {
-        this.put(MESSAGE, message);
-        return this;
+    public R(ResultEnum resultEnum) {
+        this(resultEnum.code, null, resultEnum.message);
     }
 
-    public R data(Object data) {
-        this.put(DATA, data);
-        return this;
+    public R(ResultEnum resultEnum, T data) {
+        this(resultEnum.code, data, resultEnum.message);
     }
 
-    public R code(String code) {
-        this.put(CODE, code);
-        return this;
+    public R(String code, T data, String message) {
+        this.code = code;
+        this.data = data;
+        this.message = message;
     }
 
-    public R resultEnum(ResultEnum resultEnum) {
-        this.put(CODE, resultEnum.code);
-        this.put(MESSAGE, resultEnum.message);
-        return this;
+    public static <T> R<T> success() {
+        return success(ResultEnum.A00000, null);
     }
 
-    @Override
-    public R put(String key, Object value) {
-        super.put(key, value);
-        return this;
+    public static <T> R<T> success(T data) {
+        return success(ResultEnum.A00000, data);
     }
 
-    public String getMessage() {
-        return String.valueOf(get(MESSAGE));
+    public static <T> R<T> success(ResultEnum resultEnum, T data) {
+        return success(resultEnum.code, data, resultEnum.message);
     }
 
-    public Object getData() {
-        return get(DATA);
+    public static <T> R<T> success(String code, T data, String message) {
+        return new R<T>(code, data, message);
+    }
+
+    public static <T> R<T> fail(ResultEnum resultEnum) {
+        return fail(resultEnum, null);
+    }
+
+    public static <T> R<T> fail(ResultEnum resultEnum, T data) {
+        return fail(resultEnum.code, data, resultEnum.message);
+    }
+
+    public static <T> R<T> fail(String code, T data, String message) {
+        return new R<T>(code, data, message);
     }
 }
