@@ -45,7 +45,7 @@ public class BaseExceptionHandler {
             detailMessage.append(constraintViolation.getMessage());
         }
         // 包装 CommonResult 结果
-        return new R().code(ResultEnum.A0400.code).message(detailMessage.toString());
+        return R.fail(ResultEnum.A0400.code,null ,detailMessage.toString());
     }
 
 
@@ -64,7 +64,7 @@ public class BaseExceptionHandler {
             detailMessage.append(objectError.getDefaultMessage());
         }
         // 包装 CommonResult 结果
-        return new R().code(ResultEnum.A0400.code).message(detailMessage.toString());
+        return R.fail(ResultEnum.A0400.code,null,detailMessage.toString());
     }
 
 }
