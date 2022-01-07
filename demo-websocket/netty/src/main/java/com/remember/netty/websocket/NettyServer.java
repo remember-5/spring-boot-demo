@@ -47,7 +47,7 @@ public class NettyServer{
     /**
      * webSocket路径
      */
-    @Value("${webSocket.netty.path:/webSocket}")
+    @Value("${webSocket.netty.path:/ws}")
     private String webSocketPath;
 
     private EventLoopGroup bossGroup;
