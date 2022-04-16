@@ -24,7 +24,7 @@ public class PersonServiceImpl extends ServiceImpl<PersonMapper, Person> impleme
     @Override
     public void select() {
         DynamicRoutingDataSource ds = (DynamicRoutingDataSource) dataSource;
-        ds.getCurrentDataSources().keySet();
+        ds.getDataSources().keySet();
 
         Person person = this.baseMapper.selectById(1);
         System.err.println(person);

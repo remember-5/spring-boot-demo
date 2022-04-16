@@ -8,18 +8,18 @@ spring:
         min-idle: 5
         connection-test-query: select 1
         pool-name: MyHikariCP
-      primary: master
+      primary: my-pg
       datasource:
-        master:
+        my-mysql:
           username: root
           password: root
           driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://192.168.115.184:3306/spring_boot_demo?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8&useLocalSessionState=true
-        slave:
-          username: root
-          password: root
-          driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://192.168.115.184:3307/spring_boot_demo?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8&useLocalSessionState=true
-          hikari:
-            is-read-only: true
+          url: jdbc:mysql://192.168.50.237:3306/wang?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8&useLocalSessionState=true
+        my-pg:
+          username: postgres
+          password: postgres
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://192.168.50.237:5432/wang
+#          hikari:
+#            is-read-only: true
 

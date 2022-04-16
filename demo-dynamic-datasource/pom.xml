@@ -18,6 +18,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <spring-boot.version>2.1.18.RELEASE</spring-boot.version>
+        <mybatis-plus.version>3.5.1</mybatis-plus.version>
+        <dynamic-datasource.version>3.5.1</dynamic-datasource.version>
+        <mybatis-plus-generator.version>3.5.1</mybatis-plus-generator.version>
+        <javafaker.version>1.0.2</javafaker.version>
     </properties>
 
     <dependencies>
@@ -53,20 +57,32 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.3.1</version>
+            <version>${mybatis-plus.version}</version>
         </dependency>
 
         <!-- ————————————— mybatis-plus 代码生成器 ————————————————————— -->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-generator</artifactId>
-            <version>3.3.0</version>
+            <version>${mybatis-plus-generator.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
-            <version>3.1.0</version>
+            <version>${dynamic-datasource.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter-test</artifactId>
+            <version>${dynamic-datasource.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>${javafaker.version}</version>
         </dependency>
 
         <!-- 不造为啥 dynamic-datasource-spring-boot-starter 会依赖这个 -->
@@ -78,6 +94,12 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>

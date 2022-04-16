@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.remember.dynamic.datasource.mapper.LogAccessMapper">
+  <resultMap id="BaseResultMap" type="com.remember.dynamic.datasource.entity.LogAccess">
+    <!--@mbg.generated-->
+    <!--@Table log_access-->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="v_method" jdbcType="VARCHAR" property="vMethod" />
+    <result column="v_uri" jdbcType="VARCHAR" property="vUri" />
+    <result column="v_ip" jdbcType="VARCHAR" property="vIp" />
+    <result column="i_status" jdbcType="INTEGER" property="iStatus" />
+    <result column="v_type" jdbcType="VARCHAR" property="vType" />
+    <result column="v_browser" jdbcType="VARCHAR" property="vBrowser" />
+    <result column="b_success" jdbcType="BOOLEAN" property="bSuccess" />
+    <result column="v_application" jdbcType="VARCHAR" property="vApplication" />
+    <result column="v_data_id" jdbcType="VARCHAR" property="vDataId" />
+    <result column="v_alias_at_app_module" jdbcType="VARCHAR" property="vAliasAtAppModule" />
+    <result column="v_alias_at_app_module_function" jdbcType="VARCHAR" property="vAliasAtAppModuleFunction" />
+    <result column="b_skip" jdbcType="BOOLEAN" property="bSkip" />
+    <result column="id_at_auth_user" jdbcType="VARCHAR" property="idAtAuthUser" />
+    <result column="t_create" jdbcType="TIMESTAMP" property="tCreate" />
+    <result column="v_body" jdbcType="VARCHAR" property="vBody" />
+    <result column="id_at_app_module" jdbcType="VARCHAR" property="idAtAppModule" />
+    <result column="v_device" jdbcType="VARCHAR" property="vDevice" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, v_method, v_uri, v_ip, i_status, v_type, v_browser, b_success, v_application, 
+    v_data_id, v_alias_at_app_module, v_alias_at_app_module_function, b_skip, id_at_auth_user, 
+    t_create, v_body, id_at_app_module, v_device
+  </sql>
+</mapper>
