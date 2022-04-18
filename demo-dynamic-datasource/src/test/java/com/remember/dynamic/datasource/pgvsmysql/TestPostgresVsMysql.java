@@ -38,190 +38,26 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class TestPostgresVsMysql {
 
     @Autowired
-    LogAccessMapper logAccessMapper;
-    @Autowired
     LogAccessService logAccessService;
 
     @Test
    public void testInsert() {
         CountDownLatch countDownLatch = new CountDownLatch(5);
-        Faker faker = new Faker(new Locale("zh-CN"));
-        Date now = new Date();
 
         Thread thread1 = new Thread(() -> {
-            int count = 1;
-            while (count < 10000) {
-                ArrayList<LogAccess> logAccesses = new ArrayList<>();
-                TimeInterval timer = DateUtil.timer();
-                for (int i = 0; i < 1000; i++) {
-                    LogAccess logAccess = LogAccess.builder()
-                            .vMethod(RandomUtil.randomEle(CollUtil.newArrayList("GET", "POST", "PUT", "DELETE")))
-                            .vUri(faker.internet().url())
-                            .vIp(faker.internet().ipV4Address())
-                            .iStatus(RandomUtil.randomEle(CollUtil.newArrayList(200, 302, 400, 401, 403, 404, 413, 500)))
-                            .vType(RandomUtil.randomEle(CollUtil.newArrayList("01", "02", "03", "04", "05", "06", "07")))
-                            .vBrowser(RandomUtil.randomEle(CollUtil.newArrayList("Chrome 8", "Chrome 9", "Chrome 10", "IE", "FireFox")))
-                            .bSuccess(RandomUtil.randomBoolean())
-                            .vApplication(RandomUtil.randomString(10))
-                            .vDataId(RandomUtil.randomString(20))
-                            .vAliasAtAppModule(RandomUtil.randomString(20))
-                            .vAliasAtAppModuleFunction(RandomUtil.randomString(20))
-                            .bSkip(RandomUtil.randomBoolean())
-                            .idAtAuthUser(UUID.randomUUID().toString(true))
-                            .tCreate(faker.date().between(DateUtil.beginOfYear(now), now)) // 今年的第一天
-                            .vBody(RandomUtil.randomString(20))
-                            .idAtAppModule(RandomUtil.randomString(20))
-                            .vDevice(RandomUtil.randomEle(CollUtil.newArrayList("PC", "Android", "iOS")))
-                            .build();
-                    logAccesses.add(logAccess);
-                }
-                log.info("{},生成代码耗时 {}",Thread.currentThread().getName(),timer.intervalMs());
-                logAccessService.saveBatch(logAccesses);
-                log.info("{},写入sql耗时 {}",Thread.currentThread().getName(),timer.intervalMs());
-                count += 1;
-                log.info("{}, {}",Thread.currentThread().getName(),count);
-
-            }
+                logAccessService.testBatchInsert();
         });
 //        Thread thread2 = new Thread(() -> {
-//            int count = 1;
-//            while (count < 10000) {
-//                ArrayList<LogAccess> logAccesses = new ArrayList<>();
-//                TimeInterval timer = DateUtil.timer();
-//                for (int i = 0; i < 10000; i++) {
-//                    LogAccess logAccess = LogAccess.builder()
-//                            .vMethod(RandomUtil.randomEle(CollUtil.newArrayList("GET", "POST", "PUT", "DELETE")))
-//                            .vUri(faker.internet().url())
-//                            .vIp(faker.internet().ipV4Address())
-//                            .iStatus(RandomUtil.randomEle(CollUtil.newArrayList(200, 302, 400, 401, 403, 404, 413, 500)))
-//                            .vType(RandomUtil.randomEle(CollUtil.newArrayList("01", "02", "03", "04", "05", "06", "07")))
-//                            .vBrowser(RandomUtil.randomEle(CollUtil.newArrayList("Chrome 8", "Chrome 9", "Chrome 10", "IE", "FireFox")))
-//                            .bSuccess(RandomUtil.randomBoolean())
-//                            .vApplication(RandomUtil.randomString(10))
-//                            .vDataId(RandomUtil.randomString(20))
-//                            .vAliasAtAppModule(RandomUtil.randomString(20))
-//                            .vAliasAtAppModuleFunction(RandomUtil.randomString(20))
-//                            .bSkip(RandomUtil.randomBoolean())
-//                            .idAtAuthUser(UUID.randomUUID().toString(true))
-//                            .tCreate(faker.date().between(DateUtil.beginOfYear(now), now)) // 今年的第一天
-//                            .vBody(RandomUtil.randomString(20))
-//                            .idAtAppModule(RandomUtil.randomString(20))
-//                            .vDevice(RandomUtil.randomEle(CollUtil.newArrayList("PC", "Android", "iOS")))
-//                            .build();
-//                    logAccesses.add(logAccess);
-//                }
-//                log.info("{},生成代码耗时 {}",Thread.currentThread().getName(),timer.intervalMs());
-//                logAccessService.saveBatch(logAccesses);
-//                log.info("{},写入sql耗时 {}",Thread.currentThread().getName(),timer.intervalMs());
-//                count += 1;
-//                log.info("{}, {}",Thread.currentThread().getName(),count);
-//
-//            }
+//            logAccessService.testBatchInsert();
 //        });
 //        Thread thread3 = new Thread(() -> {
-//            int count = 1;
-//            while (count < 10000) {
-//                ArrayList<LogAccess> logAccesses = new ArrayList<>();
-//                TimeInterval timer = DateUtil.timer();
-//                for (int i = 0; i < 10000; i++) {
-//                    LogAccess logAccess = LogAccess.builder()
-//                            .vMethod(RandomUtil.randomEle(CollUtil.newArrayList("GET", "POST", "PUT", "DELETE")))
-//                            .vUri(faker.internet().url())
-//                            .vIp(faker.internet().ipV4Address())
-//                            .iStatus(RandomUtil.randomEle(CollUtil.newArrayList(200, 302, 400, 401, 403, 404, 413, 500)))
-//                            .vType(RandomUtil.randomEle(CollUtil.newArrayList("01", "02", "03", "04", "05", "06", "07")))
-//                            .vBrowser(RandomUtil.randomEle(CollUtil.newArrayList("Chrome 8", "Chrome 9", "Chrome 10", "IE", "FireFox")))
-//                            .bSuccess(RandomUtil.randomBoolean())
-//                            .vApplication(RandomUtil.randomString(10))
-//                            .vDataId(RandomUtil.randomString(20))
-//                            .vAliasAtAppModule(RandomUtil.randomString(20))
-//                            .vAliasAtAppModuleFunction(RandomUtil.randomString(20))
-//                            .bSkip(RandomUtil.randomBoolean())
-//                            .idAtAuthUser(UUID.randomUUID().toString(true))
-//                            .tCreate(faker.date().between(DateUtil.beginOfYear(now), now)) // 今年的第一天
-//                            .vBody(RandomUtil.randomString(20))
-//                            .idAtAppModule(RandomUtil.randomString(20))
-//                            .vDevice(RandomUtil.randomEle(CollUtil.newArrayList("PC", "Android", "iOS")))
-//                            .build();
-//                    logAccesses.add(logAccess);
-//                }
-//                log.info("{},生成代码耗时 {}",Thread.currentThread().getName(),timer.intervalMs());
-//                logAccessService.saveBatch(logAccesses);
-//                log.info("{},写入sql耗时 {}",Thread.currentThread().getName(),timer.intervalMs());
-//                count += 1;
-//                log.info("{}, {}",Thread.currentThread().getName(),count);
-//
-//            }
+//            logAccessService.testBatchInsert();
 //        });
 //        Thread thread4 = new Thread(() -> {
-//            int count = 1;
-//            while (count < 10000) {
-//                ArrayList<LogAccess> logAccesses = new ArrayList<>();
-//                TimeInterval timer = DateUtil.timer();
-//                for (int i = 0; i < 10000; i++) {
-//                    LogAccess logAccess = LogAccess.builder()
-//                            .vMethod(RandomUtil.randomEle(CollUtil.newArrayList("GET", "POST", "PUT", "DELETE")))
-//                            .vUri(faker.internet().url())
-//                            .vIp(faker.internet().ipV4Address())
-//                            .iStatus(RandomUtil.randomEle(CollUtil.newArrayList(200, 302, 400, 401, 403, 404, 413, 500)))
-//                            .vType(RandomUtil.randomEle(CollUtil.newArrayList("01", "02", "03", "04", "05", "06", "07")))
-//                            .vBrowser(RandomUtil.randomEle(CollUtil.newArrayList("Chrome 8", "Chrome 9", "Chrome 10", "IE", "FireFox")))
-//                            .bSuccess(RandomUtil.randomBoolean())
-//                            .vApplication(RandomUtil.randomString(10))
-//                            .vDataId(RandomUtil.randomString(20))
-//                            .vAliasAtAppModule(RandomUtil.randomString(20))
-//                            .vAliasAtAppModuleFunction(RandomUtil.randomString(20))
-//                            .bSkip(RandomUtil.randomBoolean())
-//                            .idAtAuthUser(UUID.randomUUID().toString(true))
-//                            .tCreate(faker.date().between(DateUtil.beginOfYear(now), now)) // 今年的第一天
-//                            .vBody(RandomUtil.randomString(20))
-//                            .idAtAppModule(RandomUtil.randomString(20))
-//                            .vDevice(RandomUtil.randomEle(CollUtil.newArrayList("PC", "Android", "iOS")))
-//                            .build();
-//                    logAccesses.add(logAccess);
-//                }
-//                log.info("{},生成代码耗时 {}",Thread.currentThread().getName(),timer.intervalMs());
-//                logAccessService.saveBatch(logAccesses);
-//                log.info("{},写入sql耗时 {}",Thread.currentThread().getName(),timer.intervalMs());
-//                count += 1;
-//                log.info("{}, {}",Thread.currentThread().getName(),count);
-//
-//            }
+//            logAccessService.testBatchInsert();
 //        });
 //        Thread thread5 = new Thread(() -> {
-//            int count = 1;
-//            while (count < 10000) {
-//                ArrayList<LogAccess> logAccesses = new ArrayList<>();
-//                TimeInterval timer = DateUtil.timer();
-//                for (int i = 0; i < 10000; i++) {
-//                    LogAccess logAccess = LogAccess.builder()
-//                            .vMethod(RandomUtil.randomEle(CollUtil.newArrayList("GET", "POST", "PUT", "DELETE")))
-//                            .vUri(faker.internet().url())
-//                            .vIp(faker.internet().ipV4Address())
-//                            .iStatus(RandomUtil.randomEle(CollUtil.newArrayList(200, 302, 400, 401, 403, 404, 413, 500)))
-//                            .vType(RandomUtil.randomEle(CollUtil.newArrayList("01", "02", "03", "04", "05", "06", "07")))
-//                            .vBrowser(RandomUtil.randomEle(CollUtil.newArrayList("Chrome 8", "Chrome 9", "Chrome 10", "IE", "FireFox")))
-//                            .bSuccess(RandomUtil.randomBoolean())
-//                            .vApplication(RandomUtil.randomString(10))
-//                            .vDataId(RandomUtil.randomString(20))
-//                            .vAliasAtAppModule(RandomUtil.randomString(20))
-//                            .vAliasAtAppModuleFunction(RandomUtil.randomString(20))
-//                            .bSkip(RandomUtil.randomBoolean())
-//                            .idAtAuthUser(UUID.randomUUID().toString(true))
-//                            .tCreate(faker.date().between(DateUtil.beginOfYear(now), now)) // 今年的第一天
-//                            .vBody(RandomUtil.randomString(20))
-//                            .idAtAppModule(RandomUtil.randomString(20))
-//                            .vDevice(RandomUtil.randomEle(CollUtil.newArrayList("PC", "Android", "iOS")))
-//                            .build();
-//                    logAccesses.add(logAccess);
-//                }
-//                log.info("{},生成代码耗时 {}",Thread.currentThread().getName(),timer.intervalMs());
-//                logAccessService.saveBatch(logAccesses);
-//                log.info("{},写入sql耗时 {}",Thread.currentThread().getName(),timer.intervalMs());
-//                count += 1;
-//                log.info("{}, {}",Thread.currentThread().getName(),count);
-//
-//            }
+//            logAccessService.testBatchInsert();
 //        });
 
         thread1.start();
