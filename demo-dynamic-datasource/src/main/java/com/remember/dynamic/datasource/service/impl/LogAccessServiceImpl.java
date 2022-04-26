@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.date.TimeInterval;
 import cn.hutool.core.lang.UUID;
+import cn.hutool.core.thread.ExecutorBuilder;
 import cn.hutool.core.util.RandomUtil;
 import com.github.javafaker.Faker;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.ExecutorService;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.remember.dynamic.datasource.mapper.LogAccessMapper;
@@ -20,12 +22,24 @@ import com.remember.dynamic.datasource.service.LogAccessService;
 @Service
 public class LogAccessServiceImpl extends ServiceImpl<LogAccessMapper, LogAccess> implements LogAccessService{
 
+    Faker faker = new Faker(new Locale("zh-CN"));
+
     @Override
     public void testBatchInsert() {
-        Faker faker = new Faker(new Locale("zh-CN"));
+        ExecutorService executor = ExecutorBuilder.create()
+                .setCorePoolSize(5)
+                .setMaxPoolSize(10)
+                .useSynchronousQueue()
+                .build();
+        for (int i = 0; i < 5; i++) {
+            executor.execute(this::doInsert);
+        }
+    }
+
+    private void doInsert(){
         Date now = new Date();
         int count = 1;
-        while (count < 10000) {
+        while (count < 2000) {
             ArrayList<LogAccess> logAccesses = new ArrayList<>();
             TimeInterval timer = DateUtil.timer();
             for (int i = 0; i < 10000; i++) {
@@ -43,7 +57,8 @@ public class LogAccessServiceImpl extends ServiceImpl<LogAccessMapper, LogAccess
                         .vAliasAtAppModuleFunction(RandomUtil.randomString(20))
                         .bSkip(RandomUtil.randomBoolean())
                         .idAtAuthUser(UUID.randomUUID().toString(true))
-                        .tCreate(faker.date().between(DateUtil.beginOfYear(now), now)) // 今年的第一天
+                        // 今年的第一天
+                        .tCreate(faker.date().between(DateUtil.beginOfYear(now), now))
                         .vBody(RandomUtil.randomString(20))
                         .idAtAppModule(RandomUtil.randomString(20))
                         .vDevice(RandomUtil.randomEle(CollUtil.newArrayList("PC", "Android", "iOS")))
@@ -53,8 +68,9 @@ public class LogAccessServiceImpl extends ServiceImpl<LogAccessMapper, LogAccess
             log.info("{},生成代码耗时 {}", Thread.currentThread().getName(), timer.intervalMs());
             super.saveBatch(logAccesses);
             log.info("{},写入sql耗时 {}", Thread.currentThread().getName(), timer.intervalMs());
-            count += 1;
+            count+=1;
             log.info("{}, {}", Thread.currentThread().getName(), count);
         }
+
     }
 }
