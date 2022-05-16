@@ -22,9 +22,11 @@ class SpringBootDemoRedisApplicationTests {
     @Test
     void testRedisUtilsSet() throws InterruptedException {
         for (int i = 0; i < 100; i++) {
-            redisUtils.set("my"+i,i);
+            String key = "my"+i;
+            redisUtils.set(key,i);
+            System.err.println(redissonClient.getBucket(key).get());
         }
-        System.err.println(redissonClient.getBucket("my1").get());
+
     }
 
     @Test
