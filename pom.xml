@@ -49,11 +49,6 @@
         <skipTests>true</skipTests>
     </properties>
 
-    <dependencies>
-
-    </dependencies>
-
-
     <repositories>
         <repository>
             <id>aliyun</id>

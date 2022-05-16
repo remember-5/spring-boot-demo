@@ -16,9 +16,9 @@ import java.util.List;
 @Component
 public class GeoHashService {
 
-    private final RedisTemplate<Object, Object> redisTemplate;
+    private final RedisTemplate<String, Object> redisTemplate;
 
-    public GeoHashService(RedisTemplate<Object, Object> redisTemplate) {
+    public GeoHashService(RedisTemplate<String, Object> redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 

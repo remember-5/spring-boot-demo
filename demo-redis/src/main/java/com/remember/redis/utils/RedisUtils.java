@@ -40,9 +40,9 @@ import java.util.concurrent.TimeUnit;
 @SuppressWarnings({"unchecked", "all"})
 public class RedisUtils {
     private static final Logger log = LoggerFactory.getLogger(RedisUtils.class);
-    private final RedisTemplate<Object, Object> redisTemplate;
+    private final RedisTemplate<String, Object> redisTemplate;
 
-    public RedisUtils(RedisTemplate<Object, Object> redisTemplate) {
+    public RedisUtils(RedisTemplate<String, Object> redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 
@@ -91,7 +91,7 @@ public class RedisUtils {
      * @param key 键 不能为null
      * @return 时间(秒) 返回0代表为永久有效
      */
-    public long getExpire(Object key) {
+    public long getExpire(String key) {
         return redisTemplate.getExpire(key, TimeUnit.SECONDS);
     }
 
@@ -184,7 +184,7 @@ public class RedisUtils {
                 log.debug(new StringBuilder("删除缓存：").append(keys[0]).append("，结果：").append(result).toString());
                 log.debug("--------------------------------------------");
             } else {
-                Set<Object> keySet = new HashSet<>();
+                Set<String> keySet = new HashSet<>();
                 for (String key : keys) {
                     keySet.addAll(redisTemplate.keys(key));
                 }
@@ -699,7 +699,7 @@ public class RedisUtils {
      * @param ids    id
      */
     public void delByKeys(String prefix, Set<Long> ids) {
-        Set<Object> keys = new HashSet<>();
+        Set<String> keys = new HashSet<>();
         for (Long id : ids) {
             keys.addAll(redisTemplate.keys(new StringBuffer(prefix).append(id).toString()));
         }
@@ -916,7 +916,7 @@ public class RedisUtils {
      *
      * @return
      */
-    public Set<Object> getKeys(String key) {
+    public Set<String> getKeys(String key) {
         return redisTemplate.keys(key);
     }
 
