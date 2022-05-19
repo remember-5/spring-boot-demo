@@ -8,8 +8,6 @@ spring:
     username: postgres
     password: 123456
 
-
-
 mybatis-plus:
   mapper-locations: classpath:mapperxml/*.xml
   #实体扫描，多个package用逗号或者分号分隔

@@ -38,6 +38,7 @@
         <module>demo-oauth2</module>
         <module>demo-nacos</module>
         <module>demo-websocket</module>
+        <module>demo-quartz</module>
     </modules>
 
 
