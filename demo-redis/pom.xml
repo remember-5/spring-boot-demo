@@ -63,23 +63,22 @@
         </dependency>
 
         <!--   分布式锁 start    -->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-integration</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.integration</groupId>-->
-<!--            <artifactId>spring-integration-redis</artifactId>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-integration</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.integration</groupId>
+            <artifactId>spring-integration-redis</artifactId>
+        </dependency>
         <!--   分布式锁  end   -->
 
-        <!--redisson-->
+        <!-- redisson 分布式锁-->
         <dependency>
             <groupId>org.redisson</groupId>
             <artifactId>redisson-spring-boot-starter</artifactId>
             <version>3.16.8</version>
         </dependency>
-
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

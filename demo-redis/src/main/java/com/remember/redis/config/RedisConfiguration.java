@@ -12,6 +12,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.integration.redis.util.RedisLockRegistry;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -43,6 +44,12 @@ public class RedisConfiguration {
         return template;
     }
 
+    /**
+     * 连接工厂
+     *
+     * @param redisson /
+     * @return /
+     */
     @Bean
     public RedissonConnectionFactory redissonConnectionFactory(RedissonClient redisson) {
         return new RedissonConnectionFactory(redisson);
@@ -56,5 +63,23 @@ public class RedisConfiguration {
         // json进行编码
         config.setCodec(new JsonJacksonCodec());
         return Redisson.create(config);
+    }
+
+    /**
+     * 分布式锁
+     * RedisLockRegistry相当于一个锁的管理器，所有的分布式锁都可以从中获取，
+     * 如上定义，锁的键名为 “redis-lock: 你定义的 key”，超时时间也可以自己设定，默认超时时间是 60s。
+     * RedisLockRegistry是基于 Redis 的 setnx 和ReentrantLock可重入锁实现
+     *
+     * @param redisConnectionFactory factory
+     * @return /
+     */
+    @Bean(name = "redisLockRegistry", destroyMethod = "destroy")
+    public RedisLockRegistry redisLockRegistry(RedisConnectionFactory redisConnectionFactory) {
+        // 默认失效时间
+        long defaultExpireTime = 60000L;
+        // 默认前缀
+        String defaultPrefixKey = "lock";
+        return new RedisLockRegistry(redisConnectionFactory, defaultPrefixKey);
     }
 }

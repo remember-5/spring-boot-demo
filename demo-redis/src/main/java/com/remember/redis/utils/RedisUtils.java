@@ -17,8 +17,7 @@ package com.remember.redis.utils;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.geo.*;
 import org.springframework.data.redis.connection.RedisConnection;
@@ -34,12 +33,13 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 基于redisTemplate的redis操作
  * @author /
  */
+@Slf4j
 @Component
 @SuppressWarnings({"unchecked", "all"})
 public class RedisUtils {
-    private static final Logger log = LoggerFactory.getLogger(RedisUtils.class);
     private final RedisTemplate<String, Object> redisTemplate;
 
     public RedisUtils(RedisTemplate<String, Object> redisTemplate) {
