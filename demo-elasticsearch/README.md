@@ -2,7 +2,7 @@
 spring-boot-demo-elasticsearch
 
 
-主要演示了 Spring Boot 如何集成 spring-boot-starter-data-elasticsearch 完成对 ElasticSearch 的高级使用技巧，包括创建索引、配置映射、删除索引、增删改查基本操作、复杂查询、高级查询、聚合查询等。
+主要演示了 Spring Boot 如何集成 spring-boot-starter-data-elasticsearch 完成对 ElasticSearch 6.x 的高级使用技巧，包括创建索引、配置映射、删除索引、增删改查基本操作、复杂查询、高级查询、聚合查询等。
 
 ## 使用docker安装ES和elasticsearch-hq
 
