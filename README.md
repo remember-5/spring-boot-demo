@@ -1,6 +1,7 @@
 ## 写在前面
 个人练习demo，很多来自此网站http://www.iocoder.cn/
 
+把postgres 和 mysql 的 jpa & mybatisPlus使用写到一起，结合多数据源
 
 ## 模块介绍
 
