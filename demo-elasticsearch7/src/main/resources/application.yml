@@ -2,8 +2,28 @@ server:
   port: 9092
 
 spring:
+  main:
+    banner-mode: off
+  jpa:
+    show-sql: true # 打印 SQL 。生产环境，建议关闭
+    hibernate:
+      ddl-auto: none
+    open-in-view: true
+    properties:
+      hibernate:
+        ddl-auto: none
+        dialect: org.hibernate.dialect.PostgreSQL10Dialect
+
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/spring_demo
+    url: jdbc:postgresql://192.168.50.237:5432/postgres
     username: postgres
-    password: 123456
+    password: postgres
+      # HikariCP 自定义配置，对应 HikariConfig 配置属性类
+    hikari:
+      minimum-idle: 10 # 池中维护的最小空闲连接数，默认为 10 个。
+      maximum-pool-size: 10 # 池中最大连接数，包括闲置和使用中的连接，默认为 10 个。
+
+  elasticsearch:
+    rest:
+      uris: http://192.168.50.237:9200

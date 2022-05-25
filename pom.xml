@@ -15,7 +15,7 @@
     <modules>
         <module>demo-admin</module>
         <module>demo-common</module>
-        <module>demo-elasticsearch</module>
+        <module>demo-elasticsearch6</module>
         <module>demo-elasticsearch7</module>
         <module>demo-mybatis-plus</module>
         <module>demo-sentinel</module>
