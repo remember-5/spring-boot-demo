@@ -1,4 +1,4 @@
-package com.remember.dynamic.datasource.mybatisplus.mysql.service.impl;
+package com.remember.dynamic.datasource.mybatisplus.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateUtil;
@@ -6,11 +6,12 @@ import cn.hutool.core.date.TimeInterval;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.thread.ExecutorBuilder;
 import cn.hutool.core.util.RandomUtil;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.javafaker.Faker;
-import com.remember.dynamic.datasource.mybatisplus.mysql.entity.LogAccess;
-import com.remember.dynamic.datasource.mybatisplus.mysql.mapper.LogAccessMapper;
-import com.remember.dynamic.datasource.mybatisplus.mysql.service.LogAccessService;
+import com.remember.dynamic.datasource.mybatisplus.entity.LogAccess;
+import com.remember.dynamic.datasource.mybatisplus.mapper.LogAccessMapper;
+import com.remember.dynamic.datasource.mybatisplus.service.MybatisPlusLogAccessService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,7 @@ import java.util.concurrent.ExecutorService;
 
 @Slf4j
 @Service
-public class LogAccessServiceImpl extends ServiceImpl<LogAccessMapper, LogAccess> implements LogAccessService {
+public class MybatisPlusLogAccessServiceImpl extends ServiceImpl<LogAccessMapper, LogAccess> implements MybatisPlusLogAccessService {
 
     Faker faker = new Faker(new Locale("zh-CN"));
 
@@ -35,6 +36,24 @@ public class LogAccessServiceImpl extends ServiceImpl<LogAccessMapper, LogAccess
         for (int i = 0; i < 5; i++) {
             executor.execute(this::doInsert);
         }
+    }
+
+    @DS("mysql")
+    @Override
+    public void mysqlInsert() {
+        LogAccess logAccess = LogAccess.builder()
+                .vMethod("mp-mysql-test")
+                .build();
+        this.baseMapper.insert(logAccess);
+    }
+
+    @DS("pg")
+    @Override
+    public void postgresInsert() {
+        LogAccess logAccess = LogAccess.builder()
+                .vMethod("mp-pg-test")
+                .build();
+        this.baseMapper.insert(logAccess);
     }
 
     private void doInsert(){

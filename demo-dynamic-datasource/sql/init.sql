@@ -2,7 +2,7 @@
 create table log_access
 (
     id                             varchar(40) default (uuid()) not null primary key,
-    v_method                       varchar(10),
+    v_method                       varchar(100),
     v_uri                          varchar(200),
     v_ip                           varchar(15),
     i_status                       integer,

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.remember.dynamic.datasource.mybatisplus.mysql.mapper.LogAccessMapper">
-  <resultMap id="BaseResultMap" type="com.remember.dynamic.datasource.mybatisplus.mysql.entity.LogAccess">
+<mapper namespace="com.remember.dynamic.datasource.mybatisplus.mapper.LogAccessMapper">
+  <resultMap id="BaseResultMap" type="com.remember.dynamic.datasource.mybatisplus.entity.LogAccess">
     <!--@mbg.generated-->
     <!--@Table log_access-->
     <id column="id" jdbcType="VARCHAR" property="id" />

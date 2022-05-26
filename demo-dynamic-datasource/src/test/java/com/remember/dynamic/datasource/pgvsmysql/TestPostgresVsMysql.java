@@ -2,18 +2,14 @@ package com.remember.dynamic.datasource.pgvsmysql;
 
 import com.github.javafaker.Faker;
 import com.remember.dynamic.datasource.SpringBootDemoDynamicDatasourceApplication;
-import com.remember.dynamic.datasource.mybatisplus.mysql.service.LogAccessService;
+import com.remember.dynamic.datasource.mybatisplus.service.MybatisPlusLogAccessService;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Locale;
 import java.util.concurrent.CountDownLatch;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**
@@ -21,12 +17,11 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @date 2022/4/16 19:07
  */
 @Slf4j
-@RunWith(SpringRunner.class)//设置启动器
 @SpringBootTest(classes = {SpringBootDemoDynamicDatasourceApplication.class})
 public class TestPostgresVsMysql {
 
     @Autowired
-    LogAccessService logAccessService;
+    MybatisPlusLogAccessService logAccessService;
 
     @Test
    public void testInsert() {

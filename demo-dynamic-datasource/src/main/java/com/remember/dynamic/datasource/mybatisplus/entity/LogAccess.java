@@ -1,4 +1,4 @@
-package com.remember.dynamic.datasource.mybatisplus.mysql.entity;
+package com.remember.dynamic.datasource.mybatisplus.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
