@@ -3,6 +3,8 @@ elasticsearch7.17.3
 postgresql14.x
 
 
+准备用mapstruct做对象转换
+
 @see https://github.com/Max-Qiu/demo-SpringBoot/tree/main/demo-SpringBoot-Elasticsearch
 
 > 官方教程：[Spring Data Elasticsearch - Reference Documentation](https://docs.spring.io/spring-data/elasticsearch/docs/current/reference/html/#reference)

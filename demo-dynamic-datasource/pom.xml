@@ -29,7 +29,6 @@
         <mybatis-plus.version>3.5.1</mybatis-plus.version>
         <dynamic-datasource.version>3.5.1</dynamic-datasource.version>
         <mybatis-plus-generator.version>3.5.2</mybatis-plus-generator.version>
-        <javafaker.version>1.0.2</javafaker.version>
     </properties>
 
     <dependencies>
@@ -87,7 +86,6 @@
         <dependency>
             <groupId>com.github.javafaker</groupId>
             <artifactId>javafaker</artifactId>
-            <version>${javafaker.version}</version>
         </dependency>
 
         <!-- 不造为啥 dynamic-datasource-spring-boot-starter 会依赖这个 -->

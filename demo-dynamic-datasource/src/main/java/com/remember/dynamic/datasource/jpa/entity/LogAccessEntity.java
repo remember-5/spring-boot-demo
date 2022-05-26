@@ -1,19 +1,30 @@
 package com.remember.dynamic.datasource.jpa.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
+ * GenericGenerator 定义了id生成器
+ * GeneratedValue 中的 generator 对应Generic中的name
  * @author wangjiahao
  * @date 2022/5/26 12:29
  */
 @Builder
 @Entity
-@Table(name = "log_access", schema = "public", catalog = "spring_boot_demo")
+@Table(name = "log_access")
+@NoArgsConstructor
+@AllArgsConstructor
+@GenericGenerator(name = "jpa-uuid", strategy = "uuid")
 public class LogAccessEntity {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(generator = "jpa-uuid", strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "my-uuid", strategy = GenerationType.AUTO)
+    @GenericGenerator(name = "my-uuid", strategy = "com.remember.dynamic.datasource.jpa.config.MyIdGenerator")
     @Id
     @Column(name = "id")
     private String id;

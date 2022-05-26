@@ -14,12 +14,13 @@ spring:
     hibernate:
       ddl-auto: none
     open-in-view: true
-    properties:
-      hibernate:
-        # postgresql14的配置
-        dialect: org.hibernate.dialect.PostgreSQL10Dialect
-        # mysql的配置
-        #dialect: org.hibernate.dialect.PostgreSQL10Dialect
+#    properties:
+#      # 不同数据的时候有点问题，暂时先关闭
+#      hibernate:
+#        # postgresql14的配置
+#        pg-dialect: org.hibernate.dialect.PostgreSQL10Dialect
+#        # mysql的配置
+#        mysql-dialect: org.hibernate.dialect.MySQL8Dialect
 
 # mybatis-plus配置
 mybatis-plus:

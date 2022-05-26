@@ -21,6 +21,7 @@ public class JpaLogAccessServiceImpl implements JpaLogAccessService {
     @Override
     public void mysqlInsert() {
         LogAccessEntity logAccess = LogAccessEntity.builder()
+//                .id(UUID.randomUUID().toString())
                 .vMethod("jpa-mysql-test")
                 .build();
         logAccessRepository.save(logAccess);

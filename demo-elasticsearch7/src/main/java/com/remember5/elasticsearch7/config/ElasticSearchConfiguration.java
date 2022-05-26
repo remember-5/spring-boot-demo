@@ -8,6 +8,7 @@ import org.springframework.data.elasticsearch.client.RestClients;
 import java.time.Duration;
 
 /**
+ * 手动创建链接es
  * @author wangjiahao
  * @date 2022/5/25 19:55
  */
