@@ -23,7 +23,6 @@ public class TikTokController {
 
     @PostMapping
     public R get(@RequestBody TikTokVO tikTok) {// 设置正则表达式
-        R r = new R();
         TikTokDownloader downloader = new TikTokDownloader(tikTok.getShareContent());
 
         if (tikTok.getSaveEnable()) {
@@ -32,12 +31,12 @@ public class TikTokController {
                 tikTok.setFileName(videoName);
             }
             if (!Aria2Utils.downloadFiles(downloader.getDownloadUrl(), tikTok.getFileName())) {
-                return r.setCode(500).setMessage("下载失败！");
+                return R.fail("500",null,"下载失败！");
             }
         }
 
 
-        return r.setCode(200).setData(downloader.getDownloadUrl());
+        return R.success(downloader.getDownloadUrl());
     }
 
 }

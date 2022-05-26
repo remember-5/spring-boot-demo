@@ -1,6 +1,7 @@
 ## 写在前面
 个人练习demo，很多来自此网站http://www.iocoder.cn/
 
+把postgres 和 mysql 的 jpa & mybatisPlus使用写到一起，结合多数据源
 
 ## 模块介绍
 
@@ -31,3 +32,39 @@
 
 ## FAQ
 如果遇到Lombok失效，请升级Lombok的版本
+
+## 打包
+参考`demo-web`中的pom文件
+```xml
+<build>
+        <finalName>demo</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot.version}</version>
+                <configuration> <!-- 这里添加启动路径 -->
+                    <mainClass>com.remember.demo.web.SpringBootDemoWebApplication</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>repackage</id>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+```

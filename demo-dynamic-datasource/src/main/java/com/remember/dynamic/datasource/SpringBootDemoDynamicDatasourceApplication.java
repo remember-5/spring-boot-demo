@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @author wangjiahao
  */
 @SpringBootApplication
-@EnableTransactionManagement()
+@EnableTransactionManagement
 public class SpringBootDemoDynamicDatasourceApplication {
 
     public static void main(String[] args) {

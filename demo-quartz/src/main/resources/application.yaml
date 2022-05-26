@@ -1,0 +1,37 @@
+server:
+  port: 9092
+
+spring:
+  main:
+    banner-mode: off
+  jpa:
+    hibernate:
+      ddl-auto: none
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://127.0.0.1:5432/postgres
+    username: postgres
+    password: postgres
+
+  quartz:
+    jdbc:
+      initialize-schema: always
+    scheduler-name: clusteredScheduler
+    job-store-type: jdbc
+    auto-startup: true
+    startup-delay: 10
+    wait-for-jobs-to-complete-on-shutdown: true
+    overwrite-existing-jobs: false
+    # Quartz Scheduler http://www.quartz-scheduler.org/documentation/2.4.0-SNAPSHOT/configuration.html
+    properties.org.quartz: # JobStore ????
+      jobStore:
+        class: org.springframework.scheduling.quartz.LocalDataSourceJobStore
+        driverDelegateClass: org.quartz.impl.jdbcjobstore.PostgreSQLDelegate
+        tablePrefix: QRTZ_
+        isClustered: true
+        clusterCheckinInterval: 1000
+        useProperties: false
+      threadPool:
+        class: org.quartz.simpl.SimpleThreadPool
+        threadCount: 10
+        threadPriority: 5

@@ -1,0 +1,5 @@
+server:
+  tomcat:
+    max-threads: 200
+
+

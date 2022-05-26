@@ -1,0 +1,12 @@
+spring:
+  rabbitmq:
+    host: 127.0.0.1
+    virtual-host: /websocket-test
+    username: guest
+    password: guest
+
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 0
+    password:
