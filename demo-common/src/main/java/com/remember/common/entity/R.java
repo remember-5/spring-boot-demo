@@ -1,8 +1,5 @@
 package com.remember.common.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.io.Serializable;
 
 /**
@@ -10,11 +7,33 @@ import java.io.Serializable;
  * @author wangjiahao
  * @date 2021/12/30
  */
-@Getter
-@Setter
 public class R<T> implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     /**
      * 状态码

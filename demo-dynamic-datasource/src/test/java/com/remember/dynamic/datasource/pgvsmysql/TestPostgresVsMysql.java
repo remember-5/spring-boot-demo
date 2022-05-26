@@ -1,18 +1,8 @@
 package com.remember.dynamic.datasource.pgvsmysql;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.date.DateUnit;
-import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.date.TimeInterval;
-import cn.hutool.core.lang.UUID;
-import cn.hutool.core.util.RandomUtil;
-import com.baomidou.mybatisplus.test.autoconfigure.MybatisPlusTest;
 import com.github.javafaker.Faker;
-import com.github.javafaker.Internet;
 import com.remember.dynamic.datasource.SpringBootDemoDynamicDatasourceApplication;
-import com.remember.dynamic.datasource.entity.LogAccess;
-import com.remember.dynamic.datasource.mapper.LogAccessMapper;
-import com.remember.dynamic.datasource.service.LogAccessService;
+import com.remember.dynamic.datasource.mybatisplus.mysql.service.LogAccessService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.CountDownLatch;
 

@@ -1,7 +1,6 @@
 package com.remember.dynamic.datasource.service.impl;
 
 import com.remember.dynamic.datasource.SpringBootDemoDynamicDatasourceApplicationTests;
-import com.remember.dynamic.datasource.service.PersonService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

@@ -10,16 +10,18 @@ spring:
         pool-name: MyHikariCP
       primary: my-pg
       datasource:
+        # mysql
         my-mysql:
-          username: root
-          password: root
+          url: jdbc:mysql://192.168.50.237:3306/spring_boot_demo?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8&useLocalSessionState=true
           driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://192.168.50.237:3306/wang?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8&useLocalSessionState=true
+          username: root
+          password: 123456
+        # postgres
         my-pg:
+          url: jdbc:postgresql://192.168.50.237:5432/spring_boot_demo
+          driver-class-name: org.postgresql.Driver
           username: postgres
           password: postgres
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://192.168.50.237:5432/wang
 #          hikari:
-#            is-read-only: true
+#            is-read-only: true # 开启只读
 

@@ -2,10 +2,26 @@ server:
   port: 8080
 
 spring:
+  main:
+    # 关闭日志
+    banner-mode: off
   profiles:
     active: dev
+  # JPA 配置内容，对应 JpaProperties 类
+  jpa:
+    # 打印 SQL 。生产环境，建议关闭
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+    open-in-view: true
+    properties:
+      hibernate:
+        # postgresql14的配置
+        dialect: org.hibernate.dialect.PostgreSQL10Dialect
+        # mysql的配置
+        #dialect: org.hibernate.dialect.PostgreSQL10Dialect
 
-
+# mybatis-plus配置
 mybatis-plus:
   mapper-locations: classpath:mappers/*.xml
   #实体扫描，多个package用逗号或者分号分隔
