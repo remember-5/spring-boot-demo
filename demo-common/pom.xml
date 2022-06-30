@@ -25,6 +25,12 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- hutool工具类 -->
         <dependency>
             <groupId>cn.hutool</groupId>
