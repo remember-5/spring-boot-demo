@@ -16,3 +16,8 @@ spring:
         max-active: 10000 # 连接池最大连接数（使用负值表示没有限制） 默认 8
         max-wait: 5000ms  # 连接池最大阻塞等待时间（使用负值表示没有限制） 默认 -1
     timeout: 0ms # 连接超时时间（记得添加单位，Duration）
+
+web-socket:
+  netty:
+    port: 58080
+    path: /ws
