@@ -1,10 +1,10 @@
-package com.remember.admin.client1;
+package com.remember5.websocket.client;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class AdminClient1ApplicationTests {
+class WebsocketClientApplicationTests {
 
     @Test
     void contextLoads() {

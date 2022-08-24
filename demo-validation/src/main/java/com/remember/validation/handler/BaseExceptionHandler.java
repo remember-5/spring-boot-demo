@@ -1,7 +1,7 @@
 package com.remember.validation.handler;
 
 import com.remember.common.entity.R;
-import com.remember.common.entity.ResultEnum;
+import com.remember.common.entity.REnum;
 import com.remember.validation.exception.BaseException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindException;
@@ -45,7 +45,7 @@ public class BaseExceptionHandler {
             detailMessage.append(constraintViolation.getMessage());
         }
         // 包装 CommonResult 结果
-        return R.fail(ResultEnum.A0400.code,null ,detailMessage.toString());
+        return R.fail(REnum.A0400.code,null ,detailMessage.toString());
     }
 
 
@@ -64,7 +64,7 @@ public class BaseExceptionHandler {
             detailMessage.append(objectError.getDefaultMessage());
         }
         // 包装 CommonResult 结果
-        return R.fail(ResultEnum.A0400.code,null,detailMessage.toString());
+        return R.fail(REnum.A0400.code,null,detailMessage.toString());
     }
 
 }
