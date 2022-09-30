@@ -68,3 +68,6 @@ spring-boot的部分demo，部分参考了http://www.iocoder.cn/
         </plugins>
     </build>
 ```
+# 感谢 JetBrains 免费的开源授权
+<a href="https://www.jetbrains.com/?from=spring-boot-demo" target="_blank">
+<img src="https://i.loli.net/2021/06/22/Kpd28P9GwhUlrck.png" height="200"/></a>
