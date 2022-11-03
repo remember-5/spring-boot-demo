@@ -76,6 +76,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-freemarker</artifactId>
         </dependency>
+
         <!-- freemarker,生成 html -->
         <dependency>
             <groupId>org.freemarker</groupId>
@@ -95,6 +96,12 @@
             <version>${itextpdf.version}</version>
         </dependency>
 
+        <!--   拼接pdf     -->
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>pdfbox</artifactId>
+            <version>2.0.27</version>
+        </dependency>
 
     </dependencies>
 
