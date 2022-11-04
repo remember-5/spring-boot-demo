@@ -115,24 +115,47 @@ public class PdfBoxUtil {
     }
 
     /**
-     * <b> pdf中插入图片</b>
+     * 拼接图片到pdf中，拼接方式是PREPEND，默认是覆盖到pdf上层。如需要更改，请修改 PDPageContentStream.AppendMode.PREPEND
+     *
+     * @param originalPdf pdf源文件路径
+     * @param jointImage  需要拼接的图片路径
+     * @param savePath    保持路径
+     * @param pageNum     拼接到页码
+     * @param x           偏移定位 x
+     * @param y           偏移定位 y
+     * @param width       图片宽
+     * @param height      图片高
+     * @throws IOException 读取文件异常
      */
-    public static void imgInPdf(String originalPdf, String jointImage, String savePath, int x, int y, int width, int height) throws IOException {
+    public static void imgInPdf(String originalPdf, String jointImage, String savePath, int pageNum, int x, int y, int width, int height) throws IOException {
         //Loading an existing document
         File originalFile = new File(originalPdf);
         File jointImageFile = new File(jointImage);
-        imgInPdf(originalFile, jointImageFile, savePath, x, y, width, height);
+        imgInPdf(originalFile, jointImageFile, savePath, pageNum, x, y, width, height);
     }
 
-    public static void imgInPdf(File originalPdf, File jointImage, String savePath, int x, int y, int width, int height) throws IOException {
+    /**
+     * 拼接图片到pdf中，拼接方式是PREPEND，默认是覆盖到pdf上层。如需要更改，请修改 PDPageContentStream.AppendMode.PREPEND
+     *
+     * @param originalPdf pdf源文件
+     * @param jointImage  需要拼接的图片
+     * @param savePath    保持路径
+     * @param pageNum     拼接到页码 页码从0开始
+     * @param x           偏移定位 x
+     * @param y           偏移定位 y
+     * @param width       图片宽
+     * @param height      图片高
+     * @throws IOException 读取文件异常
+     */
+    public static void imgInPdf(File originalPdf, File jointImage, String savePath, int pageNum, int x, int y, int width, int height) throws IOException {
         //Loading an existing document
         PDDocument doc = PDDocument.load(originalPdf);
         //Retrieving the page
-        PDPage page = doc.getPage(0);
+        PDPage page = doc.getPage(pageNum);
         //Creating PDImageXObject object
         PDImageXObject pdImage = PDImageXObject.createFromFileByExtension(jointImage, doc);
         //creating the PDPageContentStream object
-        PDPageContentStream contents = new PDPageContentStream(doc, page, PDPageContentStream.AppendMode.PREPEND,true,false);
+        PDPageContentStream contents = new PDPageContentStream(doc, page, PDPageContentStream.AppendMode.PREPEND, true, false);
         //Drawing the image in the PDF document
         contents.drawImage(pdImage, x, y, width, height);
         System.out.println("Image inserted");
