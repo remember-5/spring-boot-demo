@@ -15,6 +15,8 @@
  */
 package com.remember.junit.utils;
 
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.date.TimeInterval;
 import org.apache.pdfbox.io.MemoryUsageSetting;
 import org.apache.pdfbox.multipdf.PDFMergerUtility;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -166,5 +168,29 @@ public class PdfBoxUtil {
         //Closing the document
         doc.close();
     }
+
+    public static void main(String[] args) throws IOException {
+        TimeInterval timer = DateUtil.timer();
+//        String originalPdfUrl = "https://jf.sh.189.cn/minio/gov-miniapp/testpdf.pdf";
+//        String jointImageUrl = "https://jf.sh.189.cn/minio/gov-miniapp/testimg.png";
+        String savePath = "/Users/wangjiahao/Downloads/";
+//        String resultPdfPath = savePath + "result.pdf";
+//        int x = 100;
+//        int y = 150;
+//        int width = 63;
+//        int height = 90;
+//        int pageNum = 10;
+
+        // 网络资源下载到路径
+//        File originalPdfFile = HttpDownloader.downloadForFile(originalPdfUrl, new File(savePath), -1, null);
+//        File jointImageFile = HttpDownloader.downloadForFile(jointImageUrl, new File(savePath), -1, null);
+//        imgInPdf(originalPdfFile, jointImageFile, resultPdfPath, 10, x, y, width, height);
+        imgInPdf(savePath + "pdf1.pdf", savePath + "img.png", savePath + "result1.pdf", 4, 220, 255, 100, 30);
+        imgInPdf(savePath + "pdf2.pdf", savePath + "img.png", savePath + "result2.pdf", 0, 200, 390, 100, 30);
+        imgInPdf(savePath + "pdf3.pdf", savePath + "img.png", savePath + "result3.pdf", 10, 150, 163, 100, 30);
+        imgInPdf(savePath + "pdf4.pdf", savePath + "img.png", savePath + "result4.pdf", 0, 140, 250, 100, 30);
+        System.err.println(timer.interval());
+    }
+
 
 }
