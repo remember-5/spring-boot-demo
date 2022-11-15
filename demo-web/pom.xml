@@ -20,6 +20,37 @@
         <spring-boot.version>2.2.0.RELEASE</spring-boot.version>
     </properties>
 
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<!--默认激活当前配置-->
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>io.minio</groupId>
+					<artifactId>minio</artifactId>
+					<version>8.4.5</version>
+				</dependency>
+			</dependencies>
+		</profile>
+
+		<profile>
+			<id>prod</id>
+			<dependencies>
+				<dependency>
+					<groupId>io.minio</groupId>
+					<artifactId>minio</artifactId>
+					<version>8.4.3</version>
+				</dependency>
+			</dependencies>
+		</profile>
+
+
+	</profiles>
+
+
     <dependencies>
         <dependency>
             <groupId>com.remember</groupId>
