@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -38,30 +39,31 @@ public class PushServiceImpl implements PushService {
 
     @Override
     public void pushMsg2User(String userId, String msg) {
-
-
         ConcurrentHashMap<String, Channel> userChannelMap = NettyProperties.getUserChannelMap();
-        if (!userChannelMap.containsKey(userId)) {
-            log.warn("用户不在本节点");
+        if (userChannelMap.containsKey(userId)) {
+            // 如果该用户的客户端是与本服务器建立的channel,直接推送消息
+            Channel channel = userChannelMap.get(userId);
+            if (!Objects.isNull(channel)) {
+                channel.writeAndFlush(new TextWebSocketFrame(msg));
+                log.info("用户在本节点,直接发送消息");
+            } else {
+                log.warn("用户在本节点,获取channel出错");
+            }
             return;
         }
-//        Channel channel = userChannelMap.get(userId);
-//        if (!Objects.isNull(channel)) {
-//            // 如果该用户的客户端是与本服务器建立的channel,直接推送消息
-//            channel.writeAndFlush(new TextWebSocketFrame(msg));
-//        } else {
-            log.info("跨节点消息");
-            final Boolean member = redisTemplate.opsForSet().isMember(RedisConstants.REDIS_WEB_SOCKET_USER_SET, userId);
-            if (!member) {
-                log.warn("用户不在线");
-                return;
-            }
-            // 发布，给其他服务器消费
-            NettyPushMessageBody pushMessageBody = new NettyPushMessageBody();
-            pushMessageBody.setUserId(userId);
-            pushMessageBody.setMessage(msg);
-            redisTemplate.convertAndSend(RedisConstants.PUSH_MESSAGE_TO_ONE, pushMessageBody);
-//        }
+
+        final Boolean member = redisTemplate.opsForSet().isMember(RedisConstants.REDIS_WEB_SOCKET_USER_SET, userId);
+        if (!member) {
+            log.warn("用户不在线");
+            return;
+        }
+
+        log.info("跨节点消息");
+        // 发布，给其他服务器消费
+        NettyPushMessageBody pushMessageBody = new NettyPushMessageBody();
+        pushMessageBody.setUserId(userId);
+        pushMessageBody.setMessage(msg);
+        redisTemplate.convertAndSend(RedisConstants.PUSH_MESSAGE_TO_ONE, pushMessageBody);
     }
 
     @Override
