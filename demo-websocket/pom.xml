@@ -17,10 +17,11 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>netty</module>
+        <module>websocket-client</module>
         <module>websocket-single</module>
         <module>websocket-cluster</module>
         <module>websocket-route</module>
-        <module>netty</module>
     </modules>
 
     <properties>

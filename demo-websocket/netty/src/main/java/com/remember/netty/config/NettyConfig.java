@@ -21,13 +21,15 @@ public class NettyConfig {
     /**
      * 存放用户与Chanel的对应信息，用于给指定用户发送消息
      */
-    private static ConcurrentHashMap<String,Channel> userChannelMap = new ConcurrentHashMap<>();
+    private static ConcurrentHashMap<String, Channel> userChannelMap = new ConcurrentHashMap<>();
 
-    private NettyConfig() {}
+    private NettyConfig() {
+    }
 
     /**
      * 获取channel组
-     * @return
+     *
+     * @return 获取channel组
      */
     public static ChannelGroup getChannelGroup() {
         return channelGroup;
@@ -35,9 +37,10 @@ public class NettyConfig {
 
     /**
      * 获取用户channel map
-     * @return
+     *
+     * @return 获取用户channel map
      */
-    public static ConcurrentHashMap<String,Channel> getUserChannelMap(){
+    public static ConcurrentHashMap<String, Channel> getUserChannelMap() {
         return userChannelMap;
     }
 }

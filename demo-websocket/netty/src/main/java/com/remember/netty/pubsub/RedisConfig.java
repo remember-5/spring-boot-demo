@@ -54,9 +54,9 @@ public class RedisConfig {
                                                    MessageListenerAdapter listenerAdapter2) {
         RedisMessageListenerContainer redisMessageListenerContainer = new RedisMessageListenerContainer();
         redisMessageListenerContainer.setConnectionFactory(redisConnectionFactory);
+
         // 订阅频道(发送给指定用户)
         redisMessageListenerContainer.addMessageListener(listenerAdapter1, new PatternTopic(BaseConstant.PUSH_MESSAGE_TO_ONE));
-
         // 订阅频道(发送给所有用户)
         redisMessageListenerContainer.addMessageListener(listenerAdapter2, new PatternTopic(BaseConstant.PUSH_MESSAGE_TO_ALL));
 
