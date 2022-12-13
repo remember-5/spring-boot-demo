@@ -1,9 +1,10 @@
-package com.remember.netty.pubsub;
+package com.remember.netty.config;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.remember.netty.constant.BaseConstant;
+import com.remember.netty.pubsub.MessageReceive;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

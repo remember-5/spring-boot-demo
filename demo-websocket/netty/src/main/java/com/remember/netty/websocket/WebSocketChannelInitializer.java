@@ -46,13 +46,11 @@ public class WebSocketChannelInitializer extends ChannelInitializer<SocketChanne
          */
         ch.pipeline().addLast(new HttpObjectAggregator(8192));
 
-        // 自定义鉴权
-        ch.pipeline().addLast(new AuthHandler());
+        // 自定义鉴权等配置信息
+        // ch.pipeline().addLast(new CustomWebSocketHandler());
 
         //针对客户端，若10s内无读事件则触发心跳处理方法HeartBeatHandler#userEventTriggered
         ch.pipeline().addLast(new IdleStateHandler(10, 0, 0));
-        //自定义空闲状态检测(自定义心跳检测handler)
-        ch.pipeline().addLast(new HeartBeatHandler());
         /*
         说明：
         1、对应webSocket，它的数据是以帧（frame）的形式传递

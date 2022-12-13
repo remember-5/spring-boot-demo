@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author sixiaojie
  * @date 2020-03-28-15:07
  */
-public class NettyConfig {
+public class NettyProperties {
     /**
      * 定义一个channel组，管理所有的channel
      * GlobalEventExecutor.INSTANCE 是全局的事件执行器，是一个单例
@@ -23,7 +23,7 @@ public class NettyConfig {
      */
     private static ConcurrentHashMap<String, Channel> userChannelMap = new ConcurrentHashMap<>();
 
-    private NettyConfig() {
+    private NettyProperties() {
     }
 
     /**

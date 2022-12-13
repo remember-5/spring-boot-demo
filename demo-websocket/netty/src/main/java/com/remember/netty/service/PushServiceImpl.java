@@ -1,8 +1,8 @@
 package com.remember.netty.service;
 
-import com.remember.netty.config.NettyConfig;
+import com.remember.netty.config.NettyProperties;
 import com.remember.netty.constant.BaseConstant;
-import com.remember.netty.pubsub.NettyPushMessageBody;
+import com.remember.netty.entity.NettyPushMessageBody;
 import io.netty.channel.Channel;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +26,7 @@ public class PushServiceImpl implements PushService {
 
     @Override
     public void pushMsgToOne(String userId, String msg) {
-        ConcurrentHashMap<String, Channel> userChannelMap = NettyConfig.getUserChannelMap();
+        ConcurrentHashMap<String, Channel> userChannelMap = NettyProperties.getUserChannelMap();
         Channel channel = userChannelMap.get(userId);
         if (!Objects.isNull(channel)) {
             // 如果该用户的客户端是与本服务器建立的channel,直接推送消息

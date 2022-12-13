@@ -1,4 +1,4 @@
-package com.remember.netty.websocket;
+package com.remember.netty.entity;
 
 import lombok.Data;
 

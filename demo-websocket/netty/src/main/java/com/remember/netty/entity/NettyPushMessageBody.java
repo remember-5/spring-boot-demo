@@ -1,4 +1,4 @@
-package com.remember.netty.pubsub;
+package com.remember.netty.entity;
 
 import lombok.Data;
 

@@ -3,7 +3,8 @@ package com.remember.netty.pubsub;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.remember.netty.config.NettyConfig;
+import com.remember.netty.config.NettyProperties;
+import com.remember.netty.entity.NettyPushMessageBody;
 import io.netty.channel.Channel;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +35,7 @@ public class MessageReceive {
         // 推送消息
         String message = pushMessageBody.getMessage();
         String userId = pushMessageBody.getUserId();
-        ConcurrentHashMap<String, Channel> userChannelMap = NettyConfig.getUserChannelMap();
+        ConcurrentHashMap<String, Channel> userChannelMap = NettyProperties.getUserChannelMap();
         Channel channel = userChannelMap.get(userId);
         if (!Objects.isNull(channel)) {
             // 如果该用户的客户端是与本服务器建立的channel,直接推送消息
@@ -51,7 +52,7 @@ public class MessageReceive {
         Jackson2JsonRedisSerializer serializer = getSerializer(String.class);
         String message = (String) serializer.deserialize(object.getBytes());
         log.info("订阅消息，发送给所有用户：{}", message);
-        NettyConfig.getChannelGroup().writeAndFlush(new TextWebSocketFrame(message));
+        NettyProperties.getChannelGroup().writeAndFlush(new TextWebSocketFrame(message));
     }
 
     private Jackson2JsonRedisSerializer getSerializer(Class clazz) {

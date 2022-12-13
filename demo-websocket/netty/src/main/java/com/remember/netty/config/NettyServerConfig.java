@@ -1,5 +1,6 @@
-package com.remember.netty.websocket;
+package com.remember.netty.config;
 
+import com.remember.netty.websocket.WebSocketChannelInitializer;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelOption;
@@ -17,6 +18,7 @@ import java.net.InetSocketAddress;
 
 /**
  * 提供netty服务，创建服务和销毁服务
+ *
  * @author fly
  * @date 2021-12-24
  */
@@ -24,7 +26,7 @@ import java.net.InetSocketAddress;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class NettyServer {
+public class NettyServerConfig {
 
     private final WebSocketChannelInitializer channelInitializer;
 

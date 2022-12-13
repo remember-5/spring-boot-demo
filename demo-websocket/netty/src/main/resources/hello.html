@@ -9,7 +9,7 @@
     var socket;
     // 判断当前浏览器是否支持webSocket
     if(window.WebSocket){
-        socket = new WebSocket("ws://localhost:58080/webSocket")
+        socket = new WebSocket("ws://localhost:58080/ws")
         // 相当于channel的read事件，ev 收到服务器回送的消息
         socket.onmessage = function (ev) {
             var rt = document.getElementById("responseText");
