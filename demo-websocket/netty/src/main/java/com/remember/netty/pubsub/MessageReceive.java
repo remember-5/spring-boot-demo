@@ -1,14 +1,19 @@
 package com.remember.netty.pubsub;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.parser.Feature;
+import com.alibaba.fastjson.serializer.SerializeConfig;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.fastjson.support.config.FastJsonConfig;
+import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
 import com.remember.netty.config.NettyProperties;
+import com.remember.netty.constant.RedisConstants;
 import com.remember.netty.entity.NettyPushMessageBody;
 import io.netty.channel.Channel;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
@@ -20,48 +25,60 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class MessageReceive {
-
+    private final RedisTemplate<String, Object> redisTemplate;
     /**
      * 订阅消息,发送给指定用户
      *
      * @param object /
      */
     public void getMessageToOne(String object) {
-        Jackson2JsonRedisSerializer serializer = getSerializer(NettyPushMessageBody.class);
-        NettyPushMessageBody pushMessageBody = (NettyPushMessageBody) serializer.deserialize(object.getBytes());
+        NettyPushMessageBody pushMessageBody = JSON.toJavaObject(JSON.parseObject(object), NettyPushMessageBody.class);
+//        FastJsonRedisSerializer serializer = getSerializer(NettyPushMessageBody.class);
+//        NettyPushMessageBody pushMessageBody = (NettyPushMessageBody) serializer.deserialize(object.getBytes());
         log.info("订阅消息,发送给指定用户：{}", pushMessageBody.toString());
 
         // 推送消息
         String message = pushMessageBody.getMessage();
         String userId = pushMessageBody.getUserId();
-        ConcurrentHashMap<String, Channel> userChannelMap = NettyProperties.getUserChannelMap();
-        Channel channel = userChannelMap.get(userId);
-        if (!Objects.isNull(channel)) {
-            // 如果该用户的客户端是与本服务器建立的channel,直接推送消息
-            channel.writeAndFlush(new TextWebSocketFrame(message));
+        final Boolean member = redisTemplate.opsForSet().isMember(RedisConstants.REDIS_WEB_SOCKET_USER_SET, userId);
+        if(!member){
+            log.warn("用户不在线");
+            return;
+        }
+        final boolean hasKey = NettyProperties.getUserChannelMap().containsKey(userId);
+        if (hasKey) {
+            ConcurrentHashMap<String, Channel> userChannelMap = NettyProperties.getUserChannelMap();
+            Channel channel = userChannelMap.get(userId);
+            if (!Objects.isNull(channel)) {
+                // 如果该用户的客户端是与本服务器建立的channel,直接推送消息
+                channel.writeAndFlush(new TextWebSocketFrame(message));
+            }
+        } else {
+            log.warn("未找到userId {} 对应的channel", userId);
         }
     }
 
     /**
      * 订阅消息，发送给所有用户
      *
-     * @param object /
+     * @param message /
      */
-    public void getMessageToAll(String object) {
-        Jackson2JsonRedisSerializer serializer = getSerializer(String.class);
-        String message = (String) serializer.deserialize(object.getBytes());
+    public void getMessageToAll(String message) {
+//        FastJsonRedisSerializer serializer = getSerializer(String.class);
+//        String message = (String) serializer.deserialize(object.getBytes());
         log.info("订阅消息，发送给所有用户：{}", message);
         NettyProperties.getChannelGroup().writeAndFlush(new TextWebSocketFrame(message));
     }
 
-    private Jackson2JsonRedisSerializer getSerializer(Class clazz) {
-        //序列化对象（特别注意：发布的时候需要设置序列化；订阅方也需要设置序列化）
-        Jackson2JsonRedisSerializer seria = new Jackson2JsonRedisSerializer(clazz);
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-        objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
-        seria.setObjectMapper(objectMapper);
-        return seria;
+    private FastJsonRedisSerializer getSerializer(Class clazz) {
+        FastJsonRedisSerializer fastJsonRedisSerializer = new FastJsonRedisSerializer<>(Class.class);
+        FastJsonConfig fastJsonConfig = fastJsonRedisSerializer.getFastJsonConfig();
+        SerializeConfig serializeConfig = fastJsonConfig.getSerializeConfig();
+        fastJsonConfig.setSerializeConfig(serializeConfig);
+        fastJsonConfig.setFeatures(Feature.SupportAutoType);
+        fastJsonConfig.setSerializerFeatures(SerializerFeature.WriteClassName);
+        return fastJsonRedisSerializer;
     }
 }

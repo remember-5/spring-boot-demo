@@ -1,9 +1,10 @@
 package com.remember.netty.config;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.remember.netty.constant.BaseConstant;
+import com.alibaba.fastjson.parser.Feature;
+import com.alibaba.fastjson.serializer.SerializeConfig;
+import com.alibaba.fastjson.support.config.FastJsonConfig;
+import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
+import com.remember.netty.constant.RedisConstants;
 import com.remember.netty.pubsub.MessageReceive;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +14,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.PatternTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
 
 /**
@@ -57,18 +57,17 @@ public class RedisConfig {
         redisMessageListenerContainer.setConnectionFactory(redisConnectionFactory);
 
         // 订阅频道(发送给指定用户)
-        redisMessageListenerContainer.addMessageListener(listenerAdapter1, new PatternTopic(BaseConstant.PUSH_MESSAGE_TO_ONE));
+        redisMessageListenerContainer.addMessageListener(listenerAdapter1, new PatternTopic(RedisConstants.PUSH_MESSAGE_TO_ONE));
         // 订阅频道(发送给所有用户)
-        redisMessageListenerContainer.addMessageListener(listenerAdapter2, new PatternTopic(BaseConstant.PUSH_MESSAGE_TO_ALL));
+        redisMessageListenerContainer.addMessageListener(listenerAdapter2, new PatternTopic(RedisConstants.PUSH_MESSAGE_TO_ALL));
 
-        // todo 序列化需要改
-        //序列化对象（特别注意：发布的时候需要设置序列化；订阅方也需要设置序列化）
-        Jackson2JsonRedisSerializer seria = new Jackson2JsonRedisSerializer(Object.class);
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-        objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
-        seria.setObjectMapper(objectMapper);
-        redisMessageListenerContainer.setTopicSerializer(seria);
+        FastJsonRedisSerializer fastJsonRedisSerializer = new FastJsonRedisSerializer<>(Object.class);
+        FastJsonConfig fastJsonConfig = fastJsonRedisSerializer.getFastJsonConfig();
+        SerializeConfig serializeConfig = fastJsonConfig.getSerializeConfig();
+        fastJsonConfig.setSerializeConfig(serializeConfig);
+        fastJsonConfig.setFeatures(Feature.SupportAutoType);
+//        fastJsonConfig.setSerializerFeatures(SerializerFeature.WriteClassName);
+        redisMessageListenerContainer.setTopicSerializer(fastJsonRedisSerializer);
         return redisMessageListenerContainer;
     }
 

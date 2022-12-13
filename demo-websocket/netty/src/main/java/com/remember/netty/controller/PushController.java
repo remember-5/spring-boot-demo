@@ -20,25 +20,24 @@ public class PushController {
 
     private final PushService pushService;
 
-    /**
-     * 推送给所有用户
-     *
-     * @param msg message
-     */
-    @PostMapping("/pushAll")
-    public void pushToAll(@RequestParam("msg") String msg) {
-        pushService.pushMsgToAll(msg);
+    @PostMapping("/localPush2User")
+    public void localPush2User(@RequestParam("userId") String userId, @RequestParam("msg") String msg) {
+        pushService.localPush2User(userId, msg);
     }
 
-    /**
-     * 推送给指定用户
-     *
-     * @param userId userid
-     * @param msg    user message
-     */
-    @PostMapping("pushOne")
-    public void pushMsgToOne(@RequestParam("userId") String userId, @RequestParam("msg") String msg) {
-        pushService.pushMsgToOne(userId, msg);
+    @PostMapping("/localPushAllUser")
+    public void localPushAllUser(@RequestParam("msg") String msg) {
+        pushService.localPushAllUser(msg);
+    }
+
+    @PostMapping("/pushMsg2User")
+    public void pushMsg2User(@RequestParam("userId") String userId, @RequestParam("msg") String msg) {
+        pushService.pushMsg2User(userId, msg);
+    }
+
+    @PostMapping("/pushMsg2AllUser")
+    public void pushMsg2AllUser(@RequestParam("msg") String msg) {
+        pushService.pushMsg2AllUser(msg);
     }
 
 }
