@@ -1,3 +1,73 @@
+# poi 读取doc文件
+```xml
+<!--   poi读取doc     -->
+<!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
+<dependency>
+    <groupId>org.apache.poi</groupId>
+    <artifactId>poi</artifactId>
+    <version>5.2.3</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
+<dependency>
+    <groupId>org.apache.poi</groupId>
+    <artifactId>poi-ooxml</artifactId>
+    <version>5.2.3</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml-schemas -->
+<dependency>
+    <groupId>org.apache.poi</groupId>
+    <artifactId>poi-ooxml-schemas</artifactId>
+    <version>4.1.2</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/org.apache.poi/poi-scratchpad -->
+<dependency>
+    <groupId>org.apache.poi</groupId>
+    <artifactId>poi-scratchpad</artifactId>
+    <version>5.2.3</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
+<dependency>
+    <groupId>org.apache.logging.log4j</groupId>
+    <artifactId>log4j-core</artifactId>
+    <version>2.20.0</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api -->
+<dependency>
+    <groupId>org.apache.logging.log4j</groupId>
+    <artifactId>log4j-api</artifactId>
+    <version>2.20.0</version>
+</dependency>
+
+```
+
+```java
+
+public static void main(String[] args) {
+        String filePath = "/Users/wangjiahao/Downloads/加密下单接口.docx";
+        String buffer = "";
+        try {
+            if (filePath.endsWith(".doc")) {
+                InputStream is = new FileInputStream(filePath);
+                WordExtractor ex = new WordExtractor(is);
+                buffer = ex.getText();
+                ex.close();
+            } else if (filePath.endsWith("docx")) {
+                OPCPackage opcPackage = POIXMLDocument.openPackage(filePath);
+                POIXMLTextExtractor extractor = new XWPFWordExtractor(opcPackage);
+                buffer = extractor.getText();
+                extractor.close();
+            } else {
+                System.out.println("此文件不是word文件！");
+            }
+            System.err.println(buffer);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+```
+
 # pdfbox 拼接图片
 
 添加相关依赖
@@ -51,9 +121,34 @@ public class PdfBoxUtils {
 }
 ```
 
+## pdf 写入文字
+
+
 # excel2Pdf
 
 excel模版来生成pdf文件
+
+添加pom依赖
+```xml
+<!-- freemarker,生成 html -->
+<dependency>
+    <groupId>org.freemarker</groupId>
+    <artifactId>freemarker</artifactId>
+    <version>${freemarker.version}</version>
+</dependency>
+<!-- 渲染 css 样式 -->
+<dependency>
+    <groupId>org.xhtmlrenderer</groupId>
+    <artifactId>flying-saucer-pdf</artifactId>
+    <version>${flying-saucer-pdf.version}</version>
+</dependency>
+<!-- iText,export pdf -->
+<dependency>
+    <groupId>com.itextpdf</groupId>
+    <artifactId>itextpdf</artifactId>
+    <version>${itextpdf.version}</version>
+</dependency>
+```
 
 在resource中创建模版文件夹`templates`和模版文件`pdf_export_emplyee_kpi.ftl`
 
