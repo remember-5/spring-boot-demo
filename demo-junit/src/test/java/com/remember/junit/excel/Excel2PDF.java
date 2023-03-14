@@ -1,6 +1,8 @@
 package com.remember.junit.excel;
 
 
+import cn.hutool.poi.excel.ExcelReader;
+import cn.hutool.poi.excel.ExcelUtil;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -11,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * @author wangjiahao
@@ -39,8 +42,6 @@ public class Excel2PDF {
 //        wb.saveToFile("/Users/wangjiahao/Downloads/a.pdf", FileFormat.PDF);
 
 
-
-
         // Create Workbook to load Excel file
 //        Workbook workbook = new Workbook(fileName);
 
@@ -63,12 +64,12 @@ public class Excel2PDF {
 
 
     @Test
-    void testExcel2Json(){
+    void testExcel2Json() {
         String filePath = "/Users/wangjiahao/Downloads/64e90931-751c-4017-83d8-bc97f9a0f8a1.xlsx";
         // 这里 需要指定读用哪个class去读，然后读取第一个sheet 文件流会自动关闭
         List<Map> excelList = EasyExcel.read(filePath).sheet().doReadSync();
 
-        final Object[] keys  = excelList.get(0).values().toArray();
+        final Object[] keys = excelList.get(0).values().toArray();
         excelList.remove(0);
 
         ArrayList<JSON> jsons = new ArrayList<>();
@@ -82,6 +83,44 @@ public class Excel2PDF {
             jsons.add(newRowData);
         });
         System.err.println(jsons);
+    }
+
+
+    @Test
+    void testExcel2Content() throws InterruptedException {
+        String filePath = "/Users/wangjiahao/Downloads/test.xlsx";
+
+        ExcelReader reader = ExcelUtil.getReader(filePath);
+        // sheet = 0
+        List<List<Object>> readAll = reader.read();
+
+        final String sheet0Str = list2String(readAll);
+        // 获取多页
+        final int sheetCount = reader.getSheetCount();
+        if (sheetCount > 1) {
+            StringBuilder result = new StringBuilder(sheet0Str);
+            for (int i = 1; i < sheetCount; i++) {
+                reader.setSheet(i);
+                final List<List<Object>> read = reader.read();
+                result.append(list2String(read));
+            }
+            return;
+        }
+        new CountDownLatch(0).await();
+
+    }
+
+
+    private String list2String(List<List<Object>> data) {
+        StringBuilder sb = new StringBuilder();
+        for (List<Object> datum : data) {
+            for (Object obj : datum) {
+                if (null != obj) {
+                    sb.append(obj);
+                }
+            }
+        }
+        return sb.toString();
     }
 
 }
