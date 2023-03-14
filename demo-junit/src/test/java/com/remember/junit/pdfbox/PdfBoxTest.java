@@ -15,10 +15,10 @@
  */
 package com.remember.junit.pdfbox;
 
-import cn.hutool.http.HttpDownloader;
 import com.remember.junit.utils.PdfBoxUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.io.ClassPathResource;
 
 import java.io.File;
 import java.io.IOException;
@@ -45,10 +45,13 @@ public class PdfBoxTest {
 
 
         // 网络资源下载到路径
-        File originalPdfFile = HttpDownloader.downloadForFile(originalPdfUrl, new File(savePath), -1, null);
-        File jointImageFile = HttpDownloader.downloadForFile(jointImageUrl, new File(savePath), -1, null);
-        PdfBoxUtil.imgInPdf(originalPdfFile, jointImageFile, resultPdfPath, pageNum, x, y, width, height);
-
+//        File originalPdfFile = HttpDownloader.downloadForFile(originalPdfUrl, new File(savePath), -1, null);
+//        File jointImageFile = HttpDownloader.downloadForFile(jointImageUrl, new File(savePath), -1, null);
+//        PdfBoxUtil.imgInPdf(originalPdfFile, jointImageFile, resultPdfPath, pageNum, x, y, width, height);
+//        final String fileName = ResourceFileUtil.getAbsolutePath("static/font/simfang.ttf");
+        ClassPathResource classPathResource = new ClassPathResource("static/font/simfang.ttf");
+        File fontFile = classPathResource.getFile();
+        PdfBoxUtil.textInPdf(savePath + "pdf1.pdf", "中国电信上海分公司", savePath + "result1.pdf", 0, 180, 660, fontFile, 12);
     }
 
 }
