@@ -2,9 +2,15 @@ package com.remember.junit.excel;
 
 
 import com.alibaba.excel.EasyExcel;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.remember.junit.entity.FillData;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author wangjiahao
@@ -53,6 +59,29 @@ public class Excel2PDF {
 //        map.put("name", "张三");
 //        map.put("number", 5.2);
 //        EasyExcel.write(fileName).withTemplate(templateFileName).sheet().doFill(map);
+    }
+
+
+    @Test
+    void testExcel2Json(){
+        String filePath = "/Users/wangjiahao/Downloads/64e90931-751c-4017-83d8-bc97f9a0f8a1.xlsx";
+        // 这里 需要指定读用哪个class去读，然后读取第一个sheet 文件流会自动关闭
+        List<Map> excelList = EasyExcel.read(filePath).sheet().doReadSync();
+
+        final Object[] keys  = excelList.get(0).values().toArray();
+        excelList.remove(0);
+
+        ArrayList<JSON> jsons = new ArrayList<>();
+        excelList.forEach(list -> {
+            final Object[] originalRowData = JSON.parseObject(list.toString()).values().toArray();
+            final JSONObject newRowData = new JSONObject();
+
+            for (int i = 0; i < keys.length; i++) {
+                newRowData.put(keys[i].toString(), originalRowData[i]);
+            }
+            jsons.add(newRowData);
+        });
+        System.err.println(jsons);
     }
 
 }

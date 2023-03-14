@@ -22,8 +22,10 @@ import org.apache.pdfbox.multipdf.PDFMergerUtility;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.apache.pdfbox.rendering.PDFRenderer;
+import org.apache.pdfbox.text.PDFTextStripper;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -65,12 +67,12 @@ public class PdfBoxUtil {
     /***
      * PDF文件转PNG图片，全部页数
      *
-     * @param PdfFilePath pdf完整路径
+     * @param filePath pdf完整路径
      * @param dstImgFolder 图片存放的文件夹
      * @param dpi dpi越大转换后越清晰，相对转换速度越慢
      */
-    public static void pdfToImage(String PdfFilePath, String dstImgFolder, int dpi) {
-        File file = new File(PdfFilePath);
+    public static void pdfToImage(String filePath, String dstImgFolder, int dpi) {
+        File file = new File(filePath);
         PDDocument pdDocument;
         try {
             String imgPDFPath = file.getParent();
@@ -169,6 +171,42 @@ public class PdfBoxUtil {
         doc.close();
     }
 
+
+    public static void textInPdf(String originalPdf, String jointText, String savePath, int pageNum, int x, int y, File fontFile, float fontSize) throws IOException {
+        File originalFile = new File(originalPdf);
+        // Loading an existing document
+        PDDocument doc = PDDocument.load(originalFile);
+        // Retrieving the page
+        PDPage page = doc.getPage(pageNum);
+        // creating the PDPageContentStream object
+        PDPageContentStream contents = new PDPageContentStream(doc, page, PDPageContentStream.AppendMode.PREPEND, true, false);
+
+        PDType0Font font1 = PDType0Font.load(doc, fontFile);
+        contents.beginText();
+//        contents.setFont(PDType1Font.TIMES_ROMAN, 12);
+        contents.setFont(font1, fontSize);
+        contents.newLineAtOffset(x, y);
+        contents.showText(jointText);
+        contents.endText();
+
+        //Closing the PDPageContentStream object
+        contents.close();
+        //Saving the document
+        doc.save(savePath);
+        //Closing the document
+        doc.close();
+    }
+
+    public static String readPdfText(String filePath) throws IOException {
+        final File file = new File(filePath);
+        PDDocument doc = PDDocument.load(file);
+        PDFTextStripper pdfTextStripper = new PDFTextStripper();
+        String text = pdfTextStripper.getText(doc);
+        doc.close();
+        return text;
+    }
+
+
     public static void main(String[] args) throws IOException {
         TimeInterval timer = DateUtil.timer();
 //        String originalPdfUrl = "https://jf.sh.189.cn/minio/gov-miniapp/testpdf.pdf";
@@ -185,10 +223,13 @@ public class PdfBoxUtil {
 //        File originalPdfFile = HttpDownloader.downloadForFile(originalPdfUrl, new File(savePath), -1, null);
 //        File jointImageFile = HttpDownloader.downloadForFile(jointImageUrl, new File(savePath), -1, null);
 //        imgInPdf(originalPdfFile, jointImageFile, resultPdfPath, 10, x, y, width, height);
-        imgInPdf(savePath + "pdf1.pdf", savePath + "img.png", savePath + "result1.pdf", 4, 220, 255, 100, 30);
-        imgInPdf(savePath + "pdf2.pdf", savePath + "img.png", savePath + "result2.pdf", 0, 200, 390, 100, 30);
-        imgInPdf(savePath + "pdf3.pdf", savePath + "img.png", savePath + "result3.pdf", 10, 150, 163, 100, 30);
-        imgInPdf(savePath + "pdf4.pdf", savePath + "img.png", savePath + "result4.pdf", 0, 140, 250, 100, 30);
+//        imgInPdf(savePath + "pdf1.pdf", savePath + "img.png", savePath + "result1.pdf", 4, 220, 255, 100, 30);
+//        imgInPdf(savePath + "pdf2.pdf", savePath + "img.png", savePath + "result2.pdf", 0, 200, 390, 100, 30);
+//        imgInPdf(savePath + "pdf3.pdf", savePath + "img.png", savePath + "result3.pdf", 10, 150, 163, 100, 30);
+//        imgInPdf(savePath + "pdf4.pdf", savePath + "img.png", savePath + "result4.pdf", 0, 140, 250, 100, 30);
+        File fontFile = new File("/Users/wangjiahao/IdeaProjects/spring-boot-demo/demo-junit/src/main/java/com/remember/junit/utils/simfang.ttf");
+        textInPdf(savePath + "pdf1.pdf", "中国电信上海分公司", savePath + "result1.pdf", 0, 180, 660, fontFile, 12);
+        System.err.println(readPdfText(savePath + "pdf1.pdf"));
         System.err.println(timer.interval());
     }
 
