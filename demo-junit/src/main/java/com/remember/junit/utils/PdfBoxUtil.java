@@ -72,7 +72,7 @@ public class PdfBoxUtil {
      * @param dstImgFolder 图片存放的文件夹
      * @param dpi dpi越大转换后越清晰，相对转换速度越慢
      */
-    public static void pdfToImage(String filePath, String dstImgFolder, int dpi) {
+    public static void pdf2Image(String filePath, String dstImgFolder, int dpi) {
         File file = new File(filePath);
         PDDocument pdDocument;
         try {

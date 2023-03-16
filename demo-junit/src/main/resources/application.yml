@@ -17,5 +17,5 @@ spring:
 
 ## pdf export config
 pdfExport:
-  fontSimsun: static/font/simsun.ttc
+  fontSimsun: static/fonts/simsun.ttc
   employeeKpiFtl: templates/pdf_export_employee_kpi.ftl

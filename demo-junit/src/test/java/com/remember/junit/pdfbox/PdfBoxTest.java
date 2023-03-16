@@ -49,7 +49,7 @@ public class PdfBoxTest {
 //        File jointImageFile = HttpDownloader.downloadForFile(jointImageUrl, new File(savePath), -1, null);
 //        PdfBoxUtil.imgInPdf(originalPdfFile, jointImageFile, resultPdfPath, pageNum, x, y, width, height);
 //        final String fileName = ResourceFileUtil.getAbsolutePath("static/font/simfang.ttf");
-        ClassPathResource classPathResource = new ClassPathResource("static/font/simfang.ttf");
+        ClassPathResource classPathResource = new ClassPathResource("static/fonts/simfang.ttf");
         File fontFile = classPathResource.getFile();
         PdfBoxUtil.textInPdf(savePath + "pdf1.pdf", "中国电信上海分公司", savePath + "result1.pdf", 0, 180, 660, fontFile, 12);
     }

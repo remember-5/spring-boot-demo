@@ -61,7 +61,7 @@
         <skipTests>true</skipTests>
 
         <!--plugins-->
-        <hutool.version>5.8.1</hutool.version>
+        <hutool.version>5.8.15</hutool.version>
         <guava.version>31.1-jre</guava.version>
         <user.agent.version>1.20</user.agent.version>
         <fastjson.version>1.2.83</fastjson.version>
@@ -74,6 +74,7 @@
         <spring.boot.version>2.5.13</spring.boot.version>
     </properties>
 
+    <!-- 依赖声明 -->
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -115,17 +116,54 @@
         </dependencies>
     </dependencyManagement>
 
+    <dependencies>
+
+
+    </dependencies>
+
+    <!--  打包相关  -->
+    <build>
+        <plugins>
+            <!--     maven编译插件       -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>${jdk.version}</source>
+                    <target>${jdk.version}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+        <!--   插件声明，有些包不需要打jar，所以只是声明     -->
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+
+    <!-- 配置依赖仓库 -->
     <repositories>
         <repository>
-            <id>aliyun</id>
-            <name>aliyun</name>
+            <id>public</id>
+            <name>aliyun nexus</name>
             <url>https://maven.aliyun.com/repository/public</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
         </repository>
     </repositories>
 
@@ -134,7 +172,7 @@
         <pluginRepository>
             <id>public</id>
             <name>aliyun nexus</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <url>https://maven.aliyun.com/repository/public</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -143,4 +181,5 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
+
 </project>
