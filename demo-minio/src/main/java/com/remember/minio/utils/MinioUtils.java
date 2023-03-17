@@ -15,17 +15,20 @@ import io.minio.*;
 import io.minio.errors.*;
 import io.minio.http.Method;
 import io.minio.messages.Bucket;
+import io.minio.messages.Item;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -85,6 +88,15 @@ public class MinioUtils {
         }
     }
 
+    /**
+     * 获得Bucket策略
+     *
+     * @param bucketName 存储桶名称
+     * @return Bucket策略
+     */
+    public String getBucketPolicy(String bucketName) throws Exception {
+        return minioClient.getBucketPolicy(GetBucketPolicyArgs.builder().bucket(bucketName).build());
+    }
 
     /**
      * 更改bucket为custom
@@ -247,6 +259,108 @@ public class MinioUtils {
     }
 
     /**
+     * 判断文件是否存在
+     *
+     * @param bucketName 存储桶名称
+     * @param objectName 文件名
+     * @return true：存在；false：不存在
+     */
+    public boolean isObjectExist(String bucketName, String objectName) {
+        boolean exist = true;
+        try {
+            minioClient.statObject(StatObjectArgs.builder().bucket(bucketName).object(objectName).build());
+        } catch (Exception e) {
+            exist = false;
+        }
+        return exist;
+    }
+
+    /**
+     * 判断文件夹是否存在
+     *
+     * @param bucketName 存储桶名称
+     * @param objectName 文件夹名称
+     * @return true：存在；false：不存在
+     */
+    public boolean isFolderExist(String bucketName, String objectName) {
+        boolean exist = false;
+        try {
+            ListObjectsArgs listObjectsArgs = ListObjectsArgs.builder()
+                    .bucket(bucketName)
+                    .prefix(objectName)
+                    .recursive(false)
+                    .build();
+            Iterable<Result<Item>> results = minioClient.listObjects(listObjectsArgs);
+            for (Result<Item> result : results) {
+                Item item = result.get();
+                if (item.isDir() && objectName.equals(item.objectName())) {
+                    exist = true;
+                }
+            }
+        } catch (Exception e) {
+            exist = false;
+        }
+        return exist;
+    }
+
+    /**
+     * 创建文件夹或目录
+     *
+     * @param bucketName 存储桶名称
+     * @param objectName 目录路径
+     */
+    public ObjectWriteResponse createDir(String bucketName, String objectName) throws Exception {
+        PutObjectArgs putObjectArgs = PutObjectArgs.builder()
+                .bucket(bucketName)
+                .object(objectName)
+                .stream(new ByteArrayInputStream(new byte[]{}), 0, -1)
+                .build();
+        return minioClient.putObject(putObjectArgs);
+    }
+
+    /**
+     * 根据文件前缀查询文件
+     *
+     * @param bucketName 存储桶名称
+     * @param prefix     前缀
+     * @param recursive  是否使用递归查询
+     * @return MinioItem列表
+     */
+    public List<Item> getAllObjectsByPrefix(String bucketName, String prefix, boolean recursive) throws Exception {
+        List<Item> list = new ArrayList<>();
+        ListObjectsArgs listObjectsArgs = ListObjectsArgs.builder()
+                .bucket(bucketName)
+                .prefix(prefix)
+                .recursive(recursive)
+                .build();
+        Iterable<Result<Item>> objectsIterator = minioClient.listObjects(listObjectsArgs);
+        if (objectsIterator != null) {
+            for (Result<Item> o : objectsIterator) {
+                Item item = o.get();
+                list.add(item);
+            }
+        }
+        return list;
+    }
+
+    /**
+     * 获取路径下文件列表
+     *
+     * @param bucketName 存储桶名称
+     * @param prefix     文件名称
+     * @param recursive  是否递归查找，false：模拟文件夹结构查找
+     * @return 二进制流
+     */
+    public Iterable<Result<Item>> listObjects(String bucketName, String prefix, boolean recursive) {
+        ListObjectsArgs listObjectsArgs = ListObjectsArgs.builder()
+                .bucket(bucketName)
+                .prefix(prefix)
+                .recursive(recursive)
+                .build();
+        return minioClient.listObjects(listObjectsArgs);
+    }
+
+    /**
      * 获取文件外链
      *
      * @param bucketName bucket名称
@@ -306,6 +420,23 @@ public class MinioUtils {
     }
 
     /**
+     * 拷贝文件
+     *
+     * @param bucketName    存储桶名称
+     * @param objectName    文件名
+     * @param srcBucketName 目标存储桶
+     * @param srcObjectName 目标文件名
+     */
+    public ObjectWriteResponse copyObject(String bucketName, String objectName, String srcBucketName, String srcObjectName) throws Exception {
+        return minioClient.copyObject(CopyObjectArgs.builder()
+                .source(CopySource.builder()
+                        .bucket(bucketName)
+                        .object(objectName).build())
+                .bucket(srcBucketName)
+                .object(srcObjectName).build());
+    }
+
+    /**
      * 删除文件
      *
      * @param objectName 文件名称
@@ -314,6 +445,22 @@ public class MinioUtils {
     public void removeObject(String bucketName, String objectName) throws ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException, ServerException, io.minio.errors.InsufficientDataException, io.minio.errors.InternalException {
         minioClient.removeObject(RemoveObjectArgs.builder().bucket(bucketName).object(objectName).versionId("version-id").build());
         log.info("删除 {} 文件成功", objectName);
+    }
+
+    /**
+     * 批量删除文件
+     *
+     * @param bucketName 存储桶名称
+     * @param keys       需要删除的文件列表
+     */
+    public void removeObjects(String bucketName, List<String> keys) {
+        keys.forEach(key -> {
+            try {
+                removeObject(bucketName, key);
+            } catch (Exception e) {
+                log.error("批量删除失败！error:{0}", e);
+            }
+        });
     }
 
 
