@@ -14,8 +14,11 @@ import java.io.Serializable;
 @Configuration
 @ConfigurationProperties(prefix = "spring.minio")
 public class MinioProperties implements Serializable {
+    private Boolean enabled;
     private String endpoint;
-    private String bucket;
+    private String defaultBucket;
     private String accessKey;
     private String secretKey;
+    private String domain;
+    private Long expiry;
 }

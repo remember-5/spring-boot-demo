@@ -1,9 +1,19 @@
 spring:
   minio:
+    # 开启minio
+    enabled: true
+    # 服务器地址
     endpoint: http://192.168.227.128:9000
-    bucket: wangjiahao
+    # 默认bucket
+    default-bucket: test-minio
+    # ak
     access-key: minioadmin
+    # sk
     secret-key: minioadmin
+    # 自定义域名
+    domain: http://192.168.227.128:9000
+    # 文件预览的时间
+    expiry: 10800
   servlet:
     multipart:
       max-file-size: 100MB

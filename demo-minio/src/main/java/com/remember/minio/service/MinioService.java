@@ -1,9 +1,8 @@
 package com.remember.minio.service;
 
 import com.remember.common.entity.R;
+import com.remember.minio.entity.Base64Uploader;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.InputStream;
 
 /**
  * @author wangjiahao
@@ -21,10 +20,10 @@ public interface MinioService {
     /**
      * base64上传
      *
-     * @param fileData base64
+     * @param base64Uploader base64
      * @return /
      */
-    R uploadFile(String fileData);
+    R uploadFile(Base64Uploader base64Uploader);
 
     /**
      * 删除文件
@@ -33,12 +32,4 @@ public interface MinioService {
      * @return /
      */
     R removeObject(String objectName);
-
-    /**
-     * 下载文件流
-     *
-     * @param objectName 文件名
-     * @return /
-     */
-    InputStream getObject(String objectName);
 }
