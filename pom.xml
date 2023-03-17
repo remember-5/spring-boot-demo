@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.remember</groupId>
+    <groupId>com.remember5</groupId>
     <artifactId>spring-boot-demo</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
@@ -34,6 +34,7 @@
         <module>demo-swagger</module>
         <module>demo-redis</module>
         <module>demo-junit</module>
+        <module>demo-liquibase</module>
         <module>demo-dynamic-datasource</module>
         <module>demo-jwt</module>
         <module>demo-minio</module>

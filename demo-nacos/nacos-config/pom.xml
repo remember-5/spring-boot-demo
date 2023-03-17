@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>demo-nacos</artifactId>
-        <groupId>com.remember</groupId>
+        <groupId>com.remember5</groupId>
         <version>1.0.0</version>
     </parent>
 
@@ -21,7 +21,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.remember</groupId>
+            <groupId>com.remember5</groupId>
             <artifactId>demo-common</artifactId>
             <version>0.0.1</version>
         </dependency>

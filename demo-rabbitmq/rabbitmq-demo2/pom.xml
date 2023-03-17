@@ -2,13 +2,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
+        <groupId>com.remember5</groupId>
         <artifactId>demo-rabbitmq</artifactId>
-        <groupId>com.remember</groupId>
         <version>1.0.0</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.example</groupId>
     <artifactId>rabbitmq-demo2</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>rabbitmq-demo2</name>
