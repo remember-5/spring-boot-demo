@@ -23,6 +23,7 @@ import com.remember.junit.utils.PdfBoxUtil;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.IOException;
 
@@ -49,9 +50,13 @@ public class Runner implements CommandLineRunner {
             final String pngTmpPath = FileUtil.getTmpDirPath() + UUID.fastUUID() + ".png";
             final String ttfTmpPath = FileUtil.getTmpDirPath() + UUID.fastUUID() + ".ttf";
 
-            IoUtil.copy(new ClassPathResource(path1).getStream(), FileUtil.getOutputStream(pdfTmpPath));
-            IoUtil.copy(new ClassPathResource(path2).getStream(), FileUtil.getOutputStream(pngTmpPath));
-            IoUtil.copy(new ClassPathResource(path3).getStream(), FileUtil.getOutputStream(ttfTmpPath));
+            final BufferedOutputStream pdfTmpPathStream = FileUtil.getOutputStream(pdfTmpPath);
+            final BufferedOutputStream pngTmpPathStream = FileUtil.getOutputStream(pngTmpPath);
+            final BufferedOutputStream ttfTmpPathStream = FileUtil.getOutputStream(ttfTmpPath);
+
+            IoUtil.copy(new ClassPathResource(path1).getStream(), pdfTmpPathStream);
+            IoUtil.copy(new ClassPathResource(path2).getStream(), pngTmpPathStream);
+            IoUtil.copy(new ClassPathResource(path3).getStream(), ttfTmpPathStream);
 
             System.err.println(pdfTmpPath);
             System.err.println(pngTmpPath);
@@ -70,6 +75,8 @@ public class Runner implements CommandLineRunner {
             FileUtil.del(ttfTmpPath);
             FileUtil.del(result1);
             FileUtil.del(result2);
+
+            IoUtil.close(pdfTmpPathStream);
 
             System.err.println("end");
 
