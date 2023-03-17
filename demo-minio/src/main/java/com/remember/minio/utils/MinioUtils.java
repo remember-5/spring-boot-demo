@@ -16,6 +16,7 @@ import io.minio.errors.*;
 import io.minio.http.Method;
 import io.minio.messages.Bucket;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -39,9 +40,9 @@ public class MinioUtils {
     private final MinioClient minioClient;
     private final MinioProperties minioProperties;
 
-    public MinioUtils(MinioClient minioClient, MinioProperties minioProperties) {
-        this.minioClient = minioClient;
+    public MinioUtils(@Autowired(required = false) MinioClient minioClient, MinioProperties minioProperties) {
         this.minioProperties = minioProperties;
+        this.minioClient = minioClient;
     }
 
     /**
