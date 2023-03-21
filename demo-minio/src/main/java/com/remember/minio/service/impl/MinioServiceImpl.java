@@ -1,32 +1,21 @@
 package com.remember.minio.service.impl;
 
 
-import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import com.amazonaws.HttpMethod;
-import com.amazonaws.services.s3.model.*;
 import com.remember.common.entity.R;
 import com.remember.common.entity.REnum;
-import com.remember.minio.constant.MinioConstant;
 import com.remember.minio.entity.*;
 import com.remember.minio.properties.MinioProperties;
 import com.remember.minio.service.MinioService;
 import com.remember.minio.utils.MinioUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.MediaType;
-import org.springframework.http.MediaTypeFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.Date;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * @author wangjiahao
@@ -102,31 +91,31 @@ public class MinioServiceImpl implements MinioService {
     @Override
     public TaskInfoDTO initTask(InitTaskParam param) {
 
-        Date currentDate = new Date();
-        String bucketName = minioProperties.getDefaultBucket();
-        String fileName = param.getFileName();
-        String suffix = fileName.substring(fileName.lastIndexOf(".")+1, fileName.length());
-        String key = StrUtil.format("{}/{}.{}", DateUtil.format(currentDate, "YYYY-MM-dd"), IdUtil.randomUUID(), suffix);
-        String contentType = MediaTypeFactory.getMediaType(key).orElse(MediaType.APPLICATION_OCTET_STREAM).toString();
-        ObjectMetadata objectMetadata = new ObjectMetadata();
-        objectMetadata.setContentType(contentType);
-        InitiateMultipartUploadResult initiateMultipartUploadResult = amazonS3
-                .initiateMultipartUpload(new InitiateMultipartUploadRequest(bucketName, key).withObjectMetadata(objectMetadata));
-        String uploadId = initiateMultipartUploadResult.getUploadId();
-
-        SysUploadTask task = new SysUploadTask();
-        int chunkNum = (int) Math.ceil(param.getTotalSize() * 1.0 / param.getChunkSize());
-        task.setBucketName(minioProperties.getDefaultBucket())
-                .setChunkNum(chunkNum)
-                .setChunkSize(param.getChunkSize())
-                .setTotalSize(param.getTotalSize())
-                .setFileIdentifier(param.getIdentifier())
-                .setFileName(fileName)
-                .setObjectKey(key)
-                .setUploadId(uploadId);
-        // todo 保存到redis
-        // sysUploadTaskMapper.insert(task);
-        return new TaskInfoDTO().setFinished(false).setTaskRecord(TaskRecordDTO.convertFromEntity(task)).setPath(getPath(bucketName, key));
+//        Date currentDate = new Date();
+//        String bucketName = minioProperties.getDefaultBucket();
+//        String fileName = param.getFileName();
+//        String suffix = fileName.substring(fileName.lastIndexOf(".")+1, fileName.length());
+//        String key = StrUtil.format("{}/{}.{}", DateUtil.format(currentDate, "YYYY-MM-dd"), IdUtil.randomUUID(), suffix);
+//        String contentType = MediaTypeFactory.getMediaType(key).orElse(MediaType.APPLICATION_OCTET_STREAM).toString();
+//        ObjectMetadata objectMetadata = new ObjectMetadata();
+//        objectMetadata.setContentType(contentType);
+////        InitiateMultipartUploadResult initiateMultipartUploadResult = amazonS3.initiateMultipartUpload(new InitiateMultipartUploadRequest(bucketName, key).withObjectMetadata(objectMetadata));
+////        String uploadId = initiateMultipartUploadResult.getUploadId();
+//
+//        SysUploadTask task = new SysUploadTask();
+//        int chunkNum = (int) Math.ceil(param.getTotalSize() * 1.0 / param.getChunkSize());
+//        task.setBucketName(minioProperties.getDefaultBucket())
+//                .setChunkNum(chunkNum)
+//                .setChunkSize(param.getChunkSize())
+//                .setTotalSize(param.getTotalSize())
+//                .setFileIdentifier(param.getIdentifier())
+//                .setFileName(fileName)
+//                .setObjectKey(key)
+//                .setUploadId(uploadId);
+//        // todo 保存到redis
+//        // sysUploadTaskMapper.insert(task);
+//        return new TaskInfoDTO().setFinished(false).setTaskRecord(TaskRecordDTO.convertFromEntity(task)).setPath(getPath(bucketName, key));
+        return null;
     }
 
     @Override
@@ -136,55 +125,57 @@ public class MinioServiceImpl implements MinioService {
 
     @Override
     public TaskInfoDTO getTaskInfo(String identifier) {
-        SysUploadTask task = getByIdentifier(identifier);
-        if (task == null) {
-            return null;
-        }
-        TaskInfoDTO result = new TaskInfoDTO().setFinished(true).setTaskRecord(TaskRecordDTO.convertFromEntity(task)).setPath(getPath(task.getBucketName(), task.getObjectKey()));
-
-        boolean doesObjectExist = amazonS3.doesObjectExist(task.getBucketName(), task.getObjectKey());
-        if (!doesObjectExist) {
-            // 未上传完，返回已上传的分片
-            ListPartsRequest listPartsRequest = new ListPartsRequest(task.getBucketName(), task.getObjectKey(), task.getUploadId());
-            PartListing partListing = amazonS3.listParts(listPartsRequest);
-            result.setFinished(false).getTaskRecord().setExitPartList(partListing.getParts());
-        }
-        return result;
+//        SysUploadTask task = getByIdentifier(identifier);
+//        if (task == null) {
+//            return null;
+//        }
+//        TaskInfoDTO result = new TaskInfoDTO().setFinished(true).setTaskRecord(TaskRecordDTO.convertFromEntity(task)).setPath(getPath(task.getBucketName(), task.getObjectKey()));
+//
+//        boolean doesObjectExist = amazonS3.doesObjectExist(task.getBucketName(), task.getObjectKey());
+//        if (!doesObjectExist) {
+//            // 未上传完，返回已上传的分片
+//            ListPartsRequest listPartsRequest = new ListPartsRequest(task.getBucketName(), task.getObjectKey(), task.getUploadId());
+//            PartListing partListing = amazonS3.listParts(listPartsRequest);
+//            result.setFinished(false).getTaskRecord().setExitPartList(partListing.getParts());
+//        }
+//        return result;
+        return null;
     }
 
     @Override
     public String genPreSignUploadUrl(String bucket, String objectKey, Map<String, String> params) {
-        Date currentDate = new Date();
-        Date expireDate = DateUtil.offsetMillisecond(currentDate, MinioConstant.PRE_SIGN_URL_EXPIRE.intValue());
-        GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest(bucket, objectKey)
-                .withExpiration(expireDate).withMethod(HttpMethod.PUT);
-        if (params != null) {
-            params.forEach((key, val) -> request.addRequestParameter(key, val));
-        }
-        URL preSignedUrl = amazonS3.generatePresignedUrl(request);
-        return preSignedUrl.toString();
+//        Date currentDate = new Date();
+//        Date expireDate = DateUtil.offsetMillisecond(currentDate, MinioConstant.PRE_SIGN_URL_EXPIRE.intValue());
+//        GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest(bucket, objectKey)
+//                .withExpiration(expireDate).withMethod(HttpMethod.PUT);
+//        if (params != null) {
+//            params.forEach((key, val) -> request.addRequestParameter(key, val));
+//        }
+//        URL preSignedUrl = amazonS3.generatePresignedUrl(request);
+//        return preSignedUrl.toString();
+        return null;
     }
 
     @Override
     public void merge(String identifier) {
-        SysUploadTask task = getByIdentifier(identifier);
-        if (task == null) {
-            throw new RuntimeException("分片任务不存");
-        }
-
-        ListPartsRequest listPartsRequest = new ListPartsRequest(task.getBucketName(), task.getObjectKey(), task.getUploadId());
-        PartListing partListing = amazonS3.listParts(listPartsRequest);
-        List<PartSummary> parts = partListing.getParts();
-        if (!task.getChunkNum().equals(parts.size())) {
-            // 已上传分块数量与记录中的数量不对应，不能合并分块
-            throw new RuntimeException("分片缺失，请重新上传");
-        }
-        CompleteMultipartUploadRequest completeMultipartUploadRequest = new CompleteMultipartUploadRequest()
-                .withUploadId(task.getUploadId())
-                .withKey(task.getObjectKey())
-                .withBucketName(task.getBucketName())
-                .withPartETags(parts.stream().map(partSummary -> new PartETag(partSummary.getPartNumber(), partSummary.getETag())).collect(Collectors.toList()));
-        CompleteMultipartUploadResult result = amazonS3.completeMultipartUpload(completeMultipartUploadRequest);
+//        SysUploadTask task = getByIdentifier(identifier);
+//        if (task == null) {
+//            throw new RuntimeException("分片任务不存");
+//        }
+//
+//        ListPartsRequest listPartsRequest = new ListPartsRequest(task.getBucketName(), task.getObjectKey(), task.getUploadId());
+//        PartListing partListing = amazonS3.listParts(listPartsRequest);
+//        List<PartSummary> parts = partListing.getParts();
+//        if (!task.getChunkNum().equals(parts.size())) {
+//            // 已上传分块数量与记录中的数量不对应，不能合并分块
+//            throw new RuntimeException("分片缺失，请重新上传");
+//        }
+//        CompleteMultipartUploadRequest completeMultipartUploadRequest = new CompleteMultipartUploadRequest()
+//                .withUploadId(task.getUploadId())
+//                .withKey(task.getObjectKey())
+//                .withBucketName(task.getBucketName())
+//                .withPartETags(parts.stream().map(partSummary -> new PartETag(partSummary.getPartNumber(), partSummary.getETag())).collect(Collectors.toList()));
+//        CompleteMultipartUploadResult result = amazonS3.completeMultipartUpload(completeMultipartUploadRequest);
     }
 
 
