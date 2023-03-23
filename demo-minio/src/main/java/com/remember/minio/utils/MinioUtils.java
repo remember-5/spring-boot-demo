@@ -54,11 +54,11 @@ public class MinioUtils {
     public static final String DELETE_FAIL = "删除失败";
     public static final String DELETE_BUCKET_FAIL = "删除临时桶失败";
     public static final String CREATE_BUCKET_FAIL = "创建桶失败";
-    public static final String CHUNK_EXIST= "块文件已存在";
-    public static final String CHUNK_NOT_EXIST= "块文件不存在";
-    public static final String CHUNK_UPLOAD_SUCCESS= "块文件上传成功";
-    public static final String MERGE_FAIL= "合并失败";
-    public static final String MERGE_SUCCESS= "合并成功";
+    public static final String CHUNK_EXIST = "块文件已存在";
+    public static final String CHUNK_NOT_EXIST = "块文件不存在";
+    public static final String CHUNK_UPLOAD_SUCCESS = "块文件上传成功";
+    public static final String MERGE_FAIL = "合并失败";
+    public static final String MERGE_SUCCESS = "合并成功";
     private final MinioClient minioClient;
     private final MinioProperties minioProperties;
 
@@ -215,6 +215,41 @@ public class MinioUtils {
             String urlBuilder = (CharSequenceUtil.isBlank(minioProperties.getDomain()) ? minioProperties.getEndpoint() : minioProperties.getDomain()) +
                     FILE_SEPARATOR + bucket + FILE_SEPARATOR + filename;
             return new MinioResponse(o, true, urlBuilder);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return null;
+        }
+    }
+
+    public ObjectWriteResponse uploadObject(String bucket, String objectName, String filename, String contentType) {
+        try {
+            UploadObjectArgs objectArgs = UploadObjectArgs.builder().bucket(bucket).object(objectName).filename(filename).contentType(contentType).build();
+            return minioClient.uploadObject(objectArgs);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     *  合并分片文件
+     * @param bucket 桶名称
+     * @param objectName 文件名称
+     * @param fileUrls 分片文件名称
+     * @return /
+     */
+    public ObjectWriteResponse composeObject(String bucket, String objectName, List<String> fileUrls) {
+        try {
+            List<ComposeSource> sourceObjectList = new ArrayList<ComposeSource>();
+            for (String url : fileUrls) {
+                sourceObjectList.add(ComposeSource.builder().bucket(bucket).object(url).build());
+            }
+            ComposeObjectArgs build = ComposeObjectArgs.builder()
+                    .bucket(bucket)
+                    .object(objectName)
+                    .sources(sourceObjectList)
+                    .build();
+            return minioClient.composeObject(build);
         } catch (Exception e) {
             log.error(e.getMessage());
             return null;
