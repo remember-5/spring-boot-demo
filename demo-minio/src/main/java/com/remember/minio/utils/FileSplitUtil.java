@@ -3,6 +3,8 @@ package com.remember.minio.utils;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author fly
@@ -16,8 +18,9 @@ public class FileSplitUtil {
      * @param file
      * @param count
      */
-    public static void getSplitFile(String file, int count, long partSize) {
+    public static List<Long> getSplitFile(String file, int count, long partSize) {
         //预分配文件所占用的磁盘空间，在磁盘创建一个指定大小的文件，“r”表示只读，“rw”支持随机读写
+        List<Long> fileSize = new ArrayList<Long>();
         try {
             RandomAccessFile raf = new RandomAccessFile(new File(file), "r");
             // 计算文件大小
@@ -38,16 +41,19 @@ public class FileSplitUtil {
                 long fend = (i + 1) * partSize;
                 // 写入文件
                 offset = getWrite(file, i, fbegin, fend);
+                fileSize.add(partSize);
             }
 
             // 剩余部分文件写入到最后一份(如果不能平平均分配的时候)
             if (length - offset > 0) {
                 // 写入文件
-                getWrite(file, count - 1, offset, length);
+                long write = getWrite(file, count - 1, offset, length);
+                fileSize.add(write - offset);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return fileSize;
     }
 
     /**

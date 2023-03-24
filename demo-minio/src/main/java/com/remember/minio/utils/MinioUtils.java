@@ -28,6 +28,7 @@ import java.io.InputStream;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -225,6 +226,33 @@ public class MinioUtils {
         try {
             UploadObjectArgs objectArgs = UploadObjectArgs.builder().bucket(bucket).object(objectName).filename(filename).contentType(contentType).build();
             return minioClient.uploadObject(objectArgs);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return null;
+        }
+    }
+
+    public ObjectWriteResponse uploadSnowballObjects(String bucket, List<String> fileName, List<InputStream> files, List<Long> partSizes) {
+        try {
+            List<SnowballObject> objects = new ArrayList<SnowballObject>();
+            for (int i = 0; i < files.size(); i++) {
+                objects.add(new SnowballObject(fileName.get(i), files.get(i),partSizes.get(i) , ZonedDateTime.now()));
+            }
+//            List<SnowballObject> objects = new ArrayList<SnowballObject>();
+//            objects.add(
+//                    new SnowballObject(
+//                            "my-object-one",
+//                            new ByteArrayInputStream("hello".getBytes(StandardCharsets.UTF_8)),
+//                            5,
+//                            null));
+//            objects.add(
+//                    new SnowballObject(
+//                            "my-object-two",
+//                            new ByteArrayInputStream("java".getBytes(StandardCharsets.UTF_8)),
+//                            4,
+//                            null));
+            UploadSnowballObjectsArgs args = UploadSnowballObjectsArgs.builder().bucket(bucket).objects(objects).build();
+            return minioClient.uploadSnowballObjects(args);
         } catch (Exception e) {
             log.error(e.getMessage());
             return null;
