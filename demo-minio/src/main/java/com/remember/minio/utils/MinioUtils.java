@@ -236,7 +236,7 @@ public class MinioUtils {
         try {
             List<SnowballObject> objects = new ArrayList<SnowballObject>();
             for (int i = 0; i < files.size(); i++) {
-                objects.add(new SnowballObject(fileName.get(i), files.get(i),partSizes.get(i) , ZonedDateTime.now()));
+                objects.add(new SnowballObject(fileName.get(i), files.get(i), partSizes.get(i), ZonedDateTime.now()));
             }
 //            List<SnowballObject> objects = new ArrayList<SnowballObject>();
 //            objects.add(
@@ -260,10 +260,11 @@ public class MinioUtils {
     }
 
     /**
-     *  合并分片文件
-     * @param bucket 桶名称
+     * 合并分片文件
+     *
+     * @param bucket     桶名称
      * @param objectName 文件名称
-     * @param fileUrls 分片文件名称
+     * @param fileUrls   分片文件名称
      * @return /
      */
     public ObjectWriteResponse composeObject(String bucket, String objectName, List<String> fileUrls) {
@@ -286,13 +287,24 @@ public class MinioUtils {
 
 
     /**
+     * 判断桶是否存在
+     *
+     * @param bucket 桶名称
+     * @return bool
+     * @throws Exception 查询异常
+     */
+    private boolean bucketExists(String bucket) throws Exception {
+        return minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucket).build());
+    }
+
+    /**
      * 检查文件分区是否存在，如果没有就创建
      *
      * @param bucket 文件分区名字
      */
-    private void bucketExists(String bucket) {
+    private void bucketExistsAndCreate(String bucket) {
         try {
-            if (minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucket).build())) {
+            if (bucketExists(bucket)) {
                 return;
             }
             log.info("文件分区未存在,正在创建分区{}", bucket);
@@ -301,7 +313,6 @@ public class MinioUtils {
             log.error("文件分区 {} 异常, {}", bucket, e.getMessage());
         }
     }
-
 
     /**
      * @param url    需要下载的文件地址
