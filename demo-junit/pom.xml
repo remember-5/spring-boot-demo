@@ -20,7 +20,7 @@
         <spring-boot.version>2.2.0.RELEASE</spring-boot.version>
         <freemarker.version>2.3.28</freemarker.version>
         <flying-saucer-pdf.version>9.1.16</flying-saucer-pdf.version>
-        <itextpdf.version>5.5.13</itextpdf.version>
+        <itextpdf.version>5.5.13.3</itextpdf.version>
     </properties>
 
     <dependencies>
