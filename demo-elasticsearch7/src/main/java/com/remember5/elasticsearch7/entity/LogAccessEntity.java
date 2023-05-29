@@ -4,8 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.DateFormat;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
-import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
@@ -13,66 +17,64 @@ import java.sql.Timestamp;
  * @date 2022/5/27 00:06
  */
 @Data
-@Entity
 @Builder
-@Table(name = "log_access", schema = "public", catalog = "spring_boot_demo")
-@AllArgsConstructor
+@Document(indexName = "log_access")
 @NoArgsConstructor
+@AllArgsConstructor
 public class LogAccessEntity {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     @Id
-    @Column(name = "id")
     private String id;
-    @Basic
-    @Column(name = "v_method")
+
+    @Field(type = FieldType.Keyword)
     private String vMethod;
-    @Basic
-    @Column(name = "v_uri")
+
+    @Field(type = FieldType.Keyword)
     private String vUri;
-    @Basic
-    @Column(name = "v_ip")
+
+    @Field(type = FieldType.Keyword)
     private String vIp;
-    @Basic
-    @Column(name = "i_status")
+
+    @Field(type = FieldType.Integer)
     private Integer iStatus;
-    @Basic
-    @Column(name = "v_type")
+
+    @Field(type = FieldType.Keyword)
     private String vType;
-    @Basic
-    @Column(name = "v_browser")
+
+    @Field(type = FieldType.Keyword)
     private String vBrowser;
-    @Basic
-    @Column(name = "b_success")
+
+    @Field(type = FieldType.Boolean)
     private Boolean bSuccess;
-    @Basic
-    @Column(name = "v_application")
+
+    @Field(type = FieldType.Keyword)
     private String vApplication;
-    @Basic
-    @Column(name = "v_data_id")
+
+    @Field(type = FieldType.Keyword)
     private String vDataId;
-    @Basic
-    @Column(name = "v_alias_at_app_module")
+
+    @Field(type = FieldType.Keyword)
     private String vAliasAtAppModule;
-    @Basic
-    @Column(name = "v_alias_at_app_module_function")
+
+    @Field(type = FieldType.Keyword)
     private String vAliasAtAppModuleFunction;
-    @Basic
-    @Column(name = "b_skip")
+
+    @Field(type = FieldType.Boolean)
     private Boolean bSkip;
-    @Basic
-    @Column(name = "id_at_auth_user")
+
+    @Field(type = FieldType.Keyword)
     private String idAtAuthUser;
-    @Basic
-    @Column(name = "t_create")
+
+    @Field(type = FieldType.Date, format = DateFormat.date_hour_minute_second_millis)
     private Timestamp tCreate;
-    @Basic
-    @Column(name = "v_body")
+
+    @Field(type = FieldType.Text, analyzer = "ik_max_word")
     private String vBody;
-    @Basic
-    @Column(name = "id_at_app_module")
+
+    @Field(type = FieldType.Keyword)
     private String idAtAppModule;
-    @Basic
-    @Column(name = "v_device")
+
+    @Field(type = FieldType.Keyword)
     private String vDevice;
 
 

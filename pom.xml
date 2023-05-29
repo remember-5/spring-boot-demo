@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.remember</groupId>
+    <groupId>com.remember5</groupId>
     <artifactId>spring-boot-demo</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
@@ -23,28 +23,31 @@
     <modules>
         <module>demo-admin</module>
         <module>demo-common</module>
+        <module>demo-dynamic-datasource</module>
         <module>demo-elasticsearch6</module>
         <module>demo-elasticsearch7</module>
-        <module>demo-mybatis-plus</module>
-        <module>demo-sentinel</module>
-        <module>demo-spi</module>
-        <module>demo-interview</module>
         <module>demo-encrypt</module>
-        <module>demo-validation</module>
-        <module>demo-swagger</module>
-        <module>demo-redis</module>
+        <module>demo-interview</module>
         <module>demo-junit</module>
-        <module>demo-dynamic-datasource</module>
         <module>demo-jwt</module>
+        <module>demo-liquibase</module>
         <module>demo-minio</module>
+        <module>demo-mybatis-plus</module>
+        <module>demo-nacos</module>
+        <module>demo-oauth2</module>
+        <module>demo-quartz</module>
         <module>demo-rabbitmq</module>
+        <module>demo-redis</module>
         <module>demo-rocketmq</module>
         <module>demo-security</module>
+        <module>demo-sentinel</module>
+        <module>demo-skywalking</module>
+        <module>demo-spi</module>
+        <module>demo-swagger</module>
+        <module>demo-validation</module>
         <module>demo-web</module>
-        <module>demo-oauth2</module>
-        <module>demo-nacos</module>
+        <module>demo-webflux</module>
         <module>demo-websocket</module>
-        <module>demo-quartz</module>
     </modules>
 
 

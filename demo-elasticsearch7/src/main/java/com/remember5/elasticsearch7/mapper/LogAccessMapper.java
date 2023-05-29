@@ -1,6 +1,5 @@
 package com.remember5.elasticsearch7.mapper;
 
-import com.remember5.elasticsearch7.entity.EsLogAccessEntity;
 import com.remember5.elasticsearch7.entity.LogAccessEntity;
 import org.mapstruct.Mapper;
 
@@ -10,5 +9,5 @@ import org.mapstruct.Mapper;
  */
 @Mapper(componentModel = "spring")
 public interface LogAccessMapper {
-    EsLogAccessEntity toEsEntity(LogAccessEntity logAccessEntity);
+    LogAccessEntity toEsEntity(LogAccessEntity logAccessEntity);
 }

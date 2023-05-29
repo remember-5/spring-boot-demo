@@ -1,10 +1,11 @@
 package com.remember.minio.entity;
 
-import cn.hutool.core.codec.Base64Decoder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 /**
  * @author fly
@@ -12,62 +13,67 @@ import java.io.*;
  */
 @Slf4j
 public class Base64DecodedMultipartFile implements MultipartFile {
-    private final byte[] imgContent;
-    private final String header;
+    private final byte[] fileContent;
 
-    public Base64DecodedMultipartFile(byte[] imgContent, String header) {
-        this.imgContent = imgContent;
-        this.header = header.split(";")[0];
+    private final String extension;
+    private final String contentType;
+
+
+    /**
+     * @param base64
+     * @param dataUri 格式类似于: data:image/png;base64
+     */
+    public Base64DecodedMultipartFile(String base64, String dataUri) {
+        this.fileContent = Base64.getDecoder().decode(base64.getBytes(StandardCharsets.UTF_8));
+        this.extension = dataUri.split(";")[0].split("/")[1];
+        this.contentType = dataUri.split(";")[0].split(":")[1];
+    }
+
+    public Base64DecodedMultipartFile(String base64, String extension, String contentType) {
+        this.fileContent = Base64.getDecoder().decode(base64.getBytes(StandardCharsets.UTF_8));
+        this.extension = extension;
+        this.contentType = contentType;
     }
 
     @Override
     public String getName() {
-        return System.currentTimeMillis() + Math.random() + "." + header.split("/")[1];
+        return "param_" + System.currentTimeMillis();
     }
 
     @Override
     public String getOriginalFilename() {
-        return System.currentTimeMillis() + (int) Math.random() * 10000 + "." + header.split("/")[1];
+        return "file_" + System.currentTimeMillis() + "." + extension;
     }
 
     @Override
     public String getContentType() {
-        return header.split(":")[1];
+        return contentType;
     }
 
     @Override
     public boolean isEmpty() {
-        return imgContent == null || imgContent.length == 0;
+        return fileContent == null || fileContent.length == 0;
     }
 
     @Override
     public long getSize() {
-        return imgContent.length;
+        return fileContent.length;
     }
 
     @Override
     public byte[] getBytes() throws IOException {
-        return imgContent;
+        return fileContent;
     }
 
     @Override
     public InputStream getInputStream() throws IOException {
-        return new ByteArrayInputStream(imgContent);
+        return new ByteArrayInputStream(fileContent);
     }
 
     @Override
-    public void transferTo(File dest) throws IOException, IllegalStateException {
-        new FileOutputStream(dest).write(imgContent);
-    }
-
-    public static MultipartFile base64ToMultipart(String base64) {
-        String[] baseStrs = base64.split(",");
-        byte[] b = Base64Decoder.decode(baseStrs[1]);
-        for (int i = 0; i < b.length; ++i) {
-            if (b[i] < 0) {
-                b[i] += 256;
-            }
+    public void transferTo(File file) throws IOException, IllegalStateException {
+        try (FileOutputStream fos = new FileOutputStream(file)) {
+            fos.write(fileContent);
         }
-        return new Base64DecodedMultipartFile(b, baseStrs[0]);
     }
 }

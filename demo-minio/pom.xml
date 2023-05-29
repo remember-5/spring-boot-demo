@@ -3,12 +3,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.remember</groupId>
+        <groupId>com.remember5</groupId>
         <artifactId>spring-boot-demo</artifactId>
         <version>1.0.0</version>
     </parent>
 
-    <groupId>com.remember</groupId>
     <artifactId>demo-minio</artifactId>
     <version>1.0.0</version>
     <name>demo-minio</name>
@@ -18,12 +17,12 @@
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <spring-boot.version>2.1.18.RELEASE</spring-boot.version>
+        <spring-boot.version>2.5.14</spring-boot.version>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>com.remember</groupId>
+            <groupId>com.remember5</groupId>
             <artifactId>demo-common</artifactId>
             <version>0.0.1</version>
         </dependency>
@@ -65,7 +64,12 @@
         <dependency>
             <groupId>io.minio</groupId>
             <artifactId>minio</artifactId>
-            <version>8.4.1</version>
+            <version>8.5.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>4.8.1</version>
         </dependency>
 
     </dependencies>
@@ -85,17 +89,9 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                    <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot.version}</version>
             </plugin>
         </plugins>
     </build>

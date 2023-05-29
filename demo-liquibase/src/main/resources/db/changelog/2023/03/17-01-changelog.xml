@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1679042879966-1" author="wangjiahao (generated)">
+        <createTable tableName="t_user">
+            <column autoIncrement="true" name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="t_user_pk"/>
+            </column>
+            <column name="name" type="VARCHAR"/>
+            <column name="age" type="INTEGER"/>
+            <column name="gander" type="INTEGER"/>
+            <column name="address" type="VARCHAR"/>
+            <column name="create_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+        </createTable>
+        <sqlFile path="t_user.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+</databaseChangeLog>

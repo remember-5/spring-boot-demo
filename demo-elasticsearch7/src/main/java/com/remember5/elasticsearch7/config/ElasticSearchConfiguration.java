@@ -1,7 +1,6 @@
 package com.remember5.elasticsearch7.config;
 
 import org.elasticsearch.client.RestHighLevelClient;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.data.elasticsearch.client.ClientConfiguration;
 import org.springframework.data.elasticsearch.client.RestClients;
 
@@ -12,7 +11,7 @@ import java.time.Duration;
  * @author wangjiahao
  * @date 2022/5/25 19:55
  */
-@Configuration
+//@Configuration
 public class ElasticSearchConfiguration {
 
 //    @Bean

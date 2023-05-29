@@ -5,6 +5,8 @@ import cn.hutool.core.util.ObjectUtil;
 import com.remember.common.entity.R;
 import com.remember.common.entity.REnum;
 import com.remember.minio.entity.Base64DecodedMultipartFile;
+import com.remember.minio.entity.Base64Uploader;
+import com.remember.minio.entity.MinioResponse;
 import com.remember.minio.properties.MinioProperties;
 import com.remember.minio.service.MinioService;
 import com.remember.minio.utils.MinioUtils;
@@ -14,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * @author wangjiahao
@@ -27,21 +28,20 @@ public class MinioServiceImpl implements MinioService {
     private final MinioUtils minioUtils;
 
     /**
-     * @Author: fly
-     * @Description: 文件上传
-     * @Date: 2020/10/15
-     * @Param: [file]
-     * @Return: java.lang.String
+     * 文件上传
+     *
+     * @param file file
+     * @return /
      */
     @Override
     public R uploadFile(MultipartFile file) {
         if (ObjectUtil.isNotNull(file)) {
-            boolean flag = false;
             try {
-                flag = minioUtils.upload(file, minioProperties.getBucket());
-                return flag ? R.success(flag) : R.fail(REnum.A0500);
+                final MinioResponse upload = minioUtils.upload(file, minioProperties.getDefaultBucket());
+                return upload.stats() ? R.success(upload.stats()) : R.fail(REnum.A0500);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                log.error("文件上传异常 {}", file.getOriginalFilename());
+                return R.fail(REnum.A0700);
             }
         }
         return R.fail(REnum.A0500);
@@ -50,34 +50,35 @@ public class MinioServiceImpl implements MinioService {
     /**
      * base64上传
      *
-     * @param fileData base64
+     * @param base64Uploader base64
      * @return /
      */
     @Override
-    public R uploadFile(String fileData) {
-        return uploadFile(Base64DecodedMultipartFile.base64ToMultipart(fileData));
+    public R uploadFile(Base64Uploader base64Uploader) {
+        final String[] base64Array = base64Uploader.getData().split(",");
+        String dataUir;
+        String data;
+        if (base64Array.length > 1) {
+            dataUir = base64Array[0];
+            data = base64Array[1];
+        } else {
+            //根据你base64代表的具体文件构建
+            dataUir = "data:image/jpg;base64";
+            data = base64Array[0];
+        }
+        MultipartFile multipartFile = new Base64DecodedMultipartFile(data, dataUir);
+        return uploadFile(multipartFile);
     }
 
     @Override
     public R removeObject(String objectName) {
         try {
-            minioUtils.removeObject(minioProperties.getBucket(), objectName);
+            minioUtils.removeObject(minioProperties.getDefaultBucket(), objectName);
             return R.success();
         } catch (Exception e) {
             log.error(e.getMessage());
             return R.fail(REnum.A0500);
         }
     }
-
-    @Override
-    public InputStream getObject(String objectName) {
-        try {
-            return minioUtils.getObject(minioProperties.getBucket(), objectName);
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            return null;
-        }
-    }
-
 
 }

@@ -45,9 +45,34 @@ import java.time.LocalDateTime;
     refreshIntervall, 默认为“1s”
     indexStoreType, 默认为"fs"
 
+@Field(type=FieldType.Text, analyzer=“ik_max_word”) 表示该字段是一个文本，并作最大程度拆分，默认建立索引
+@Field(type=FieldType.Text,index=false) 表示该字段是一个文本，不建立索引
+    1) 支持分词，全文检索,支持模糊、精确查询,不支持聚合,排序操作
+    2) text类型的最大支持的字符长度无限制,适合大字段存储；
+    使用场景：
+        存储全文搜索数据, 例如: 邮箱内容、地址、代码块、博客文章内容等。
+        默认结合standard analyzer(标准解析器)对文本进行分词、倒排索引。
+        默认结合标准分析器进行词命中、词频相关度打分。
+
+
+@Field(type=FieldType.Date) 表示该字段是一个文本，日期类型，默认不建立索引
+@Field(type=FieldType.Long) 表示该字段是一个长整型，默认建立索引
+@Field(type=FieldType.Keyword) 表示该字段内容是一个文本并作为一个整体不可分，默认建立索引
+    1) 不进行分词，直接索引,支持模糊、支持精确匹配，支持聚合、排序操作。
+    2) keyword类型的最大支持的长度为——32766个UTF-8类型的字符,可以通过设置ignore_above指定自持字符长度，超过给定长度后的数据将不被索引，无法通过term精确匹配检索返回结果。
+    使用场景：
+        存储邮箱号码、url、name、title，手机号码、主机名、状态码、邮政编码、标签、年龄、性别等数据。
+        用于筛选数据(例如: select * from x where status='open')、排序、聚合(统计)。
+        直接将完整的文本保存到倒排索引中。
+
+@Field(type=FieldType.Float) 表示该字段内容是一个浮点类型并作为一个整体不可分，默认建立索引
+date 、float、long都是不能够被拆分的
+
 */
 
 // @formatter:on
+
+
 
 /**
  * @author Max_Qiu
