@@ -7,27 +7,27 @@ spring-boot的部分demo，部分参考了http://www.iocoder.cn/
 
 | 模块 | 介绍 |  
 | -- | -- |  
-| spring-boot-demo-admin | spring-boot-admin模块
-| spring-boot-demo-common | 公共模块
-| spring-boot-demo-dynamic-datasource | springboot多数据demo
-| spring-boot-demo-elasticsearch | springboot结合es
-| spring-boot-demo-encrypt | 测试springboot结合加密
-| spring-boot-demo-guava | google工具类guava的使用
-| spring-boot-demo-interview | 面试练习
-| spring-boot-demo-jpa | jpa联系
-| spring-boot-demo-junit | junit单元测试案例
-| spring-boot-demo-jwt | jwt token-demo
-| spring-boot-demo-minio | minio文件上传demo
-| spring-boot-demo-mybatis-plus | springboot结合mybatisplus并且配置多数据源和ps6py打印日志
-| spring-boot-demo-postgresql | 结合postgres
-| spring-boot-demo-rabbitmq | rabbitmq
-| spring-boot-demo-redis | redis操作demo
-| spring-boot-demo-rocketmq-consumer | rocketmq
-| spring-boot-demo-rocketmq-provider | rocketmq
-| spring-boot-demo-sentinel | 结合sentinel
-| spring-boot-demo-spi | 整合spi
-| spring-boot-demo-swagger | swagger2 knife4j-ui
-| spring-boot-demo-validation | spring数据校验
+| demo-admin | spring-boot-admin模块
+| demo-common | 公共模块
+| demo-dynamic-datasource | springboot多数据demo
+| demo-elasticsearch6 | springboot结合es
+| demo-elasticsearch7 | springboot结合es
+| demo-encrypt | 测试springboot结合加密
+| demo-interview | 面试练习
+| demo-junit | junit单元测试案例
+| demo-jwt | jwt token-demo
+| demo-liquibase| liquibase使用教程
+| demo-minio | minio文件上传demo
+| demo-mybatis-plus | springboot结合mybatisplus并且配置多数据源和ps6py打印日志
+| demo-postgresql | 结合postgres
+| demo-rabbitmq | rabbitmq
+| demo-redis | redis操作demo
+| demo-rocketmq-consumer | rocketmq
+| demo-rocketmq-provider | rocketmq
+| demo-sentinel | 结合sentinel
+| demo-spi | 整合spi
+| demo-swagger | swagger2 knife4j-ui
+| demo-validation | spring数据校验
 
 
 ## FAQ
