@@ -41,6 +41,7 @@
         <module>demo-rocketmq</module>
         <module>demo-security</module>
         <module>demo-sentinel</module>
+        <module>demo-skywalking</module>
         <module>demo-spi</module>
         <module>demo-swagger</module>
         <module>demo-validation</module>
