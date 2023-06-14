@@ -1,8 +1,6 @@
 ## 写在前面
 spring-boot的部分demo，部分参考了http://www.iocoder.cn/
 
-把postgres 和 mysql 的 jpa & mybatisPlus使用写到一起，结合多数据源
-
 ## 模块介绍
 
 | 模块 | 介绍 |  
@@ -19,15 +17,22 @@ spring-boot的部分demo，部分参考了http://www.iocoder.cn/
 | demo-liquibase| liquibase使用教程
 | demo-minio | minio文件上传demo
 | demo-mybatis-plus | springboot结合mybatisplus并且配置多数据源和ps6py打印日志
-| demo-postgresql | 结合postgres
+| demo-nacos | nacos的基本代码
+| demo-oauth2 | oauth2单点登录
+| demo-office | office(excel/word/ppt)等操作
+| demo-quartz | 定时任务
 | demo-rabbitmq | rabbitmq
 | demo-redis | redis操作demo
-| demo-rocketmq-consumer | rocketmq
-| demo-rocketmq-provider | rocketmq
+| demo-rocketmq | rocketmq
+| demo-security | security安全代码
 | demo-sentinel | 结合sentinel
+| demo-skywalking | skywalking链路追踪
 | demo-spi | 整合spi
 | demo-swagger | swagger2 knife4j-ui
 | demo-validation | spring数据校验
+| demo-web | web常用代码
+| demo-webflux | spring-webflux简单使用教程
+| demo-websocket | spring和netty-websocket结合使用代码
 
 
 ## FAQ
