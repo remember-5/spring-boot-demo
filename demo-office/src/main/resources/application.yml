@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: spring-boot-demo-office
+  freemarker:
+    # ??????
+    cache: false
+    # ????
+    charset: UTF-8
+    # freemarker???? ??? .ftl
+    suffix: .ftl
+    # ????????MVC??????
+    enabled: true
+    # Content-Type?
+    content-type: text/html
+    # #?????? ???? ,????? classpath:/templates/
+    template-loader-path: classpath:/templates/
+
+## pdf export config
+pdfExport:
+  fontSimsun: static/fonts/simsun.ttc
+  employeeKpiFtl: templates/pdf_export_employee_kpi.ftl

@@ -35,6 +35,7 @@
         <module>demo-mybatis-plus</module>
         <module>demo-nacos</module>
         <module>demo-oauth2</module>
+        <module>demo-office</module>
         <module>demo-quartz</module>
         <module>demo-rabbitmq</module>
         <module>demo-redis</module>
