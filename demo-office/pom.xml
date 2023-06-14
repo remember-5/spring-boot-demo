@@ -143,6 +143,15 @@
             <version>2.20.0</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/e-iceblue/spire.pdf.free -->
+        <dependency>
+            <groupId>e-iceblue</groupId>
+            <artifactId>spire.pdf.free</artifactId>
+            <version>5.1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/spire.pdf.free-5.1.0.jar</systemPath>
+        </dependency>
+
     </dependencies>
 
     <dependencyManagement>
@@ -205,5 +214,4 @@
             </resource>
         </resources>
     </build>
-
 </project>

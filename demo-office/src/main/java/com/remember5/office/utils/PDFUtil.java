@@ -4,6 +4,8 @@ import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
 import com.itextpdf.html2pdf.resolver.font.DefaultFontProvider;
 import com.itextpdf.kernel.pdf.PdfWriter;
+import com.spire.pdf.FileFormat;
+import com.spire.pdf.PdfDocument;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -45,7 +47,7 @@ public class PDFUtil {
         final File file = new File(ftlFilePath);
         configuration.setDefaultEncoding("UTF-8");
         configuration.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-        try(Writer out = new StringWriter()) {
+        try (Writer out = new StringWriter()) {
             configuration.setDirectoryForTemplateLoading(new File(file.getParent()));
             configuration.setLogTemplateExceptions(false);
             configuration.setWrapUncheckedExceptions(true);
@@ -104,5 +106,28 @@ public class PDFUtil {
             HtmlConverter.convertToPdf(html, pdfWriter, converterProperties);
         }
     }
+
+    /**
+     * 使用Spire.PDF 来完成pdf2word
+     *
+     * @param pdfPath /
+     * @param docPath /
+     * @throws Exception /
+     */
+    public static void pdf2word(String pdfPath, String docPath) throws Exception {
+        //创建一个 PdfDocument 对象
+        PdfDocument doc = new PdfDocument();
+
+        //加载 PDF 文件
+        doc.loadFromFile(pdfPath);
+
+        //将PDF转换为Doc格式文件并保存
+//        doc.saveToFile(docPath, FileFormat.DOC);
+
+        //将PDF转换为Docx格式文件并保存
+        doc.saveToFile(docPath, FileFormat.DOCX);
+        doc.close();
+    }
+
 
 }
