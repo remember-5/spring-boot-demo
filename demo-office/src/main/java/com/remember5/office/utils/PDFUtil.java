@@ -114,7 +114,7 @@ public class PDFUtil {
      * @param docPath /
      * @throws Exception /
      */
-    public static void pdf2word(String pdfPath, String docPath) throws Exception {
+    public static void pdf2word(String pdfPath, String docPath) {
         //创建一个 PdfDocument 对象
         PdfDocument doc = new PdfDocument();
 

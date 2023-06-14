@@ -65,3 +65,7 @@ pdfExport:
 读取word和填充查看`com/remember5/office/poi/PoiTest.java:52`
 读取excel 有很多种方式，poi暂时有冲突未解决
 
+
+
+# 使用Spire.PDF 来完成pdf2word
+查看`com/remember5/office/utils/PDFUtil.java:117`
