@@ -65,7 +65,7 @@
         <skipTests>true</skipTests>
 
         <!--plugins-->
-        <hutool.version>5.8.15</hutool.version>
+        <hutool.version>5.8.19</hutool.version>
         <guava.version>31.1-jre</guava.version>
         <user.agent.version>1.20</user.agent.version>
         <fastjson.version>1.2.83</fastjson.version>

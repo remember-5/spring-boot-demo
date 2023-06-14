@@ -2,6 +2,8 @@ server:
   port: 8080
 
 spring:
+  application:
+    name: spring-boot-demo-dynamic-datasource
   main:
     # 关闭日志
     banner-mode: off

@@ -49,7 +49,7 @@ public class Html2PdfTest {
 
         String htmlStr = PDFUtil.freemarkerRender(dataMap, ResourceFileUtil.getAbsolutePath(pdfExportConfig.getEmployeeKpiFtl()));
 //        byte[] pdfBytes = FreemarkerUtils.createPDF(htmlStr, ResourceFileUtil.getAbsolutePath(ttc));
-        PDFUtil.createPDF(htmlStr, ResourceFileUtil.getAbsolutePath(pdfExportConfig.getFontSimsun()),fileName);
+        PDFUtil.createPDF(htmlStr, ResourceFileUtil.getAbsolutePath(pdfExportConfig.getFontSimsun()), fileName);
 //        PDFUtil.createPDF(htmlStr, ResourceFileUtil.getAbsolutePath(pdfExportConfig.getFontSimsun()));
 //        if (pdfBytes != null && pdfBytes.length > 0) {
 //            final File file = FileUtil.writeBytes(pdfBytes, );

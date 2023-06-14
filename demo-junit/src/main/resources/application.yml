@@ -1,21 +1,3 @@
 spring:
   application:
     name: spring-boot-demo-junit
-  freemarker:
-    # 禁用模板缓存
-    cache: false
-    # 编码格式
-    charset: UTF-8
-    # freemarker模板后缀 默认是 .ftl
-    suffix: .ftl
-    # 是否为此技术启用MVC视图分辨率。
-    enabled: true
-    # Content-Type值
-    content-type: text/html
-    # #模板加载路径 按需配置 ,默认路径是 classpath:/templates/
-    template-loader-path: classpath:/templates/
-
-## pdf export config
-pdfExport:
-  fontSimsun: static/fonts/simsun.ttc
-  employeeKpiFtl: templates/pdf_export_employee_kpi.ftl

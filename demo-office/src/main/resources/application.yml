@@ -2,20 +2,22 @@ spring:
   application:
     name: spring-boot-demo-office
   freemarker:
-    # ??????
+    # 禁用模板缓存
     cache: false
-    # ????
+    # 编码格式
     charset: UTF-8
-    # freemarker???? ??? .ftl
+    # freemarker模板后缀 默认是 .ftl
     suffix: .ftl
-    # ????????MVC??????
+    # 是否为此技术启用MVC视图分辨率。
     enabled: true
-    # Content-Type?
+    # Content-Type值
     content-type: text/html
-    # #?????? ???? ,????? classpath:/templates/
+    # #模板加载路径 按需配置 ,默认路径是 classpath:/templates/
     template-loader-path: classpath:/templates/
 
-## pdf export config
+## pdf export config 这个可以写成配置，也可以写成static的属性
 pdfExport:
+  # 注意字体
   fontSimsun: static/fonts/simsun.ttc
+  # 模版位置
   employeeKpiFtl: templates/pdf_export_employee_kpi.ftl

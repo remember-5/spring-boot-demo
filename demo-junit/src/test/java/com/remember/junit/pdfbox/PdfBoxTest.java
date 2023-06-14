@@ -15,7 +15,6 @@
  */
 package com.remember.junit.pdfbox;
 
-import com.remember.junit.utils.PdfBoxUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
