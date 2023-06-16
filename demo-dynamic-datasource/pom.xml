@@ -14,7 +14,7 @@
     <description>Test dynamic datasource</description>
 
     <properties>
-        <jdk.version>11</jdk.version>
+        <java.version>17</java.version>
         <!--   默认jdk版本     -->
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>

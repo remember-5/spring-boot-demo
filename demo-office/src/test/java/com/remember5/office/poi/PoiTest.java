@@ -20,9 +20,13 @@ package com.remember5.office.poi;
  * @date 2023/6/14 11:50
  */
 
-import com.remember5.office.utils.ExcelUtils;
 import com.remember5.office.utils.ResourceFileUtil;
 import com.remember5.office.utils.WordUtils;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -31,10 +35,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.concurrent.CountDownLatch;
-
-import static com.remember5.office.utils.WordUtils.doWriter;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @SpringBootTest
 public class PoiTest {
@@ -56,7 +59,7 @@ public class PoiTest {
         dataMap.put("date", new SimpleDateFormat("yyyy年MM月dd日").format(new Date()));
         dataMap.put("by", "wangjiahao");
 
-        FileInputStream fileInputStream =  new FileInputStream(ResourceFileUtil.getFile("files/test.docx"));
+        FileInputStream fileInputStream = new FileInputStream(ResourceFileUtil.getFile("files/test.docx"));
         WordUtils.doWriter(fileInputStream, dataMap, resultSavePath);
     }
 
@@ -160,5 +163,43 @@ public class PoiTest {
 //        }
 //        return sb.toString();
 //    }
+
+    @Test
+    public void readExcel1() {
+        try (FileInputStream file = new FileInputStream(new File("/Users/wangjiahao/Downloads/12.xls"))) {
+            //            XSSFWorkbook workbook = new XSSFWorkbook(file);
+            HSSFWorkbook workbook = new HSSFWorkbook(file);
+            HSSFSheet sheet = workbook.getSheetAt(0); // 获取第一个工作表
+//            HSSFRow row = sheet.getRow(0); // 获取第一行
+//            HSSFCell cell = row.getCell(0); // 获取第一个单元格
+
+            // 格式化value
+            DataFormatter dataFormatter = new DataFormatter();
+
+            // 获取第一列的索引（从 0 开始）
+            int columnIndex = 2;
+            final int lastRowNum = sheet.getLastRowNum();
+            if (lastRowNum < columnIndex) {
+                // 读取失败，返回
+            }
+            for (int i = columnIndex; i < lastRowNum; i++) {
+                HSSFRow row = sheet.getRow(i);
+                HSSFCell date = row.getCell(1);
+                HSSFCell week = row.getCell(2);
+                HSSFCell name1 = row.getCell(3);
+                HSSFCell name2 = row.getCell(4);
+                System.err.println(
+                        date.getDateCellValue() + " " +
+                        dataFormatter.formatCellValue(week) +  " " +
+                        dataFormatter.formatCellValue(name1) +  " " +
+                        dataFormatter.formatCellValue(name2));
+            }
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }

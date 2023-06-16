@@ -15,7 +15,7 @@
 	<description>demo-quartz</description>
 
 	<properties>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
 		<spring-boot.version>2.5.13</spring-boot.version>
 	</properties>
 

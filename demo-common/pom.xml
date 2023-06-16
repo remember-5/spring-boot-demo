@@ -15,7 +15,7 @@
     <description>common公共包</description>
 
     <properties>
-        <jdk.version>8</jdk.version>
+        <java.version>17</java.version>
         <!--   默认jdk版本     -->
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
