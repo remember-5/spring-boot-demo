@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>demo-common</artifactId>
-    <version>0.0.1</version>
+    <version>1.0.0</version>
     <name>demo-common</name>
     <description>common公共包</description>
 
