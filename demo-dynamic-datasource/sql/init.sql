@@ -44,3 +44,26 @@ create table log_access
     id_at_app_module               varchar,
     v_device                       varchar
 );
+-- sqlite
+create table log_access
+(
+    id                             INTEGER
+        constraint log_access_pk
+            primary key autoincrement,
+    v_method                       TEXT,
+    v_uri                          TEXT,
+    v_status                       INTEGER,
+    v_type                         TEXT,
+    v_browser                      TEXT,
+    b_success                      INTEGER,
+    v_application                  TEXT,
+    v_data_id                      TEXT,
+    v_alias_at_app_module          TEXT,
+    v_alias_at_app_module_function TEXT,
+    b_skip                         INTEGER,
+    id_at_auth_user                TEXT,
+    t_create                       TEXT,
+    v_body                         TEXT,
+    id_at_app_module               TEXT,
+    v_device                       TEXT
+);

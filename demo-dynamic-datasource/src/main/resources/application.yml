@@ -10,12 +10,12 @@ spring:
   profiles:
     active: dev
   # JPA 配置内容，对应 JpaProperties 类
-  jpa:
-    # 打印 SQL 。生产环境，建议关闭
-    show-sql: true
-    hibernate:
-      ddl-auto: none
-    open-in-view: true
+#  jpa:
+#    # 打印 SQL 。生产环境，建议关闭
+#    show-sql: true
+#    hibernate:
+#      ddl-auto: none
+#    open-in-view: true
 #    properties:
 #      # 不同数据的时候有点问题，暂时先关闭
 #      hibernate:

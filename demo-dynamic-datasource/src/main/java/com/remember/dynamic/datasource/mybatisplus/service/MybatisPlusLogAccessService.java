@@ -14,6 +14,12 @@ public interface MybatisPlusLogAccessService extends IService<LogAccess>{
      */
     void postgresInsert();
 
+
+    /**
+     * sqlite insert
+     */
+    void sqliteInsert();
+
     /**
      * 测试批量插入
      */

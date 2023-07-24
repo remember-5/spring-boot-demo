@@ -56,6 +56,15 @@ public class MybatisPlusLogAccessServiceImpl extends ServiceImpl<LogAccessMapper
         this.baseMapper.insert(logAccess);
     }
 
+    @DS("sqlite")
+    @Override
+    public void sqliteInsert() {
+        LogAccess logAccess = LogAccess.builder()
+                .vMethod("mp-sqlite-test")
+                .build();
+        this.baseMapper.insert(logAccess);
+    }
+
     private void doInsert(){
         Date now = new Date();
         int count = 1;

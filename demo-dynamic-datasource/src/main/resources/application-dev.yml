@@ -8,20 +8,23 @@ spring:
         min-idle: 5
         connection-test-query: select 1
         pool-name: MyHikariCP
-      primary: pg
+      primary: sqlite
       datasource:
         # mysql
-        mysql:
-          url: jdbc:mysql://192.168.50.237:3306/spring_boot_demo?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8&useLocalSessionState=true
-          driver-class-name: com.mysql.cj.jdbc.Driver
-          username: root
-          password: 123456
+#        mysql:
+#          driver-class-name: com.mysql.cj.jdbc.Driver
+#          url: jdbc:mysql://192.168.50.237:3306/spring_boot_demo?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8&useLocalSessionState=true
+#          username: root
+#          password: 123456
         # postgres
-        pg:
-          url: jdbc:postgresql://192.168.50.237:5432/spring_boot_demo
-          driver-class-name: org.postgresql.Driver
-          username: postgres
-          password: postgres
+#        pg:
+#          driver-class-name: org.postgresql.Driver
+#          url: jdbc:postgresql://192.168.50.237:5432/spring_boot_demo
+#          username: postgres
+#          password: postgres
+        sqlite:
+          driver-class-name: org.sqlite.JDBC
+          url: jdbc:sqlite:/Users/wangjiahao/IdeaProjects/spring-boot-demo/demo-dynamic-datasource/sqlite/db.db
 #          hikari:
 #            is-read-only: true # 开启只读
 
