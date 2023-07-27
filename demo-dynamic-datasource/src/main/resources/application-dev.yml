@@ -24,7 +24,7 @@ spring:
 #          password: postgres
         sqlite:
           driver-class-name: org.sqlite.JDBC
-          url: jdbc:sqlite:/Users/wangjiahao/IdeaProjects/spring-boot-demo/demo-dynamic-datasource/sqlite/db.db
+          url: jdbc:sqlite:sqlite/db.db
 #          hikari:
 #            is-read-only: true # 开启只读
 
