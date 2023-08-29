@@ -40,9 +40,14 @@ public class MyGUI {
         generateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.err.println(ip.getText());
-                System.err.println(port.getText());
-                System.err.println(username.getText());
+                DbDTO dbDto = new DbDTO();
+                dbDto.setDbType(dbType.getSelectedItem().toString());
+                dbDto.setIp(ip.getText());
+                dbDto.setPort(Integer.parseInt(port.getText()));
+                dbDto.setUsername(username.getText());
+                dbDto.setPassword(password.getText());
+                dbDto.setDatabase(database.getText());
+                dbDto.setGenerateType(generateType.getSelectedItem().toString());
 
 
                 JFileChooser fileChooser = new JFileChooser();
@@ -57,7 +62,9 @@ public class MyGUI {
                     File selectedDir = fileChooser.getSelectedFile();
                     String dirPath = selectedDir.getAbsolutePath();
                     System.out.println("选择的文件夹路径：" + dirPath);
-                    Db2DocUtils.generatedDoc();
+                    dbDto.setFileOutputDir(dirPath);
+                    Db2DocUtils.generatedDoc(dbDto);
+                    JOptionPane.showMessageDialog(fdsa, "已生成！", "提示", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         });
@@ -78,7 +85,7 @@ public class MyGUI {
         jFrame.setVisible(true);
 //        jFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jFrame.setSize(800, 800);
+        jFrame.setSize(500, 500);
 
     }
 }
