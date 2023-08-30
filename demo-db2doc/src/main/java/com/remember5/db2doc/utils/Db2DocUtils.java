@@ -1,4 +1,4 @@
-package com.remember5.db2doc;
+package com.remember5.db2doc.utils;
 
 import cn.smallbun.screw.core.Configuration;
 import cn.smallbun.screw.core.engine.EngineConfig;
@@ -6,33 +6,19 @@ import cn.smallbun.screw.core.engine.EngineFileType;
 import cn.smallbun.screw.core.engine.EngineTemplateType;
 import cn.smallbun.screw.core.execute.DocumentationExecute;
 import cn.smallbun.screw.core.process.ProcessConfig;
+import com.remember5.db2doc.entity.DBEnum;
+import com.remember5.db2doc.entity.DbDTO;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 public class Db2DocUtils {
 
-    /**
-     * MySQL
-     * MariaDB
-     * TIDB
-     * Oracle
-     * SqlServer
-     * PostgreSQL
-     * Cache DB（2016）
-     */
-    public static HashMap<String, String> map = new HashMap<String, String>(16) {
-        {
-            put("Mysql", "com.mysql.cj.jdbc.Driver");
-        }
-    };
-
-    public static List<String> list = Arrays.asList("Word", "HTML", "Markdown");
+    public static List<String> GENERATE_TYPE_LIST = Arrays.asList("Word", "HTML", "Markdown");
 
     public static void main(String[] args) {
         generatedDoc();
@@ -113,24 +99,9 @@ public class Db2DocUtils {
     }
 
     public static void generatedDoc(DbDTO dbDto) {
-
-        final String driverClassName = map.get(dbDto.getDbType());
-        String jdbcUrl = null;
-        if ("Mysql".equals(dbDto.getDbType())) {
-            jdbcUrl = "jdbc:mysql://" + dbDto.getIp() + ":" + dbDto.getPort() + "/" + dbDto.getDatabase();
-        }
+        HikariConfig hikariConfig = generateHikariConfig(dbDto);
         //数据源
         final String filename = dbDto.getDatabase();
-
-        HikariConfig hikariConfig = new HikariConfig();
-        hikariConfig.setDriverClassName(driverClassName);
-        hikariConfig.setJdbcUrl(jdbcUrl);
-        hikariConfig.setUsername(dbDto.getUsername());
-        hikariConfig.setPassword(dbDto.getPassword());
-        //设置可以获取tables remarks信息
-        hikariConfig.addDataSourceProperty("useInformationSchema", "true");
-        hikariConfig.setMinimumIdle(2);
-        hikariConfig.setMaximumPoolSize(5);
         DataSource dataSource = new HikariDataSource(hikariConfig);
         //生成配置
         EngineConfig engineConfig = EngineConfig.builder()
@@ -155,7 +126,6 @@ public class Db2DocUtils {
             default:
                 break;
         }
-
 
         //忽略表
         ArrayList<String> ignoreTableName = new ArrayList<>();
@@ -197,6 +167,40 @@ public class Db2DocUtils {
                 .build();
         //执行生成
         new DocumentationExecute(config).execute();
+    }
+
+
+    public static HikariConfig generateHikariConfig(DbDTO dbDto) {
+        final String driverClassName = DBEnum.getDriverClassNameByKey(dbDto.getDbType());
+        String jdbcUrl = null;
+        if ("Mysql".equals(dbDto.getDbType())) {
+            jdbcUrl = "jdbc:mysql://" + dbDto.getIp() + ":" + dbDto.getPort() + "/" + dbDto.getDatabase();
+        }
+        if ("MariaDB".equals(dbDto.getDbType())) {
+            jdbcUrl = "jdbc:mariadb://" + dbDto.getIp() + ":" + dbDto.getPort() + "/" + dbDto.getDatabase();
+        }
+        if ("Oracle".equals(dbDto.getDbType())) {
+            jdbcUrl = "jdbc:oracle:thin:@//" + dbDto.getIp() + ":" + dbDto.getPort() + "/" + dbDto.getDatabase();
+        }
+        if ("PostgreSQL".equals(dbDto.getDbType())) {
+            jdbcUrl = "jdbc:postgresql://" + dbDto.getIp() + ":" + dbDto.getPort() + "/" + dbDto.getDatabase();
+        }
+        if ("TIDB".equals(dbDto.getDbType())) {
+            jdbcUrl = "jdbc:mysql://" + dbDto.getIp() + ":" + dbDto.getPort() + "/" + dbDto.getDatabase();
+        }
+        if ("SqlServer".equals(dbDto.getDbType())) {
+            jdbcUrl = "jdbc:sqlserver://" + dbDto.getIp() + ":" + dbDto.getPort() + ";databaseName=" + dbDto.getDatabase();
+        }
+        HikariConfig hikariConfig = new HikariConfig();
+        hikariConfig.setDriverClassName(driverClassName);
+        hikariConfig.setJdbcUrl(jdbcUrl);
+        hikariConfig.setUsername(dbDto.getUsername());
+        hikariConfig.setPassword(dbDto.getPassword());
+        //设置可以获取tables remarks信息
+        hikariConfig.addDataSourceProperty("useInformationSchema", "true");
+        hikariConfig.setMinimumIdle(2);
+        hikariConfig.setMaximumPoolSize(5);
+        return hikariConfig;
     }
 
 }
