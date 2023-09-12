@@ -18,13 +18,13 @@ package com.remember5.office.itext;
 import com.remember5.office.config.PDFExportConfig;
 import com.remember5.office.utils.PDFUtil;
 import com.remember5.office.utils.ResourceFileUtil;
-import com.remember5.office.utils.WordUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,20 +39,28 @@ public class Html2PdfTest {
     @Autowired
     PDFExportConfig pdfExportConfig;
 
+    /**
+     * 数据导出(PDF 格式)
+     */
     @Test
     public void testHtml2Pdf() throws Exception {
-        /**
-         * 数据导出(PDF 格式)
-         */
         Map<String, Object> dataMap = new HashMap<>(16);
         dataMap.put("statisticalTime", new Date().toString());
-        dataMap.put("imageUrl", "http://118.25.95.207:9000/ahtc/2021-08-10/4dba6307-fde7-4c62-b825-ff921c932464.png");
-
-        String fileName = "/Users/wangjiahao/Downloads/" + System.currentTimeMillis() + (int) (Math.random() * 90000 + 10000) + ".pdf";
+        dataMap.put("imageUrl", "http://42.193.105.146:9000/nt1/mr.jpeg");
+        dataMap.put("selfSummary", "这是我的自我总结文本");
 
         String htmlStr = PDFUtil.freemarkerRender(dataMap, ResourceFileUtil.getAbsolutePath(pdfExportConfig.getEmployeeKpiFtl()));
+        String htmlFileName = "/Users/wangjiahao/Downloads/" + System.currentTimeMillis() + (int) (Math.random() * 90000 + 10000) + ".html";
+        try (PrintWriter writer = new PrintWriter(htmlFileName, "UTF-8")) {
+            writer.println(htmlStr);
+        } catch (FileNotFoundException | UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+
 //        byte[] pdfBytes = FreemarkerUtils.createPDF(htmlStr, ResourceFileUtil.getAbsolutePath(ttc));
-        PDFUtil.createPDF(htmlStr, ResourceFileUtil.getAbsolutePath(pdfExportConfig.getFontSimsun()), fileName);
+        String pdfFileName = "/Users/wangjiahao/Downloads/" + System.currentTimeMillis() + (int) (Math.random() * 90000 + 10000) + ".pdf";
+        PDFUtil.createPDF(htmlStr, ResourceFileUtil.getAbsolutePath(pdfExportConfig.getFontSimsun()), pdfFileName);
 //        PDFUtil.createPDF(htmlStr, ResourceFileUtil.getAbsolutePath(pdfExportConfig.getFontSimsun()));
 //        if (pdfBytes != null && pdfBytes.length > 0) {
 //            final File file = FileUtil.writeBytes(pdfBytes, );
