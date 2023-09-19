@@ -10,8 +10,15 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.rendering.PDFRenderer;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -127,6 +134,59 @@ public class PDFUtil {
         //将PDF转换为Docx格式文件并保存
         doc.saveToFile(docPath, FileFormat.DOCX);
         doc.close();
+    }
+
+    public static void main(String[] args) {
+        String savePath = "/Users/wangjiahao/Downloads/";
+        int dpi = 96; // 设置渲染的 DPI 值
+
+        try {
+            PDDocument document = PDDocument.load(new File(savePath + "1695117787296.pdf"));
+            PDFRenderer renderer = new PDFRenderer(document);
+
+
+            int totalPages = document.getNumberOfPages();
+            ArrayList<BufferedImage> images = new ArrayList<>();
+
+            for (int i = 0; i < totalPages; i++) {
+                BufferedImage image = renderer.renderImageWithDPI(i, 300); // 使用300 DPI进行渲染
+                images.add(image);
+            }
+
+            document.close();
+
+            int totalWidth = 0;
+            int totalHeight = 0;
+
+            for (BufferedImage image : images) {
+                totalWidth = Math.max(totalWidth, image.getWidth());
+                totalHeight += image.getHeight();
+            }
+
+            BufferedImage mergedImage = new BufferedImage(totalWidth, totalHeight, BufferedImage.TYPE_INT_RGB);
+            Graphics2D g2d = mergedImage.createGraphics();
+            g2d.setColor(Color.WHITE);
+            g2d.fillRect(0, 0, totalWidth, totalHeight);
+
+            int currentHeight = 0;
+
+            for (BufferedImage image : images) {
+                g2d.drawImage(image, 0, currentHeight, image.getWidth(), image.getHeight(), null);
+                currentHeight += image.getHeight();
+            }
+
+
+            // 保存为PNG文件
+            ImageIO.write(mergedImage, "png", new File(savePath + "test.png"));
+            document.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static int getPageHeightWithoutMargins(PDPage page) {
+        // 计算页面高度（去掉页边距）
+        return (int) (page.getCropBox().getHeight() - page.getCropBox().getLowerLeftY());
     }
 
 
