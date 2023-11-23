@@ -45,20 +45,19 @@ public class PDFUtil {
     /**
      * freemarker 引擎渲染 html
      *
-     * @param dataMap     传入 html 模板的 Map 数据
-     * @param ftlFilePath html 模板文件相对路径(相对于 resources路径,路径 + 文件名)
-     *                    eg: "templates/pdf_export_demo.ftl"
+     * @param dataMap      传入 html 模板的 Map 数据
+     * @param templateName html 模板文件相对路径(相对于 resources路径,路径 + 文件名)
+     *                     eg: "templates/pdf_export_demo.ftl"
      * @return
      */
-    public static String freemarkerRender(Map<String, Object> dataMap, String ftlFilePath) {
-        final File file = new File(ftlFilePath);
+    public static String freemarkerRender(Map<String, Object> dataMap, String templateName) {
+        configuration.setClassForTemplateLoading(PDFUtil.class, "/");
         configuration.setDefaultEncoding("UTF-8");
         configuration.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
         try (Writer out = new StringWriter()) {
-            configuration.setDirectoryForTemplateLoading(new File(file.getParent()));
             configuration.setLogTemplateExceptions(false);
             configuration.setWrapUncheckedExceptions(true);
-            Template template = configuration.getTemplate(file.getName());
+            Template template = configuration.getTemplate(templateName);
             template.process(dataMap, out);
             out.flush();
             return out.toString();
@@ -101,7 +100,7 @@ public class PDFUtil {
      * @param savePath 保存路径
      * @return
      */
-    public static void createPDF(String html, String fontFile, String savePath) throws IOException {
+    public static void createPDF(String html, byte[] fontFile, String savePath) throws IOException {
         try (PdfWriter pdfWriter = new PdfWriter(savePath)) {
             DefaultFontProvider fontProvider = new DefaultFontProvider();
             fontProvider.addFont(fontFile);
@@ -136,7 +135,8 @@ public class PDFUtil {
         doc.close();
     }
 
-    public static void main(String[] args) {
+
+    public static void generatePdf2Image() {
         String savePath = "/Users/wangjiahao/Downloads/";
         int dpi = 96; // 设置渲染的 DPI 值
 
@@ -184,10 +184,14 @@ public class PDFUtil {
         }
     }
 
+
     private static int getPageHeightWithoutMargins(PDPage page) {
         // 计算页面高度（去掉页边距）
         return (int) (page.getCropBox().getHeight() - page.getCropBox().getLowerLeftY());
     }
 
+    public static void main(String[] args) {
+        generatePdf2Image();
+    }
 
 }

@@ -28,6 +28,7 @@
         <module>demo-elasticsearch6</module>
         <module>demo-elasticsearch7</module>
         <module>demo-encrypt</module>
+        <module>demo-flowable</module>
         <module>demo-interview</module>
         <module>demo-junit</module>
         <module>demo-jwt</module>

@@ -15,12 +15,15 @@
  */
 package com.remember5.office.itext;
 
+import cn.hutool.core.io.IoUtil;
 import com.remember5.office.config.PDFExportConfig;
 import com.remember5.office.utils.PDFUtil;
 import com.remember5.office.utils.ResourceFileUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -49,7 +52,7 @@ public class Html2PdfTest {
         dataMap.put("imageUrl", "http://42.193.105.146:9000/nt1/mr.jpeg");
         dataMap.put("selfSummary", "这是我的自我总结文本");
 
-        String htmlStr = PDFUtil.freemarkerRender(dataMap, ResourceFileUtil.getAbsolutePath(pdfExportConfig.getEmployeeKpiFtl()));
+        String htmlStr = PDFUtil.freemarkerRender(dataMap, pdfExportConfig.getEmployeeKpiFtl());
         String htmlFileName = "/Users/wangjiahao/Downloads/" + System.currentTimeMillis() + (int) (Math.random() * 90000 + 10000) + ".html";
         try (PrintWriter writer = new PrintWriter(htmlFileName, "UTF-8")) {
             writer.println(htmlStr);
@@ -60,7 +63,9 @@ public class Html2PdfTest {
 
 //        byte[] pdfBytes = FreemarkerUtils.createPDF(htmlStr, ResourceFileUtil.getAbsolutePath(ttc));
         String pdfFileName = "/Users/wangjiahao/Downloads/" + System.currentTimeMillis() + (int) (Math.random() * 90000 + 10000) + ".pdf";
-        PDFUtil.createPDF(htmlStr, ResourceFileUtil.getAbsolutePath(pdfExportConfig.getFontSimsun()), pdfFileName);
+        Resource resource = new ClassPathResource(pdfExportConfig.getFontSimsun());
+        byte[] fileBytes = IoUtil.readBytes(resource.getInputStream());
+        PDFUtil.createPDF(htmlStr, fileBytes, pdfFileName);
 //        PDFUtil.createPDF(htmlStr, ResourceFileUtil.getAbsolutePath(pdfExportConfig.getFontSimsun()));
 //        if (pdfBytes != null && pdfBytes.length > 0) {
 //            final File file = FileUtil.writeBytes(pdfBytes, );
@@ -80,7 +85,9 @@ public class Html2PdfTest {
         String docpath = "/Users/wangjiahao/Downloads/" + System.currentTimeMillis() + (int) (Math.random() * 90000 + 10000) + ".docx";
 
         String htmlStr = PDFUtil.freemarkerRender(dataMap, ResourceFileUtil.getAbsolutePath(pdfExportConfig.getEmployeeKpiFtl()));
-        PDFUtil.createPDF(htmlStr, ResourceFileUtil.getAbsolutePath(pdfExportConfig.getFontSimsun()), pdfpath);
+        Resource resource = new ClassPathResource(pdfExportConfig.getFontSimsun());
+        byte[] fileBytes = IoUtil.readBytes(resource.getInputStream());
+        PDFUtil.createPDF(htmlStr, fileBytes, pdfpath);
         PDFUtil.pdf2word(pdfpath, docpath);
 //        PDFUtil.createPDF(htmlStr, ResourceFileUtil.getAbsolutePath(pdfExportConfig.getFontSimsun()));
 //        if (pdfBytes != null && pdfBytes.length > 0) {
