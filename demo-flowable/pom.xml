@@ -38,6 +38,7 @@
             <version>6.7.0</version> <!-- 使用最新版本 -->
         </dependency>
 
+        <!--    生成图片    -->
         <dependency>
             <groupId>org.flowable</groupId>
             <artifactId>flowable-image-generator</artifactId>

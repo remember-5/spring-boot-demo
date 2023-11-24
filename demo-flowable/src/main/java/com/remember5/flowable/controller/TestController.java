@@ -16,21 +16,13 @@
 package com.remember5.flowable.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.io.IOUtils;
-import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.engine.*;
 import org.flowable.engine.runtime.ProcessInstance;
-import org.flowable.image.impl.DefaultProcessDiagramGenerator;
-import org.flowable.task.api.Task;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -45,9 +37,6 @@ public class TestController {
 
     private final RuntimeService runtimeService;
     private final TaskService taskService;
-    private final RepositoryService repositoryService;
-    private final ProcessEngine processEngine;
-    private final ProcessEngineConfiguration processEngineConfiguration;
 
     /**
      * 启动流程实例
@@ -88,52 +77,18 @@ public class TestController {
         if (!approverId.equals("1")) {
             throw new RuntimeException("审批人不匹配");
         }
-        // 获取下一步任务
-        final Task task = taskService.createTaskQuery()
-                .processInstanceId(taskId)
-                .singleResult();
+        // 获取下一步任务 这个暂时用不到
+//        final Task task = taskService.createTaskQuery()
+//                .processInstanceId(taskId)
+//                .singleResult();
 
         // 设置当前任务的环境变量
         final HashMap<String, Object> stringStringHashMap = new HashMap<>();
         stringStringHashMap.put("status", status);
-        taskService.complete(task.getId(), stringStringHashMap);
+        taskService.complete(taskId, stringStringHashMap);
         return "审批完成~";
 
     }
 
-
-    /**
-     * 获取流程图
-     *
-     * @param processInstanceId 流程实例id
-     * @return
-     * @throws IOException
-     */
-    @GetMapping(value = "/image/{processInstanceId}", produces = MediaType.IMAGE_PNG_VALUE)
-    public ResponseEntity<byte[]> getTaskImage(@PathVariable String processInstanceId) throws IOException {
-        // 获取流程定义 ID
-        ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
-                .processInstanceId(processInstanceId)
-                .singleResult();
-
-        String processDefinitionId = processInstance.getProcessDefinitionId();
-
-        // 获取流程模型
-        BpmnModel bpmnModel = repositoryService.getBpmnModel(processDefinitionId);
-
-        // 获取活动节点
-        List<String> activeActivityIds = runtimeService.getActiveActivityIds(processInstanceId);
-
-        // 生成流程图
-        InputStream imageStream = new DefaultProcessDiagramGenerator().generateDiagram(
-                bpmnModel, "png", activeActivityIds,
-                Collections.emptyList(), processEngineConfiguration.getActivityFontName(),
-                processEngineConfiguration.getLabelFontName(),
-                processEngineConfiguration.getAnnotationFontName(),
-                processEngineConfiguration.getClassLoader(), 1.0, true);
-        // 将InputStream转换为byte数组
-        byte[] imageBytes = IOUtils.toByteArray(imageStream);
-        return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(imageBytes);
-    }
 
 }

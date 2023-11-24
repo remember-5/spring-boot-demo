@@ -155,6 +155,17 @@
                             </goals>
                         </execution>
                     </executions>
+                    <configuration>
+                        <resources>
+                            <resource>
+                                <directory>src/main/resources</directory>
+                                <excludes>
+                                    <!-- 排除子项目的资源文件 -->
+                                    <exclude>demo*/**/*</exclude>
+                                </excludes>
+                            </resource>
+                        </resources>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
