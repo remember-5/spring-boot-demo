@@ -5,6 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
+ * 多数据源
+ *
  * @author wangjiahao
  */
 @SpringBootApplication

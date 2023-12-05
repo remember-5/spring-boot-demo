@@ -44,6 +44,8 @@ create table log_access
     id_at_app_module               varchar,
     v_device                       varchar
 );
+
+
 -- sqlite
 create table log_access
 (
