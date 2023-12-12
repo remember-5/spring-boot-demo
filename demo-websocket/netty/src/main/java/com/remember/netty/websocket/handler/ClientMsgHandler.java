@@ -15,16 +15,18 @@
  */
 package com.remember.netty.websocket.handler;
 
-import com.remember.netty.config.NettyProperties;
-import com.remember.netty.constant.RedisConstants;
+import com.remember.netty.constant.NettyChannelManage;
+import com.remember.netty.constant.NettyRedisConstants;
+import com.remember.netty.properties.WebSocketProperties;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.util.AttributeKey;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
 /**
@@ -36,15 +38,19 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @ChannelHandler.Sharable
-@RequiredArgsConstructor
 public class ClientMsgHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
 
     private final RedisTemplate<String, Object> redisTemplate;
+    private final WebSocketProperties webSocketProperties;
+
+    public ClientMsgHandler(@Nullable @Lazy RedisTemplate<String, Object> redisTemplate, WebSocketProperties webSocketProperties) {
+        this.redisTemplate = redisTemplate;
+        this.webSocketProperties = webSocketProperties;
+    }
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame msg) throws Exception {
         log.info("服务器收到消息：{}", msg.text());
-        // todo something about
         // 回复消息
         ctx.channel().writeAndFlush(new TextWebSocketFrame("服务器连接成功！"));
     }
@@ -69,12 +75,15 @@ public class ClientMsgHandler extends SimpleChannelInboundHandler<TextWebSocketF
 
 
     private void removeUserId(ChannelHandlerContext ctx) {
-        NettyProperties.getChannelGroup().remove(ctx.channel());
+        NettyChannelManage.getChannelGroup().remove(ctx.channel());
 
         AttributeKey<String> key = AttributeKey.valueOf("userId");
         String userId = ctx.channel().attr(key).get();
-        NettyProperties.getUserChannelMap().remove(userId);
-        redisTemplate.opsForSet().remove(RedisConstants.REDIS_WEB_SOCKET_USER_SET, userId);
+        NettyChannelManage.getUserChannelMap().remove(userId);
+        if (Boolean.TRUE.equals(webSocketProperties.getEnableCluster())) {
+            assert redisTemplate != null;
+            redisTemplate.opsForSet().remove(NettyRedisConstants.REDIS_WEB_SOCKET_USER_SET, userId);
+        }
 
         ctx.channel().close();
     }

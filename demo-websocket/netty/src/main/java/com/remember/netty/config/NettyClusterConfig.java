@@ -1,12 +1,32 @@
+/**
+ * Copyright [2022] [remember5]
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.remember.netty.config;
 
 import com.alibaba.fastjson.parser.Feature;
 import com.alibaba.fastjson.serializer.SerializeConfig;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
-import com.remember.netty.constant.RedisConstants;
+import com.remember.netty.constant.NettyRedisConstants;
+import com.remember.netty.properties.WebSocketProperties;
 import com.remember.netty.pubsub.MessageReceive;
+import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -17,14 +37,27 @@ import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
 import org.springframework.data.redis.serializer.RedisSerializer;
 
 /**
- * @author sixiaojie
- * @date 2020-08-24-13:38
+ * netty集群配置
+ *
+ * @author wangjiahao
+ * @date 2023/12/12 12:28
  */
 @Configuration
-public class RedisConfig {
+@ConditionalOnProperty(prefix = WebSocketProperties.PREFIX, name = "enable-cluster", havingValue = "true")
+@RequiredArgsConstructor
+public class NettyClusterConfig {
 
+    private final ApplicationContext applicationContext;
+
+    /**
+     * 注入redis 消息监听器
+     *
+     * @param redisConnectionFactory redis连接工厂
+     * @return /
+     */
     @Bean
     @ConditionalOnMissingBean(name = "redisTemplate")
+    @ConditionalOnProperty(prefix = WebSocketProperties.PREFIX, name = "enable-cluster", havingValue = "true")
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
         // 创建 RedisTemplate 对象
         RedisTemplate<String, Object> template = new RedisTemplate<>();
@@ -40,13 +73,15 @@ public class RedisConfig {
         return template;
     }
 
+
     /**
      * redis消息监听器容器
      * 可以添加多个监听不同话题的redis监听器，只需要把消息监听器和相应的消息订阅处理器绑定，该消息监听器
      * 通过反射技术调用消息订阅处理器的相关方法进行一些业务处理
+     *
      * @param redisConnectionFactory /
-     * @param listenerAdapter1 /
-     * @param listenerAdapter2 /
+     * @param listenerAdapter1       /
+     * @param listenerAdapter2       /
      * @return /
      */
     @Bean
@@ -57,9 +92,9 @@ public class RedisConfig {
         redisMessageListenerContainer.setConnectionFactory(redisConnectionFactory);
 
         // 订阅频道(发送给指定用户)
-        redisMessageListenerContainer.addMessageListener(listenerAdapter1, new PatternTopic(RedisConstants.PUSH_MESSAGE_TO_ONE));
+        redisMessageListenerContainer.addMessageListener(listenerAdapter1, new PatternTopic(NettyRedisConstants.PUSH_MESSAGE_TO_ONE));
         // 订阅频道(发送给所有用户)
-        redisMessageListenerContainer.addMessageListener(listenerAdapter2, new PatternTopic(RedisConstants.PUSH_MESSAGE_TO_ALL));
+        redisMessageListenerContainer.addMessageListener(listenerAdapter2, new PatternTopic(NettyRedisConstants.PUSH_MESSAGE_TO_ALL));
 
         FastJsonRedisSerializer fastJsonRedisSerializer = new FastJsonRedisSerializer<>(Object.class);
         FastJsonConfig fastJsonConfig = fastJsonRedisSerializer.getFastJsonConfig();
@@ -69,6 +104,12 @@ public class RedisConfig {
 //        fastJsonConfig.setSerializerFeatures(SerializerFeature.WriteClassName);
         redisMessageListenerContainer.setTopicSerializer(fastJsonRedisSerializer);
         return redisMessageListenerContainer;
+    }
+
+    @Bean
+    @ConditionalOnBean(RedisTemplate.class)
+    public MessageReceive messageReceive(RedisTemplate<String, Object> redisTemplate) {
+        return new MessageReceive(redisTemplate);
     }
 
 
@@ -89,5 +130,6 @@ public class RedisConfig {
         //这个地方 是给messageListenerAdapter 传入一个消息接受的处理器，利用反射的方法调用“MessageReceive ”
         return new MessageListenerAdapter(messageReceive, "getMessageToAll");
     }
+
 
 }

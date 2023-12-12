@@ -39,9 +39,6 @@ public class HeartBeatHandler extends ChannelInboundHandlerAdapter {
      * 用户事件
      * 自定义空闲状态检测(自定义心跳检测handler)
      * 若连续2次无读事件，则关闭这个客户端channel
-     *
-     * @author wangjiahao
-     * @date 2020-08-21-16:14
      */
     @Override
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {

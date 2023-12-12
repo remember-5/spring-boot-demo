@@ -6,15 +6,13 @@ import com.alibaba.fastjson.serializer.SerializeConfig;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
-import com.remember.netty.config.NettyProperties;
-import com.remember.netty.constant.RedisConstants;
+import com.remember.netty.constant.NettyChannelManage;
+import com.remember.netty.constant.NettyRedisConstants;
 import com.remember.netty.entity.NettyPushMessageBody;
 import io.netty.channel.Channel;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
@@ -24,10 +22,14 @@ import java.util.concurrent.ConcurrentHashMap;
  * @date 2020-08-24-13:47
  */
 @Slf4j
-@Component
-@RequiredArgsConstructor
 public class MessageReceive {
-    private final RedisTemplate<String, Object> redisTemplate;
+
+    private RedisTemplate<String, Object> redisTemplate;
+
+    public MessageReceive(RedisTemplate<String, Object> redisTemplate) {
+        this.redisTemplate = redisTemplate;
+    }
+
     /**
      * 订阅消息,发送给指定用户
      *
@@ -42,14 +44,14 @@ public class MessageReceive {
         // 推送消息
         String message = pushMessageBody.getMessage();
         String userId = pushMessageBody.getUserId();
-        final Boolean member = redisTemplate.opsForSet().isMember(RedisConstants.REDIS_WEB_SOCKET_USER_SET, userId);
-        if(!member){
+        final Boolean member = redisTemplate.opsForSet().isMember(NettyRedisConstants.REDIS_WEB_SOCKET_USER_SET, userId);
+        if (!member) {
             log.warn("用户不在线");
             return;
         }
-        final boolean hasKey = NettyProperties.getUserChannelMap().containsKey(userId);
+        final boolean hasKey = NettyChannelManage.getUserChannelMap().containsKey(userId);
         if (hasKey) {
-            ConcurrentHashMap<String, Channel> userChannelMap = NettyProperties.getUserChannelMap();
+            ConcurrentHashMap<String, Channel> userChannelMap = NettyChannelManage.getUserChannelMap();
             Channel channel = userChannelMap.get(userId);
             if (!Objects.isNull(channel)) {
                 // 如果该用户的客户端是与本服务器建立的channel,直接推送消息
@@ -69,7 +71,7 @@ public class MessageReceive {
 //        FastJsonRedisSerializer serializer = getSerializer(String.class);
 //        String message = (String) serializer.deserialize(object.getBytes());
         log.info("订阅消息，发送给所有用户：{}", message);
-        NettyProperties.getChannelGroup().writeAndFlush(new TextWebSocketFrame(message));
+        NettyChannelManage.getChannelGroup().writeAndFlush(new TextWebSocketFrame(message));
     }
 
     private FastJsonRedisSerializer getSerializer(Class clazz) {

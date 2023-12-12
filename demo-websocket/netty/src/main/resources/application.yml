@@ -2,12 +2,9 @@ server:
   port: 8080
 spring:
   redis:
-    #    sentinel:
-    #      master: #master节点
-    #      nodes: # 地址
-    host:
+    host: 127.0.0.1
     port: 6379
-    password:
+    password: 123456
     database: 9 # Redis默认情况下有16个分片，这里配置具体使用的分片
     lettuce:
       pool:
@@ -18,6 +15,8 @@ spring:
     timeout: 0ms # 连接超时时间（记得添加单位，Duration）
 
 web-socket:
+  enable-cluster: true
   netty:
     port: 58080
     path: /ws
+    backlog: 1024

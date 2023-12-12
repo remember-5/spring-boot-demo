@@ -15,9 +15,10 @@
  */
 package com.remember.netty.websocket.handler;
 
-import cn.hutool.core.util.StrUtil;
-import com.remember.netty.config.NettyProperties;
-import com.remember.netty.constant.RedisConstants;
+import cn.hutool.core.text.CharSequenceUtil;
+import com.remember.netty.constant.NettyChannelManage;
+import com.remember.netty.constant.NettyRedisConstants;
+import com.remember.netty.properties.WebSocketProperties;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -27,12 +28,16 @@ import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.handler.codec.http.HttpVersion;
 import io.netty.util.AttributeKey;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 鉴权handler
@@ -43,12 +48,17 @@ import java.util.Date;
 @Slf4j
 @Component
 @ChannelHandler.Sharable
-@RequiredArgsConstructor
 public class AuthHandler extends ChannelInboundHandlerAdapter {
 
     private static final String AUTHORIZATION = "Authorization";
 
     private final RedisTemplate<String, Object> redisTemplate;
+    private final WebSocketProperties webSocketProperties;
+
+    public AuthHandler(@Nullable @Lazy RedisTemplate<String, Object> redisTemplate, WebSocketProperties webSocketProperties) {
+        this.redisTemplate = redisTemplate;
+        this.webSocketProperties = webSocketProperties;
+    }
 
     /**
      * 一旦连接，第一个被执行
@@ -59,9 +69,7 @@ public class AuthHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void handlerAdded(ChannelHandlerContext ctx) {
         log.info("[handlerAdded] 逻辑处理器被添加：handlerAdded() {}", ctx.channel().id().asLongText());
-        // 添加到channelGroup 通道组
-        NettyProperties.getChannelGroup().add(ctx.channel());
-//        super.handlerAdded(ctx);
+        NettyChannelManage.getChannelGroup().add(ctx.channel());
     }
 
 
@@ -102,33 +110,42 @@ public class AuthHandler extends ChannelInboundHandlerAdapter {
      *
      * @param ctx 上下文
      * @param msg 消息
-     * @throws Exception 异常
      */
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         log.info("[channelRead] channel 有数据可读：channelRead()");
         if (msg instanceof FullHttpRequest) {
-            FullHttpRequest msg1 = (FullHttpRequest) msg;
-            //根据请求头的 AUTHORIZATION 进行鉴权操作
-            final String userid = msg1.headers().get("userId");
-            log.info("鉴权操作");
-            if (StrUtil.isEmpty(userid)) {
+            FullHttpRequest httpRequest = (FullHttpRequest) msg;
+            // 根据请求头的 AUTHORIZATION 进行鉴权操作
+            final String uri = httpRequest.uri();
+            final Map<String, String> params = getParams(uri);
+            final String userId = params.get("userId");
+            if (CharSequenceUtil.isEmpty(userId)) {
                 ctx.channel().writeAndFlush(new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.UNAUTHORIZED));
                 ctx.channel().close();
                 return;
             }
 
-            //鉴权成功，添加channel用户组
-            NettyProperties.getChannelGroup().add(ctx.channel());
+            // 重定向uri，否则会导致连接阻塞异常
+            if (uri.contains("?")) {
+                String newUri = uri.substring(0, uri.indexOf("?"));
+                httpRequest.setUri(newUri);
+            }
+
+            // 鉴权成功，添加channel用户组
+            NettyChannelManage.getChannelGroup().add(ctx.channel());
 
             // 将用户ID作为自定义属性加入到channel中，方便随时channel中获取用户ID
             AttributeKey<String> key = AttributeKey.valueOf("userId");
-            ctx.channel().attr(key).setIfAbsent(userid);
-            NettyProperties.getUserChannelMap().put(userid, ctx.channel());
+            ctx.channel().attr(key).setIfAbsent(userId);
+            NettyChannelManage.getUserChannelMap().put(userId, ctx.channel());
 
-            // save redis
-            redisTemplate.opsForSet().add(RedisConstants.REDIS_WEB_SOCKET_USER_SET, userid);
-            // 鉴权完成删除这个hander
+            // Save redis.
+            if (Boolean.TRUE.equals(webSocketProperties.getEnableCluster())) {
+                assert redisTemplate != null;
+                redisTemplate.opsForSet().add(NettyRedisConstants.REDIS_WEB_SOCKET_USER_SET, userId);
+            }
+            // 鉴权完成删除这个handler
             ctx.pipeline().remove(this);
             // 对事件进行传播，知道完成WebSocket连接。
             ctx.fireChannelRead(msg);
@@ -190,11 +207,49 @@ public class AuthHandler extends ChannelInboundHandlerAdapter {
     }
 
 
-    public void removeRedisUserId(ChannelHandlerContext ctx){
+    public void removeRedisUserId(ChannelHandlerContext ctx) {
         AttributeKey<String> key = AttributeKey.valueOf("userId");
         String userId = ctx.channel().attr(key).get();
-        redisTemplate.opsForSet().remove(RedisConstants.REDIS_WEB_SOCKET_USER_SET, userId);
+        if (Boolean.TRUE.equals(webSocketProperties.getEnableCluster())) {
+            assert redisTemplate != null;
+            redisTemplate.opsForSet().remove(NettyRedisConstants.REDIS_WEB_SOCKET_USER_SET, userId);
+        }
         ctx.channel().close();
+    }
+
+
+    /**
+     * 获取uri中的参数
+     *
+     * @param uri uri
+     * @return 参数map
+     */
+    public static Map<String, String> getParams(String uri) {
+        // /ws?name=123  /?name=123
+        if (null == uri || uri.isEmpty()) {
+            return Collections.emptyMap();
+        }
+        if (uri.startsWith("/")) {
+            uri = uri.substring(1);
+        }
+        if (uri.contains("?")) {
+            uri = uri.substring(uri.indexOf("?"));
+        }
+
+        uri = uri.replace("/", "").replace("?", "");
+        HashMap<String, String> result = new HashMap<>();
+
+        if (uri.contains("&")) {
+            final String[] split = uri.split("&");
+            for (String s : split) {
+                result.put(s.split("=")[0], s.split("=")[1]);
+            }
+        } else if (uri.contains("=")) {
+            result.put(uri.split("=")[0], uri.split("=")[1]);
+        }
+
+        return result;
+
     }
 
 }

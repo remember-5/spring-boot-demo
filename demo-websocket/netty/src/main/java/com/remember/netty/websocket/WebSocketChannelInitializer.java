@@ -1,5 +1,21 @@
+/**
+ * Copyright [2022] [remember5]
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.remember.netty.websocket;
 
+import com.remember.netty.properties.WebSocketProperties;
 import com.remember.netty.websocket.handler.AuthHandler;
 import com.remember.netty.websocket.handler.ClientMsgHandler;
 import com.remember.netty.websocket.handler.HeartBeatHandler;
@@ -13,10 +29,11 @@ import io.netty.handler.codec.serialization.ObjectEncoder;
 import io.netty.handler.stream.ChunkedWriteHandler;
 import io.netty.handler.timeout.IdleStateHandler;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
+ * websocket channel 初始化
+ *
  * @author wangjiahao
  * @date 2022/6/27 17:01
  */
@@ -28,17 +45,12 @@ public class WebSocketChannelInitializer extends ChannelInitializer<SocketChanne
     private final ClientMsgHandler clientMsgHandler;
     private final HeartBeatHandler heartBeatHandler;
     private final RateLimitHandler rateLimitHandler;
-
+    private final WebSocketProperties webSocketProperties;
 
     /**
      * webSocket协议名
      */
     private static final String WEBSOCKET_PROTOCOL = "WebSocket";
-    /**
-     * webSocket路径
-     */
-    @Value("${web-socket.netty.path}")
-    private String webSocketPath;
 
     @Override
     protected void initChannel(SocketChannel ch) throws Exception {
@@ -55,8 +67,8 @@ public class WebSocketChannelInitializer extends ChannelInitializer<SocketChanne
         ch.pipeline().addLast(new ChunkedWriteHandler());
         /*
         说明：
-        1、http数据在传输过程中是分段的，HttpObjectAggregator可以将多个段聚合
-        2、这就是为什么，当浏览器发送大量数据时，就会发送多次http请求
+        1. http数据在传输过程中是分段的，HttpObjectAggregator可以将多个段聚合
+        2. 这就是为什么，当浏览器发送大量数据时，就会发送多次http请求
          */
         ch.pipeline().addLast(new HttpObjectAggregator(1024 * 64));
 
@@ -66,15 +78,15 @@ public class WebSocketChannelInitializer extends ChannelInitializer<SocketChanne
         // 针对客户端，若10s内无读事件则触发心跳处理方法 CustomWebSocketHandler#userEventTriggered
         ch.pipeline().addLast(new IdleStateHandler(10, 10, 0));
         ch.pipeline().addLast(heartBeatHandler);
-        /*
-        说明：
-        1、对应webSocket，它的数据是以帧（frame）的形式传递
-        2、浏览器请求时 ws://localhost:58080/xxx 表示请求的uri
-        3、核心功能是将http协议升级为ws协议，保持长连接
-        */
-        ch.pipeline().addLast(new WebSocketServerProtocolHandler(webSocketPath, WEBSOCKET_PROTOCOL, true, 65536 * 10));
 
         // 自定义的handler，处理业务逻辑
         ch.pipeline().addLast(clientMsgHandler);
+        /*
+        说明：
+        1. 对应webSocket，它的数据是以帧（frame）的形式传递
+        2. 浏览器请求时 ws://localhost:58080/xxx 表示请求的uri
+        3. 核心功能是将http协议升级为ws协议，保持长连接
+        */
+        ch.pipeline().addLast(new WebSocketServerProtocolHandler(webSocketProperties.getNetty().getPath(), WEBSOCKET_PROTOCOL, true, 65536 * 10));
     }
 }
