@@ -93,6 +93,5 @@ public class PushServiceImpl implements PushService {
     public void pushMsg2AllUser(String msg) {
         // 发布，给其他服务器消费
         redisTemplate.convertAndSend(NettyRedisConstants.PUSH_MESSAGE_TO_ALL, msg);
-//        NettyConfig.getChannelGroup().writeAndFlush(new TextWebSocketFrame(msg));
     }
 }
