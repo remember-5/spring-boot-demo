@@ -59,7 +59,6 @@ public class ClientMsgHandler extends SimpleChannelInboundHandler<TextWebSocketF
     @Override
     public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
         log.info("handlerRemoved 被调用" + ctx.channel().id().asLongText());
-        // 删除通道
         removeUserId(ctx);
     }
 
@@ -82,7 +81,7 @@ public class ClientMsgHandler extends SimpleChannelInboundHandler<TextWebSocketF
         NettyChannelManage.getUserChannelMap().remove(userId);
         if (Boolean.TRUE.equals(webSocketProperties.getEnableCluster())) {
             assert redisTemplate != null;
-            redisTemplate.opsForSet().remove(NettyRedisConstants.REDIS_WEB_SOCKET_USER_SET, userId);
+            redisTemplate.opsForSet().remove(NettyRedisConstants.WS_CLIENT + NettyRedisConstants.ADDRESS_MD5, userId);
         }
 
         ctx.channel().close();

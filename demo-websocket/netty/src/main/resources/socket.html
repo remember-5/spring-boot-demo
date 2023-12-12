@@ -14,9 +14,8 @@
 	</div>
 	<div>
 		<div>
-			<textarea id="message" v-model="message" cols="30" rows="10"></textarea>
-			<input type="text" v-model="userId" placeholder="输入用户id">
-			<button @click="setUserId">生成uuid作为用户id</button>
+			<textarea v-model="socketUrl" placeholder="输入连接地址" cols="40" rows="4"></textarea>
+			<textarea v-model="message" placeholder="输入发送消息" cols="30" rows="10"></textarea>
 		</div>
 
 		<div>
@@ -35,8 +34,8 @@
         data() {
             return {
                 message: '',
-                userId: '',
                 socket: null,
+                socketUrl: 'ws://localhost:58080/ws',
                 socketConnected: false,
                 list: []
             }
@@ -48,7 +47,7 @@
                 // 判断当前浏览器是否支持webSocket
                 if (window.WebSocket) {
                     this.list.push({type: 'left', message: '当前浏览器支持webSocket'})
-                    this.socket = new WebSocket(`ws://localhost:58080/ws?userId=${this.userId}`)
+                    this.socket = new WebSocket(this.socketUrl)
                     const that = this
                     // Connection opened
                     this.socket.addEventListener("open", function (event) {
@@ -79,30 +78,14 @@
                 }
             },
             sendMessage() {
-                this.list.push({
-                    type: 'left',
-                    message: this.message
-                })
+                this.list.push({ type: 'left', message: this.message })
                 this.socket.send(this.message)
             },
             reset() {
                 this.list = []
                 this.message = ''
             },
-            setUserId() {
-                this.userId = this.generateUUID()
-            },
-            generateUUID() {
-                let timestamp = new Date().getTime();
-                const uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-                    const r = (timestamp + Math.random() * 16) % 16 | 0;
-                    timestamp = Math.floor(timestamp / 16);
-                    return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
-                });
-                return uuid
-            }
         }
-
     }).mount('#app')
 
 

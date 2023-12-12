@@ -1,0 +1,29 @@
+### 本地发送给指定用户
+POST http://localhost:8080/push/localPush2User
+Content-Type: application/x-www-form-urlencoded
+
+userId = abc &
+msg = 我是发送给指定用户的消息
+
+
+### 本地发送给所有用户
+POST http://localhost:8080/push/localPushAllUser
+Content-Type: application/x-www-form-urlencoded
+
+msg = 我是发送给所有人的消息
+
+
+### 发送给指定用户
+POST http://localhost:8080/push/pushMsg2User
+Content-Type: application/x-www-form-urlencoded
+
+userId = xyz &
+msg = 我是发送给指定用户的消息
+
+
+
+### 发送给所有用户
+POST http://localhost:8080/push/pushMsg2AllUser
+Content-Type: application/x-www-form-urlencoded
+
+msg = 我是发送给所有人的消息

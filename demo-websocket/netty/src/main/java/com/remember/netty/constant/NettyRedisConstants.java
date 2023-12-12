@@ -15,6 +15,10 @@
  */
 package com.remember.netty.constant;
 
+import cn.hutool.crypto.digest.DigestAlgorithm;
+import cn.hutool.crypto.digest.Digester;
+import cn.hutool.system.SystemUtil;
+
 /**
  * netty redis 中需要用的key
  *
@@ -23,6 +27,14 @@ package com.remember.netty.constant;
  */
 public interface NettyRedisConstants {
 
+    /**
+     * 本级address ip
+     */
+    String ADDRESS = SystemUtil.getHostInfo().getAddress();
+    /**
+     * 本级address ip md5
+     */
+    String ADDRESS_MD5 = new Digester(DigestAlgorithm.MD5).digestHex(ADDRESS);
     /**
      * redis发布订阅topic：发送给指定用户
      */
@@ -34,7 +46,12 @@ public interface NettyRedisConstants {
     String PUSH_MESSAGE_TO_ALL = "PushMessageToAll";
 
 
-    String REDIS_WEB_SOCKET_USER_SET = "WEBSOCKET:USER";
+    /**
+     * websocket 已登录的客户端(用户)
+     */
+    String WS_CLIENT = "WS:CLIENT:";
+
+    String REDIS_WEB_SOCKET_USER_SET = "WS:USER";
 
 
 }

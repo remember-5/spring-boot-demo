@@ -12,6 +12,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -43,31 +44,49 @@ public class PushServiceImpl implements PushService {
 
     @Override
     public void pushMsg2User(String userId, String msg) {
-        ConcurrentHashMap<String, Channel> userChannelMap = NettyChannelManage.getUserChannelMap();
-        if (userChannelMap.containsKey(userId)) {
-            // 如果该用户的客户端是与本服务器建立的channel,直接推送消息
-            Channel channel = userChannelMap.get(userId);
+        // 如果该用户的客户端是与本服务器建立的channel,直接推送消息
+        if (NettyChannelManage.getUserChannelMap().containsKey(userId)) {
+            Channel channel = NettyChannelManage.getUserChannelMap().get(userId);
             if (!Objects.isNull(channel)) {
                 channel.writeAndFlush(new TextWebSocketFrame(msg));
-                log.info("用户在本节点,直接发送消息");
+                log.info("用户 {} 在本节点,直接发送消息", userId);
             } else {
-                log.warn("用户在本节点,获取channel出错");
+                log.error("用户 {} 在本节点,获取channel出错", userId);
             }
             return;
         }
 
-        final Boolean member = redisTemplate.opsForSet().isMember(NettyRedisConstants.REDIS_WEB_SOCKET_USER_SET, userId);
-        if (!member) {
-            log.warn("用户不在线");
+        assert redisTemplate != null;
+        final Set<String> keys = redisTemplate.keys(NettyRedisConstants.WS_CLIENT + "*");
+        assert keys != null;
+
+        if (keys.isEmpty()) {
+            log.warn("没有客户端在线");
             return;
         }
 
-        log.info("跨节点消息");
-        // 发布，给其他服务器消费
-        NettyPushMessageBody pushMessageBody = new NettyPushMessageBody();
-        pushMessageBody.setUserId(userId);
-        pushMessageBody.setMessage(msg);
-        redisTemplate.convertAndSend(NettyRedisConstants.PUSH_MESSAGE_TO_ONE, pushMessageBody);
+        boolean flag = false;
+        String node = null;
+        for (String key : keys) {
+            if (Boolean.TRUE.equals(redisTemplate.opsForSet().isMember(key, userId))) {
+                flag = true;
+                node = key;
+                break;
+            }
+        }
+
+        if (flag) {
+            log.info("跨节点消息, 节点id {}", node);
+            // 发布，给其他服务器消费
+            NettyPushMessageBody pushMessageBody = new NettyPushMessageBody();
+            pushMessageBody.setUserId(userId);
+            pushMessageBody.setMessage(msg);
+            redisTemplate.convertAndSend(NettyRedisConstants.PUSH_MESSAGE_TO_ONE, pushMessageBody);
+        } else {
+            log.warn("用户 {} 不在线", userId);
+        }
+
+
     }
 
     @Override

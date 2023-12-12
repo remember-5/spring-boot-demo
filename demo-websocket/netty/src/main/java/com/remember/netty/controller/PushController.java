@@ -15,6 +15,7 @@
  */
 package com.remember.netty.controller;
 
+import com.remember.netty.properties.WebSocketProperties;
 import com.remember.netty.service.PushService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +35,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class PushController {
 
     private final PushService pushService;
+    private final WebSocketProperties webSocketProperties;
 
     @PostMapping("/localPush2User")
     public void localPush2User(@RequestParam("userId") String userId, @RequestParam("msg") String msg) {
@@ -47,12 +49,16 @@ public class PushController {
 
     @PostMapping("/pushMsg2User")
     public void pushMsg2User(@RequestParam("userId") String userId, @RequestParam("msg") String msg) {
-        pushService.pushMsg2User(userId, msg);
+        if (Boolean.TRUE.equals(webSocketProperties.getEnableCluster())) {
+            pushService.pushMsg2User(userId, msg);
+        }
     }
 
     @PostMapping("/pushMsg2AllUser")
     public void pushMsg2AllUser(@RequestParam("msg") String msg) {
-        pushService.pushMsg2AllUser(msg);
+        if (Boolean.TRUE.equals(webSocketProperties.getEnableCluster())) {
+            pushService.pushMsg2AllUser(msg);
+        }
     }
 
 }

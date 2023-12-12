@@ -26,7 +26,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -47,7 +46,6 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 @RequiredArgsConstructor
 public class NettyClusterConfig {
 
-    private final ApplicationContext applicationContext;
 
     /**
      * 注入redis 消息监听器

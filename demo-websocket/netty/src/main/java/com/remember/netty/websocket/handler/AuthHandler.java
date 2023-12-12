@@ -143,7 +143,7 @@ public class AuthHandler extends ChannelInboundHandlerAdapter {
             // Save redis.
             if (Boolean.TRUE.equals(webSocketProperties.getEnableCluster())) {
                 assert redisTemplate != null;
-                redisTemplate.opsForSet().add(NettyRedisConstants.REDIS_WEB_SOCKET_USER_SET, userId);
+                redisTemplate.opsForSet().add(NettyRedisConstants.WS_CLIENT + NettyRedisConstants.ADDRESS_MD5, userId);
             }
             // 鉴权完成删除这个handler
             ctx.pipeline().remove(this);
@@ -212,7 +212,7 @@ public class AuthHandler extends ChannelInboundHandlerAdapter {
         String userId = ctx.channel().attr(key).get();
         if (Boolean.TRUE.equals(webSocketProperties.getEnableCluster())) {
             assert redisTemplate != null;
-            redisTemplate.opsForSet().remove(NettyRedisConstants.REDIS_WEB_SOCKET_USER_SET, userId);
+            redisTemplate.opsForSet().remove(NettyRedisConstants.WS_CLIENT + NettyRedisConstants.ADDRESS_MD5, userId);
         }
         ctx.channel().close();
     }
