@@ -15,7 +15,7 @@
  */
 package com.remember.netty.websocket.handler;
 
-import com.remember.netty.constant.NettyChannelManage;
+import com.remember.netty.constant.NettyChannelManager;
 import com.remember.netty.constant.NettyRedisConstants;
 import com.remember.netty.properties.WebSocketProperties;
 import io.netty.channel.ChannelHandler;
@@ -76,11 +76,11 @@ public class ClientMsgHandler extends SimpleChannelInboundHandler<TextWebSocketF
 
 
     private void removeUserId(ChannelHandlerContext ctx) {
-        NettyChannelManage.getChannelGroup().remove(ctx.channel());
+        NettyChannelManager.getChannelGroup().remove(ctx.channel());
 
         AttributeKey<String> key = AttributeKey.valueOf("userId");
         String userId = ctx.channel().attr(key).get();
-        NettyChannelManage.getUserChannelMap().remove(userId);
+        NettyChannelManager.getUserChannelMap().remove(userId);
         if (Boolean.TRUE.equals(webSocketProperties.getEnableCluster())) {
             Objects.requireNonNull(redisTemplate).opsForSet().remove(NettyRedisConstants.WS_CLIENT + NettyRedisConstants.ADDRESS_MD5, userId);
         }

@@ -1,7 +1,7 @@
 package com.remember.netty.pubsub;
 
 import com.alibaba.fastjson.JSON;
-import com.remember.netty.constant.NettyChannelManage;
+import com.remember.netty.constant.NettyChannelManager;
 import com.remember.netty.entity.NettyPushMessageBody;
 import io.netty.channel.Channel;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
@@ -28,8 +28,8 @@ public class MessageReceive {
 
         // 推送消息
         String userId = pushMessageBody.getUserId();
-        if (NettyChannelManage.getUserChannelMap().containsKey(userId)) {
-            ConcurrentHashMap<String, Channel> userChannelMap = NettyChannelManage.getUserChannelMap();
+        if (NettyChannelManager.getUserChannelMap().containsKey(userId)) {
+            ConcurrentHashMap<String, Channel> userChannelMap = NettyChannelManager.getUserChannelMap();
             Channel channel = userChannelMap.get(userId);
             if (!Objects.isNull(channel)) {
                 // 如果该用户的客户端是与本服务器建立的channel,直接推送消息
@@ -47,6 +47,6 @@ public class MessageReceive {
      */
     public void getMessageToAll(String message) {
         log.info("订阅消息，发送给所有用户：{}", message);
-        NettyChannelManage.getChannelGroup().writeAndFlush(new TextWebSocketFrame(message));
+        NettyChannelManager.getChannelGroup().writeAndFlush(new TextWebSocketFrame(message));
     }
 }

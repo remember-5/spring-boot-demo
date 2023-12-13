@@ -16,7 +16,7 @@
 package com.remember.netty.websocket.handler;
 
 import cn.hutool.core.text.CharSequenceUtil;
-import com.remember.netty.constant.NettyChannelManage;
+import com.remember.netty.constant.NettyChannelManager;
 import com.remember.netty.constant.NettyRedisConstants;
 import com.remember.netty.properties.WebSocketProperties;
 import io.netty.channel.ChannelHandler;
@@ -66,7 +66,7 @@ public class AuthHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void handlerAdded(ChannelHandlerContext ctx) {
         log.info("[handlerAdded] 逻辑处理器被添加：handlerAdded() {}", ctx.channel().id().asLongText());
-        NettyChannelManage.getChannelGroup().add(ctx.channel());
+        NettyChannelManager.getChannelGroup().add(ctx.channel());
     }
 
 
@@ -130,12 +130,12 @@ public class AuthHandler extends ChannelInboundHandlerAdapter {
             }
 
             // 鉴权成功，添加channel用户组
-            NettyChannelManage.getChannelGroup().add(ctx.channel());
+            NettyChannelManager.getChannelGroup().add(ctx.channel());
 
             // 将用户ID作为自定义属性加入到channel中，方便随时channel中获取用户ID
             AttributeKey<String> key = AttributeKey.valueOf("userId");
             ctx.channel().attr(key).setIfAbsent(userId);
-            NettyChannelManage.getUserChannelMap().put(userId, ctx.channel());
+            NettyChannelManager.getUserChannelMap().put(userId, ctx.channel());
 
             // Save redis.
             if (Boolean.TRUE.equals(webSocketProperties.getEnableCluster())) {

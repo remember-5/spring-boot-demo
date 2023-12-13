@@ -27,11 +27,11 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author wangjiahao
  * @date 2023/12/12 11:11
  */
-public class NettyChannelManage {
+public class NettyChannelManager {
     /**
      * constructor
      */
-    private NettyChannelManage() {
+    private NettyChannelManager() {
     }
 
     /**

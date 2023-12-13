@@ -1,6 +1,6 @@
 package com.remember.netty.service;
 
-import com.remember.netty.constant.NettyChannelManage;
+import com.remember.netty.constant.NettyChannelManager;
 import com.remember.netty.constant.NettyRedisConstants;
 import com.remember.netty.entity.NettyPushMessageBody;
 import io.netty.channel.Channel;
@@ -31,7 +31,7 @@ public class PushServiceImpl implements PushService {
 
     @Override
     public void localPush2User(NettyPushMessageBody nettyPushMessageBody) {
-        ConcurrentHashMap<String, Channel> userChannelMap = NettyChannelManage.getUserChannelMap();
+        ConcurrentHashMap<String, Channel> userChannelMap = NettyChannelManager.getUserChannelMap();
         Channel channel = userChannelMap.get(nettyPushMessageBody.getUserId());
         // 如果该用户的客户端是与本服务器建立的channel,直接推送消息
         channel.writeAndFlush(new TextWebSocketFrame(nettyPushMessageBody.getMessage()));
@@ -39,14 +39,14 @@ public class PushServiceImpl implements PushService {
 
     @Override
     public void localPushAllUser(NettyPushMessageBody nettyPushMessageBody) {
-        NettyChannelManage.getChannelGroup().writeAndFlush(new TextWebSocketFrame(nettyPushMessageBody.getMessage()));
+        NettyChannelManager.getChannelGroup().writeAndFlush(new TextWebSocketFrame(nettyPushMessageBody.getMessage()));
     }
 
     @Override
     public void pushMsg2User(NettyPushMessageBody nettyPushMessageBody) {
         // 1. 客户端是与本服务器建立的channel,直接推送消息
-        if (NettyChannelManage.getUserChannelMap().containsKey(nettyPushMessageBody.getUserId())) {
-            Channel channel = NettyChannelManage.getUserChannelMap().get(nettyPushMessageBody.getUserId());
+        if (NettyChannelManager.getUserChannelMap().containsKey(nettyPushMessageBody.getUserId())) {
+            Channel channel = NettyChannelManager.getUserChannelMap().get(nettyPushMessageBody.getUserId());
             channel.writeAndFlush(new TextWebSocketFrame(nettyPushMessageBody.getMessage()));
             log.info("用户 {} 在本节点,直接发送消息", nettyPushMessageBody.getUserId());
             return;
