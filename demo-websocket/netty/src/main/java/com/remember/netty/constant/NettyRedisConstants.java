@@ -50,8 +50,4 @@ public interface NettyRedisConstants {
      * websocket 已登录的客户端(用户)
      */
     String WS_CLIENT = "WS:CLIENT:";
-
-    String REDIS_WEB_SOCKET_USER_SET = "WS:USER";
-
-
 }

@@ -15,14 +15,12 @@
  */
 package com.remember.netty.controller;
 
+import com.remember.netty.entity.NettyPushMessageBody;
 import com.remember.netty.properties.WebSocketProperties;
 import com.remember.netty.service.PushService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author sixiaojie
@@ -38,26 +36,26 @@ public class PushController {
     private final WebSocketProperties webSocketProperties;
 
     @PostMapping("/localPush2User")
-    public void localPush2User(@RequestParam("userId") String userId, @RequestParam("msg") String msg) {
-        pushService.localPush2User(userId, msg);
+    public void localPush2User(@RequestBody NettyPushMessageBody nettyPushMessageBody) {
+        pushService.localPush2User(nettyPushMessageBody);
     }
 
     @PostMapping("/localPushAllUser")
-    public void localPushAllUser(@RequestParam("msg") String msg) {
-        pushService.localPushAllUser(msg);
+    public void localPushAllUser(@RequestBody NettyPushMessageBody nettyPushMessageBody) {
+        pushService.localPushAllUser(nettyPushMessageBody);
     }
 
     @PostMapping("/pushMsg2User")
-    public void pushMsg2User(@RequestParam("userId") String userId, @RequestParam("msg") String msg) {
+    public void pushMsg2User(@RequestBody NettyPushMessageBody nettyPushMessageBody) {
         if (Boolean.TRUE.equals(webSocketProperties.getEnableCluster())) {
-            pushService.pushMsg2User(userId, msg);
+            pushService.pushMsg2User(nettyPushMessageBody);
         }
     }
 
     @PostMapping("/pushMsg2AllUser")
-    public void pushMsg2AllUser(@RequestParam("msg") String msg) {
+    public void pushMsg2AllUser(@RequestBody NettyPushMessageBody nettyPushMessageBody) {
         if (Boolean.TRUE.equals(webSocketProperties.getEnableCluster())) {
-            pushService.pushMsg2AllUser(msg);
+            pushService.pushMsg2AllUser(nettyPushMessageBody);
         }
     }
 

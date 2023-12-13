@@ -25,6 +25,8 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PreDestroy;
 
 /**
+ * 启动后，销毁前需要执行的事件
+ *
  * @author wangjiahao
  * @date 2023/3/27 15:28
  */

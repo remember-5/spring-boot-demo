@@ -15,15 +15,11 @@
  */
 package com.remember.netty.config;
 
-import com.alibaba.fastjson.parser.Feature;
-import com.alibaba.fastjson.serializer.SerializeConfig;
-import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
 import com.remember.netty.constant.NettyRedisConstants;
 import com.remember.netty.properties.WebSocketProperties;
 import com.remember.netty.pubsub.MessageReceive;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
@@ -65,9 +61,10 @@ public class NettyClusterConfig {
         // 使用 String 序列化方式，序列化 KEY 。
         template.setKeySerializer(RedisSerializer.string());
         template.setHashKeySerializer(RedisSerializer.string());
-        // 使用 JSON 序列化方式（库是 Jackson ），序列化 VALUE 。
-        template.setValueSerializer(RedisSerializer.json());
-        template.setHashValueSerializer(RedisSerializer.json());
+        // 使用 JSON 序列化方式（库是 Fastjson ），序列化 VALUE 。
+        FastJsonRedisSerializer fastJsonRedisSerializer = new FastJsonRedisSerializer(Object.class);
+        template.setValueSerializer(fastJsonRedisSerializer);
+        template.setHashValueSerializer(fastJsonRedisSerializer);
         return template;
     }
 
@@ -95,37 +92,31 @@ public class NettyClusterConfig {
         redisMessageListenerContainer.addMessageListener(listenerAdapter2, new PatternTopic(NettyRedisConstants.PUSH_MESSAGE_TO_ALL));
 
         FastJsonRedisSerializer fastJsonRedisSerializer = new FastJsonRedisSerializer<>(Object.class);
-        FastJsonConfig fastJsonConfig = fastJsonRedisSerializer.getFastJsonConfig();
-        SerializeConfig serializeConfig = fastJsonConfig.getSerializeConfig();
-        fastJsonConfig.setSerializeConfig(serializeConfig);
-        fastJsonConfig.setFeatures(Feature.SupportAutoType);
-//        fastJsonConfig.setSerializerFeatures(SerializerFeature.WriteClassName);
         redisMessageListenerContainer.setTopicSerializer(fastJsonRedisSerializer);
         return redisMessageListenerContainer;
     }
 
     @Bean
-    @ConditionalOnBean(RedisTemplate.class)
-    public MessageReceive messageReceive(RedisTemplate<String, Object> redisTemplate) {
-        return new MessageReceive(redisTemplate);
+    public MessageReceive messageReceive() {
+        return new MessageReceive();
     }
 
 
     /**
      * 表示监听一个频道（发送给指定用户）
+     * 给messageListenerAdapter 传入一个消息接受的处理器，利用反射的方法调用“MessageReceive ”
      */
     @Bean
     public MessageListenerAdapter listenerAdapter1(MessageReceive messageReceive) {
-        //这个地方 是给messageListenerAdapter 传入一个消息接受的处理器，利用反射的方法调用“MessageReceive ”
         return new MessageListenerAdapter(messageReceive, "getMessageToOne");
     }
 
     /**
      * 表示监听一个频道（发送给所有用户）
+     * 给messageListenerAdapter 传入一个消息接受的处理器，利用反射的方法调用“MessageReceive ”
      */
     @Bean
     public MessageListenerAdapter listenerAdapter2(MessageReceive messageReceive) {
-        //这个地方 是给messageListenerAdapter 传入一个消息接受的处理器，利用反射的方法调用“MessageReceive ”
         return new MessageListenerAdapter(messageReceive, "getMessageToAll");
     }
 
