@@ -17,7 +17,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>netty</module>
+        <module>netty-rabbitmq-cluster</module>
+        <module>netty-redis-cluster</module>
         <module>websocket-client</module>
         <module>websocket-single</module>
         <module>websocket-cluster</module>

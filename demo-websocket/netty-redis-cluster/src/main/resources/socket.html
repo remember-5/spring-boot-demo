@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+<div id="app">
+	<div class="container">
+		<div class="content" v-for="(item, index) in list" v-bind:key="index">
+			<div class="item" :class="item.type === 'left' ? 'left-float' : 'right-float'">{{item.message}}</div>
+		</div>
+	</div>
+	<div>
+		<div>
+			<textarea v-model="socketUrl" placeholder="输入连接地址" cols="40" rows="4"></textarea>
+			<textarea v-model="message" placeholder="输入发送消息" cols="30" rows="10"></textarea>
+		</div>
+
+		<div>
+			<button v-if="!socketConnected" @click="doConnection">连接</button>
+			<button @click="sendMessage">发送</button>
+			<button>重置</button>
+		</div>
+	</div>
+</div>
+
+</body>
+<script>
+    const {createApp, ref} = Vue
+
+    createApp({
+        data() {
+            return {
+                message: '',
+                socket: null,
+                socketUrl: 'ws://localhost:58080/ws',
+                socketConnected: false,
+                list: []
+            }
+        },
+        mounted() {
+        },
+        methods: {
+            doConnection() {
+                // 判断当前浏览器是否支持webSocket
+                if (window.WebSocket) {
+                    this.list.push({type: 'left', message: '当前浏览器支持webSocket'})
+                    this.socket = new WebSocket(this.socketUrl)
+                    const that = this
+                    // Connection opened
+                    this.socket.addEventListener("open", function (event) {
+                        console.log(event)
+                        that.socketConnected = true
+                        that.list.push({
+                            type: 'right',
+                            message: '连接成功'
+                        })
+                    });
+
+                    // Listen for messages
+                    this.socket.addEventListener("message", function (event) {
+                        console.log(event)
+                        that.list.push({
+                            type: 'right',
+                            message: event.data
+                        })
+                    });
+
+                    this.socket.addEventListener("close", function (event) {
+                        console.log(event)
+                        that.list = []
+                        that.socketConnected = false;
+                    });
+                } else {
+                    alert("当前浏览器不支持webSocket")
+                }
+            },
+            sendMessage() {
+                this.list.push({ type: 'left', message: this.message })
+                this.socket.send(this.message)
+            },
+            reset() {
+                this.list = []
+                this.message = ''
+            },
+        }
+    }).mount('#app')
+
+
+</script>
+<style>
+    .container {
+        border: 1px solid;
+        height: 400px; /* 设置大的div的高度 */
+        width: 700px;
+        overflow: auto; /* 设置溢出时出现滚动条 */
+    }
+
+    .content {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .item {
+        width: 70%; /* 设置小div的宽度为大div的70% */
+        height: 50px; /* 设置小的div的高度 */
+        margin: 10px; /* 设置小的div之间的间距 */
+        background-color: #f0f0f0;
+    }
+
+    .left-float {
+        margin-right: auto;
+    }
+
+    .right-float {
+        margin-left: auto;
+    }
+</style>
+</html>
