@@ -29,6 +29,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 /**
  * 接收客户端消息的handler
  *
@@ -80,8 +82,7 @@ public class ClientMsgHandler extends SimpleChannelInboundHandler<TextWebSocketF
         String userId = ctx.channel().attr(key).get();
         NettyChannelManage.getUserChannelMap().remove(userId);
         if (Boolean.TRUE.equals(webSocketProperties.getEnableCluster())) {
-            assert redisTemplate != null;
-            redisTemplate.opsForSet().remove(NettyRedisConstants.WS_CLIENT + NettyRedisConstants.ADDRESS_MD5, userId);
+            Objects.requireNonNull(redisTemplate).opsForSet().remove(NettyRedisConstants.WS_CLIENT + NettyRedisConstants.ADDRESS_MD5, userId);
         }
 
         ctx.channel().close();

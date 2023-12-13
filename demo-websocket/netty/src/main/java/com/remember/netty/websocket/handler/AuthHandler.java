@@ -34,10 +34,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 鉴权handler
@@ -142,8 +139,7 @@ public class AuthHandler extends ChannelInboundHandlerAdapter {
 
             // Save redis.
             if (Boolean.TRUE.equals(webSocketProperties.getEnableCluster())) {
-                assert redisTemplate != null;
-                redisTemplate.opsForSet().add(NettyRedisConstants.WS_CLIENT + NettyRedisConstants.ADDRESS_MD5, userId);
+                Objects.requireNonNull(redisTemplate).opsForSet().add(NettyRedisConstants.WS_CLIENT + NettyRedisConstants.ADDRESS_MD5, userId);
             }
             // 鉴权完成删除这个handler
             ctx.pipeline().remove(this);
@@ -211,8 +207,7 @@ public class AuthHandler extends ChannelInboundHandlerAdapter {
         AttributeKey<String> key = AttributeKey.valueOf("userId");
         String userId = ctx.channel().attr(key).get();
         if (Boolean.TRUE.equals(webSocketProperties.getEnableCluster())) {
-            assert redisTemplate != null;
-            redisTemplate.opsForSet().remove(NettyRedisConstants.WS_CLIENT + NettyRedisConstants.ADDRESS_MD5, userId);
+            Objects.requireNonNull(redisTemplate).opsForSet().remove(NettyRedisConstants.WS_CLIENT + NettyRedisConstants.ADDRESS_MD5, userId);
         }
         ctx.channel().close();
     }

@@ -76,8 +76,7 @@ public class PushServiceImpl implements PushService {
      * @return 在线状态
      */
     private boolean checkUserOnlineStatus(String userId) {
-        assert redisTemplate != null;
-        final Set<String> keys = redisTemplate.keys(NettyRedisConstants.WS_CLIENT + "*");
+        final Set<String> keys = Objects.requireNonNull(redisTemplate).keys(NettyRedisConstants.WS_CLIENT + "*");
 
         // 如果没有客户端
         if (Objects.requireNonNull(keys).isEmpty()) {
