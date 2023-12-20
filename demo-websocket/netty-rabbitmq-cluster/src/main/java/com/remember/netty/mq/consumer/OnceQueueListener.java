@@ -16,20 +16,30 @@
 package com.remember.netty.mq.consumer;
 
 import com.rabbitmq.client.Channel;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.listener.api.ChannelAwareMessageListener;
+import reactor.core.publisher.Mono;
+import reactor.core.publisher.MonoProcessor;
 
 /**
  * @author wangjiahao
  * @date 2023/12/20 22:47
  */
+@Slf4j
 public class OnceQueueListener implements ChannelAwareMessageListener {
+    private final MonoProcessor<String> messageProcessor = MonoProcessor.create();
 
+    public Mono<Void> onMessageProcessed() {
+        return messageProcessor.then();
+    }
 
     @Override
     public void onMessage(Message message, Channel channel) throws Exception {
         String msg = new String(message.getBody());
-        System.out.println("Received message: " + msg);
+        log.info("OnceQueueListener Received message: " + msg);
+        // 将消息发送到 MonoProcessor
+        messageProcessor.onNext(msg);
         channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
     }
 }

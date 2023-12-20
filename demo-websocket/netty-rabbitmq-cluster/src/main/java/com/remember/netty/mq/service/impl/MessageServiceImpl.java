@@ -17,7 +17,6 @@ package com.remember.netty.mq.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.remember.netty.mq.constant.RabbitConstants;
-import com.remember.netty.mq.consumer.OnceQueueListener;
 import com.remember.netty.mq.entity.RabbitmqMessage;
 import com.remember.netty.mq.manager.DynamicListenerManager;
 import com.remember.netty.mq.manager.NettyChannelManager;
@@ -71,21 +70,25 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public Mono<String> sendMessage(RabbitmqMessage rabbitmqMessage) {
-        return Mono.create(sink -> {
-            // 创建一次性消费者
-            final String messageId = rabbitmqMessage.getMessageId();
-            rabbitmqManager.createOnceQueue(messageId);
+        // 创建一次性消费者
+//        final String messageId = rabbitmqMessage.getMessageId();
+//        rabbitmqManager.createOnceQueue(messageId);
 
-            // 发送消息到mq
-            rabbitTemplate.convertAndSend(RabbitmqManager.EXCHANGE_NAME,
-                    RabbitConstants.getReplyRoutingKeyName(messageId),
-                    JSON.toJSONString(rabbitmqMessage));
-
-            // 监听
-            final OnceQueueListener onceQueueListener = dynamicListenerManager.getListenerForQueue(RabbitConstants.getReplyQueueName(messageId), OnceQueueListener.class);
-//            dynamicListenerManager.removeListenerForQueue(RabbitConstants.getReplyQueueName(messageId));
-            sink.success();
-        });
+        // 发送消息到给用户mq
+        rabbitTemplate.convertAndSend(RabbitmqManager.EXCHANGE_NAME,
+                RabbitConstants.getInstanceRoutingKeyName(rabbitmqMessage.getUserId()),
+                JSON.toJSONString(rabbitmqMessage));
+        return Mono.just("asd");
+        // 监听
+//        final OnceQueueListener onceQueueListener = dynamicListenerManager.getListenerForQueue(RabbitConstants.getReplyQueueName(messageId), OnceQueueListener.class);
+//        dynamicListenerManager.removeListenerForQueue(RabbitConstants.getReplyQueueName(messageId));
+//        return onceQueueListener.onMessageProcessed()
+//               .doOnSuccess(s -> {
+//                   System.err.println(s);
+//               })
+//               .doOnError(e -> {
+//                   System.err.println(e);
+//               }).thenReturn("asdsad");
     }
 
     @Override

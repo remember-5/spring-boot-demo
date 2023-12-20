@@ -15,17 +15,20 @@
  */
 package com.remember.netty.mq.websocket.handler;
 
+import com.alibaba.fastjson.JSONObject;
 import com.remember.netty.mq.constant.RabbitConstants;
+import com.remember.netty.mq.entity.RabbitmqMessage;
 import com.remember.netty.mq.manager.NettyChannelManager;
+import com.remember.netty.mq.manager.RabbitmqManager;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.util.AttributeKey;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Lazy;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
 /**
@@ -37,19 +40,24 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @ChannelHandler.Sharable
+@RequiredArgsConstructor
 public class ClientMsgHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
 
     private final RedisTemplate<String, Object> redisTemplate;
+    private final RabbitTemplate rabbitTemplate;
 
-    public ClientMsgHandler(@Nullable @Lazy RedisTemplate<String, Object> redisTemplate) {
-        this.redisTemplate = redisTemplate;
-    }
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame msg) throws Exception {
         log.info("服务器收到消息：{}", msg.text());
+        final RabbitmqMessage javaObject = JSONObject.toJavaObject(JSONObject.parseObject(msg.text()), RabbitmqMessage.class);
+        // 将消息发送到 MQ
+
+        rabbitTemplate.convertAndSend(RabbitmqManager.EXCHANGE_NAME,
+                RabbitConstants.getReplyRoutingKeyName(javaObject.getMessageId()),
+                msg.text());
         // 回复消息
-        ctx.channel().writeAndFlush(new TextWebSocketFrame("服务器连接成功！"));
+//        ctx.channel().writeAndFlush(new TextWebSocketFrame("服务器连接成功！"));
     }
 
 
