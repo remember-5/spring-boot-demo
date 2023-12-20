@@ -15,8 +15,8 @@
  */
 package com.remember.netty.mq.websocket.handler;
 
+import com.remember.netty.mq.constant.RabbitConstants;
 import com.remember.netty.mq.manager.NettyChannelManager;
-import com.remember.netty.mq.properties.WebSocketProperties;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -40,11 +40,9 @@ import org.springframework.stereotype.Component;
 public class ClientMsgHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
 
     private final RedisTemplate<String, Object> redisTemplate;
-    private final WebSocketProperties webSocketProperties;
 
-    public ClientMsgHandler(@Nullable @Lazy RedisTemplate<String, Object> redisTemplate, WebSocketProperties webSocketProperties) {
+    public ClientMsgHandler(@Nullable @Lazy RedisTemplate<String, Object> redisTemplate) {
         this.redisTemplate = redisTemplate;
-        this.webSocketProperties = webSocketProperties;
     }
 
     @Override
@@ -76,6 +74,9 @@ public class ClientMsgHandler extends SimpleChannelInboundHandler<TextWebSocketF
         AttributeKey<String> key = AttributeKey.valueOf("userId");
         String userId = ctx.channel().attr(key).get();
         NettyChannelManager.getUserChannelMap().remove(userId);
+        if (Boolean.TRUE.equals(redisTemplate.hasKey(RabbitConstants.WS_CLIENT + RabbitConstants.ADDRESS_MD5))) {
+            redisTemplate.opsForSet().remove(RabbitConstants.WS_CLIENT + RabbitConstants.ADDRESS_MD5, userId);
+        }
         ctx.channel().close();
     }
 }

@@ -13,27 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.remember.netty.mq.constant;
+package com.remember.netty.mq.consumer;
 
-import java.text.MessageFormat;
+import com.rabbitmq.client.Channel;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.rabbit.listener.api.ChannelAwareMessageListener;
 
 /**
  * @author wangjiahao
- * @date 2023/12/19 15:39
+ * @date 2023/12/20 22:47
  */
-public class RabbitRoutingKeyConstants {
+public class OnceQueueListener implements ChannelAwareMessageListener {
 
 
-    /**
-     * websocket 已登录的客户端(用户)
-     */
-    public static final String WS_CLIENT = "WS:CLIENT:ONLINE";
-
-    private static final String PREFIX_CONSUMER = "INSTANCE.{0}";
-
-    public static String getPrefixConsumer(String instanceId) {
-        return MessageFormat.format(PREFIX_CONSUMER, instanceId);
+    @Override
+    public void onMessage(Message message, Channel channel) throws Exception {
+        String msg = new String(message.getBody());
+        System.out.println("Received message: " + msg);
+        channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
     }
-
-
 }

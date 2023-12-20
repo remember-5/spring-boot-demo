@@ -16,9 +16,9 @@
 package com.remember.netty.mq.websocket.handler;
 
 import cn.hutool.core.text.CharSequenceUtil;
-import com.remember.netty.mq.constant.RabbitRoutingKeyConstants;
+import com.remember.netty.mq.constant.RabbitConstants;
 import com.remember.netty.mq.manager.NettyChannelManager;
-import com.remember.netty.mq.properties.WebSocketProperties;
+import com.remember.netty.mq.manager.RabbitmqManager;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -28,10 +28,9 @@ import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.handler.codec.http.HttpVersion;
 import io.netty.util.AttributeKey;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -45,17 +44,11 @@ import java.util.*;
 @Slf4j
 @Component
 @ChannelHandler.Sharable
+@RequiredArgsConstructor
 public class AuthHandler extends ChannelInboundHandlerAdapter {
-
     private static final String AUTHORIZATION = "Authorization";
-
     private final RedisTemplate<String, Object> redisTemplate;
-    private final WebSocketProperties webSocketProperties;
-
-    public AuthHandler(@Nullable @Lazy RedisTemplate<String, Object> redisTemplate, WebSocketProperties webSocketProperties) {
-        this.redisTemplate = redisTemplate;
-        this.webSocketProperties = webSocketProperties;
-    }
+    private final RabbitmqManager rabbitmqManager;
 
     /**
      * 一旦连接，第一个被执行
@@ -138,7 +131,10 @@ public class AuthHandler extends ChannelInboundHandlerAdapter {
             NettyChannelManager.getUserChannelMap().put(userId, ctx.channel());
 
             // Save redis.
-            Objects.requireNonNull(redisTemplate).opsForSet().add(RabbitRoutingKeyConstants.WS_CLIENT, userId);
+            Objects.requireNonNull(redisTemplate).opsForSet().add(RabbitConstants.WS_CLIENT + RabbitConstants.ADDRESS_MD5, userId);
+            // 创建消费者监听器
+            rabbitmqManager.createQueue(userId);
+
 
             // 鉴权完成删除这个handler
             ctx.pipeline().remove(this);

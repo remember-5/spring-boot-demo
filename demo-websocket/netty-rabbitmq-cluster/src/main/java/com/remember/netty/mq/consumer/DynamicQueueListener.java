@@ -15,7 +15,10 @@
  */
 package com.remember.netty.mq.consumer;
 
+import com.alibaba.fastjson.JSON;
 import com.rabbitmq.client.Channel;
+import com.remember.netty.mq.entity.RabbitmqMessage;
+import com.remember.netty.mq.manager.NettyChannelManager;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.listener.api.ChannelAwareMessageListener;
 
@@ -26,9 +29,16 @@ import org.springframework.amqp.rabbit.listener.api.ChannelAwareMessageListener;
 public class DynamicQueueListener implements ChannelAwareMessageListener {
     @Override
     public void onMessage(Message message, Channel channel) throws Exception {
+        final String msg = new String(message.getBody());
         // 处理接收到的消息
-        System.out.println("Received message from dynamic queue: " + new String(message.getBody()));
-        // 手动确认消息
-        channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+        System.out.println("Received message from dynamic queue: " + msg);
+        final RabbitmqMessage javaObject = JSON.toJavaObject(JSON.parseObject(msg), RabbitmqMessage.class);
+        if (NettyChannelManager.getUserChannelMap().containsKey(javaObject.getUserId())) {
+            // 手动确认消息
+            NettyChannelManager.getUserChannelMap().get(javaObject.getUserId()).writeAndFlush(javaObject.getMessage());
+            channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+        } else {
+            channel.basicReject(message.getMessageProperties().getDeliveryTag(), true);
+        }
     }
 }
