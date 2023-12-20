@@ -15,13 +15,10 @@
  */
 package com.remember.netty.mq.config;
 
-import com.remember.netty.mq.manager.DynamicListenerManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
-import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -46,32 +43,4 @@ public class RabbitmqConfig {
     public RabbitAdmin rabbitAdmin(ConnectionFactory connectionFactory) {
         return new RabbitAdmin(connectionFactory);
     }
-
-
-    /**
-     * 消费者监听器
-     *
-     * @param connectionFactory /
-     * @return simpleMessageListenerContainer
-     */
-    @Bean
-    public SimpleMessageListenerContainer simpleMessageListenerContainer(ConnectionFactory connectionFactory) {
-        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
-        container.setConnectionFactory(connectionFactory);
-        return container;
-    }
-
-    /**
-     * 动态消费监听管理器
-     *
-     * @param simpleMessageListenerContainer /
-     * @return dynamicListenerManager
-     */
-    @Bean
-    @ConditionalOnBean(SimpleMessageListenerContainer.class)
-    public DynamicListenerManager dynamicListenerManager(SimpleMessageListenerContainer simpleMessageListenerContainer) {
-        return new DynamicListenerManager(simpleMessageListenerContainer);
-    }
-
-
 }

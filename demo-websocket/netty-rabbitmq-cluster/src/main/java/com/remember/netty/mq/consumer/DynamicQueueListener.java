@@ -35,11 +35,9 @@ public class DynamicQueueListener implements ChannelAwareMessageListener {
     @Override
     public void onMessage(Message message, Channel channel) throws Exception {
         final String msg = new String(message.getBody());
-        // 处理接收到的消息
         log.info("DynamicQueueListener Received message from dynamic queue: " + msg);
         final RabbitmqMessage javaObject = JSON.toJavaObject(JSON.parseObject(msg), RabbitmqMessage.class);
         if (NettyChannelManager.getUserChannelMap().containsKey(javaObject.getUserId())) {
-            // 手动确认消息
             NettyChannelManager.getUserChannelMap().get(javaObject.getUserId()).writeAndFlush(new TextWebSocketFrame(javaObject.getMessage()));
             channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
         } else {

@@ -18,34 +18,41 @@ package com.remember.netty.mq.manager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.core.AcknowledgeMode;
 import org.springframework.amqp.core.MessageListener;
+import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.rabbit.listener.api.ChannelAwareMessageListener;
+import org.springframework.stereotype.Component;
 
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * 动态queue监听管理
+ * 动态消费监听管理器
  *
  * @author wangjiahao
  * @date 2023/12/19 17:45
  */
+@Component
 @RequiredArgsConstructor
 public class DynamicListenerManager {
 
-    private final SimpleMessageListenerContainer simpleMessageListenerContainer;
+    private final RabbitAdmin rabbitAdmin;
 
     private ConcurrentHashMap<String, MessageListener> listenerMap = new ConcurrentHashMap<>();
 
-    public void addListenerForQueue(String queueName, MessageListener listener) {
+    public SimpleMessageListenerContainer createListenerContainer(MessageListener listener, AcknowledgeMode acknowledgeMode, String... queueName) {
+        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
+        container.setConnectionFactory(rabbitAdmin.getRabbitTemplate().getConnectionFactory());
+
         // 动态添加要监听的队列
-        simpleMessageListenerContainer.addQueueNames(queueName);
+        container.addQueueNames(queueName);
         // 设置消息监听器
-        simpleMessageListenerContainer.setMessageListener(listener);
+        container.setMessageListener(listener);
         // 设置ack模式
-        simpleMessageListenerContainer.setAcknowledgeMode(AcknowledgeMode.MANUAL);
+        container.setAcknowledgeMode(acknowledgeMode);
         // 重新启动消息监听器容器，使其生效
-        simpleMessageListenerContainer.start();
-        listenerMap.put(queueName, listener);
+        container.start();
+
+        return container;
     }
 
 
@@ -61,18 +68,4 @@ public class DynamicListenerManager {
         }
         return null;
     }
-
-    /**
-     * 移除消费者
-     *
-     * @param queueName
-     */
-    public void removeListenerForQueue(String queueName) {
-        simpleMessageListenerContainer.removeQueueNames(queueName);
     }
-
-
-
-
-
-}

@@ -20,15 +20,13 @@ import com.remember.netty.mq.consumer.DynamicQueueListener;
 import com.remember.netty.mq.consumer.OnceQueueListener;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.DirectExchange;
-import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
 
 /**
+ *
+ *
  * @author wangjiahao
  * @date 2023/12/20 21:09
  */
@@ -41,7 +39,6 @@ public class RabbitmqManager {
     private static final DirectExchange DIRECT_EXCHANGE = new DirectExchange(EXCHANGE_NAME);
 
     private final RabbitAdmin rabbitAdmin;
-    private final RabbitTemplate rabbitTemplate;
     private final DynamicListenerManager dynamicListenerManager;
 
 
@@ -69,7 +66,7 @@ public class RabbitmqManager {
         // 绑定queue
         rabbitAdmin.declareBinding(binding);
         // 监听queue
-        dynamicListenerManager.addListenerForQueue(queueName, new DynamicQueueListener());
+        dynamicListenerManager.createListenerContainer(new DynamicQueueListener(), AcknowledgeMode.MANUAL, queueName);
     }
 
 
@@ -83,7 +80,7 @@ public class RabbitmqManager {
         // 绑定queue
         rabbitAdmin.declareBinding(binding);
         // 监听queue
-        dynamicListenerManager.addListenerForQueue(queueName, new OnceQueueListener());
+        dynamicListenerManager.createListenerContainer(new OnceQueueListener(), AcknowledgeMode.MANUAL, queueName);
     }
 
 }

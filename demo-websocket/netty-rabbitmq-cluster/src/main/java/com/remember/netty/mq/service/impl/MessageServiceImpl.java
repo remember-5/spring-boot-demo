@@ -70,16 +70,18 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public Mono<String> sendMessage(RabbitmqMessage rabbitmqMessage) {
-        // 创建一次性消费者
-//        final String messageId = rabbitmqMessage.getMessageId();
-//        rabbitmqManager.createOnceQueue(messageId);
+        return Mono.create(sink -> {
+            // 创建一次性消费者
+            final String messageId = rabbitmqMessage.getMessageId();
+            rabbitmqManager.createOnceQueue(messageId);
 
-        // 发送消息到给用户mq
-        rabbitTemplate.convertAndSend(RabbitmqManager.EXCHANGE_NAME,
-                RabbitConstants.getInstanceRoutingKeyName(rabbitmqMessage.getUserId()),
-                JSON.toJSONString(rabbitmqMessage));
-        return Mono.just("asd");
-        // 监听
+            // 发送消息到给用户mq
+            rabbitTemplate.convertAndSend(RabbitmqManager.EXCHANGE_NAME,
+                    RabbitConstants.getInstanceRoutingKeyName(rabbitmqMessage.getUserId()),
+                    JSON.toJSONString(rabbitmqMessage));
+
+            sink.success("Message processed");
+            // 监听
 //        final OnceQueueListener onceQueueListener = dynamicListenerManager.getListenerForQueue(RabbitConstants.getReplyQueueName(messageId), OnceQueueListener.class);
 //        dynamicListenerManager.removeListenerForQueue(RabbitConstants.getReplyQueueName(messageId));
 //        return onceQueueListener.onMessageProcessed()
@@ -89,6 +91,9 @@ public class MessageServiceImpl implements MessageService {
 //               .doOnError(e -> {
 //                   System.err.println(e);
 //               }).thenReturn("asdsad");
+
+        });
+
     }
 
     @Override
