@@ -18,7 +18,6 @@ package com.remember.netty.mq.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.remember.netty.mq.constant.RabbitConstants;
 import com.remember.netty.mq.entity.RabbitmqMessage;
-import com.remember.netty.mq.manager.DynamicListenerManager;
 import com.remember.netty.mq.manager.NettyChannelManager;
 import com.remember.netty.mq.manager.RabbitmqManager;
 import com.remember.netty.mq.service.MessageService;
@@ -28,6 +27,7 @@ import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
@@ -41,8 +41,8 @@ import reactor.core.publisher.Mono;
 public class MessageServiceImpl implements MessageService {
 
     public final RabbitTemplate rabbitTemplate;
-    private final DynamicListenerManager dynamicListenerManager;
     private final RabbitmqManager rabbitmqManager;
+    private final ReactiveRedisTemplate<String, Object> reactiveRedisTemplate;
 
     @Override
     public Mono<String> sendLocalMessage(RabbitmqMessage rabbitmqMessage) {
@@ -70,30 +70,22 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public Mono<String> sendMessage(RabbitmqMessage rabbitmqMessage) {
-        return Mono.create(sink -> {
-            // 创建一次性消费者
-            final String messageId = rabbitmqMessage.getMessageId();
-            rabbitmqManager.createOnceQueue(messageId);
+        // 创建一次性消费者
+        final String messageId = rabbitmqMessage.getMessageId();
+        rabbitmqManager.createOnceQueue(messageId);
 
-            // 发送消息到给用户mq
-            rabbitTemplate.convertAndSend(RabbitmqManager.EXCHANGE_NAME,
-                    RabbitConstants.getInstanceRoutingKeyName(rabbitmqMessage.getUserId()),
-                    JSON.toJSONString(rabbitmqMessage));
+        // 发送消息到给用户mq
+        rabbitTemplate.convertAndSend(RabbitmqManager.EXCHANGE_NAME,
+                RabbitConstants.getInstanceRoutingKeyName(rabbitmqMessage.getUserId()),
+                JSON.toJSONString(rabbitmqMessage));
 
-            sink.success("Message processed");
-            // 监听
-//        final OnceQueueListener onceQueueListener = dynamicListenerManager.getListenerForQueue(RabbitConstants.getReplyQueueName(messageId), OnceQueueListener.class);
-//        dynamicListenerManager.removeListenerForQueue(RabbitConstants.getReplyQueueName(messageId));
-//        return onceQueueListener.onMessageProcessed()
-//               .doOnSuccess(s -> {
-//                   System.err.println(s);
-//               })
-//               .doOnError(e -> {
-//                   System.err.println(e);
-//               }).thenReturn("asdsad");
-
-        });
-
+        return reactiveRedisTemplate
+                // 监听Redis通道
+                .listenToChannel(messageId)
+                // 获取第一条符合条件的消息
+                .next()
+                // 从Redis中获取对应的值
+                .flatMap(message -> Mono.just(message.getMessage().toString()));
     }
 
     @Override

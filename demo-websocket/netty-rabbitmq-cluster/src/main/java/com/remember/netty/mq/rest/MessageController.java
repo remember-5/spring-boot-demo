@@ -22,6 +22,7 @@ import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
@@ -73,11 +74,9 @@ public class MessageController {
                 .next()
                 // 从Redis中获取对应的值
                 .flatMap(message -> reactiveRedisTemplate.opsForValue().get(messageId)
-                        .flatMap(value ->
-                                reactiveRedisTemplate.opsForValue()
+                        .flatMap(value -> reactiveRedisTemplate.opsForValue()
                                         .delete(messageId)
-                                        .thenReturn(value.toString()
-                                        )
+                                        .thenReturn(value.toString())
                         )
                 );
     }
