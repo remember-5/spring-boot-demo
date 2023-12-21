@@ -21,6 +21,7 @@ import com.remember.netty.mq.service.MessageService;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
@@ -35,6 +36,7 @@ import reactor.core.publisher.Mono;
 public class MessageController {
 
     private final MessageService messageService;
+    private final ReactiveRedisTemplate<String, Object> reactiveRedisTemplate;
 
     @PostMapping("/sendLocalMessage")
     public Mono<String> sendLocalMessage(@RequestBody RabbitmqMessage rabbitmqMessage) {
@@ -45,6 +47,41 @@ public class MessageController {
     public Mono<String> sendMessage(@RequestBody RabbitmqMessage rabbitmqMessage) {
         return messageService.sendMessage(rabbitmqMessage);
     }
+
+    @GetMapping("/setRedisKey")
+    public Mono<Long> setRedisKey(String messageId, String message) {
+        log.info("messageId:{},message:{}", messageId, message);
+        return reactiveRedisTemplate.opsForValue().set(messageId, message)
+                // 设置值
+                .flatMap(success -> {
+                    if (Boolean.TRUE.equals(success)) {
+                        return reactiveRedisTemplate.convertAndSend("your-channel", messageId); // 发送消息
+                    } else {
+                        return Mono.error(new RuntimeException("Failed to set value")); // 返回一个表示设置操作失败的错误信号
+                    }
+                });
+    }
+
+
+    @GetMapping("/waitRedisKey")
+    public Mono<Object> waitRedisKey(String messageId) {
+        log.info("messageId:{}", messageId);
+        return reactiveRedisTemplate
+                // 监听Redis通道
+                .listenToChannel("your-channel")
+                // 获取第一条符合条件的消息
+                .next()
+                // 从Redis中获取对应的值
+                .flatMap(message -> reactiveRedisTemplate.opsForValue().get(messageId)
+                        .flatMap(value ->
+                                reactiveRedisTemplate.opsForValue()
+                                        .delete(messageId)
+                                        .thenReturn(value.toString()
+                                        )
+                        )
+                );
+    }
+
 
     @GetMapping
     public void test() {
