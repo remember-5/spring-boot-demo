@@ -22,7 +22,6 @@ import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
@@ -56,7 +55,7 @@ public class MessageController {
                 // 设置值
                 .flatMap(success -> {
                     if (Boolean.TRUE.equals(success)) {
-                        return reactiveRedisTemplate.convertAndSend("your-channel", messageId); // 发送消息
+                        return reactiveRedisTemplate.convertAndSend(messageId, message); // 发送消息
                     } else {
                         return Mono.error(new RuntimeException("Failed to set value")); // 返回一个表示设置操作失败的错误信号
                     }
@@ -69,7 +68,7 @@ public class MessageController {
         log.info("messageId:{}", messageId);
         return reactiveRedisTemplate
                 // 监听Redis通道
-                .listenToChannel("your-channel")
+                .listenToChannel(messageId)
                 // 获取第一条符合条件的消息
                 .next()
                 // 从Redis中获取对应的值

@@ -47,11 +47,11 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public Mono<String> sendLocalMessage(RabbitmqMessage rabbitmqMessage) {
         return Mono.create(sink -> {
+            final String userId = rabbitmqMessage.getUserId();
             // 本地获取
-            if (NettyChannelManager.getUserChannelMap().containsKey(rabbitmqMessage.getUserId())) {
-                final Channel channel = NettyChannelManager.getUserChannelMap().get(rabbitmqMessage.getUserId());
-                TextWebSocketFrame textFrame = new TextWebSocketFrame(rabbitmqMessage.getMessage());
-                final ChannelFuture channelFuture = channel.writeAndFlush(textFrame);
+            if (NettyChannelManager.getUserChannelMap().containsKey(userId)) {
+                final Channel channel = NettyChannelManager.getUserChannelMap().get(userId);
+                final ChannelFuture channelFuture = channel.writeAndFlush(new TextWebSocketFrame(rabbitmqMessage.getMessage()));
                 channelFuture.addListener(future -> {
                     if (future.isSuccess()) {
                         // 异步操作成功
@@ -64,7 +64,6 @@ public class MessageServiceImpl implements MessageService {
             } else {
                 sink.error(new RuntimeException("用户不在线"));
             }
-
         });
     }
 
@@ -72,7 +71,7 @@ public class MessageServiceImpl implements MessageService {
     public Mono<String> sendMessage(RabbitmqMessage rabbitmqMessage) {
         // 创建一次性消费者
         final String messageId = rabbitmqMessage.getMessageId();
-        rabbitmqManager.createOnceQueue(messageId);
+//        rabbitmqManager.createOnceQueue(messageId);
 
         // 发送消息到给用户mq
         rabbitTemplate.convertAndSend(RabbitmqManager.EXCHANGE_NAME,
