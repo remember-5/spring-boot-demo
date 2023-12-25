@@ -13,6 +13,11 @@ public interface PersonService extends IService<Person> {
      */
     void test();
 
+    /**
+     * 测试加密
+     */
+    void testEncrypt();
+
 
 }
 

@@ -24,7 +24,7 @@ public class HotWireKb {
      *
      */
     @TableId(type = IdType.NONE)
-    private int id;
+    private Integer id;
 
     /**
      * 标题

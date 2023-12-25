@@ -24,7 +24,7 @@ public class HotWireKbTest {
      *
      */
     @TableId(type = IdType.AUTO)
-    private int id;
+    private Integer id;
 
     /**
      * 标题

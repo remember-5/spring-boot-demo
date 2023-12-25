@@ -2,12 +2,7 @@ package com.remember.mybatisplus.generator;
 
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
-import com.baomidou.mybatisplus.generator.AutoGenerator;
-import com.baomidou.mybatisplus.generator.config.*;
-import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
-import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 
-import java.io.File;
 import java.util.Scanner;
 
 /**
@@ -50,61 +45,61 @@ public class CodeGenerator {
     private static final String CONTROLLER_TEMPLATE_PATH = "generator/templates/controller.java";
 
     public static void main(String[] args) {
-        AutoGenerator generator = new AutoGenerator();
-
-        // 全局配置
-        GlobalConfig globalConfig = new GlobalConfig();
-        String projectPath = System.getProperty("user.dir");
-        if (StringUtils.isBlank(PROJECT_NAME)) {
-            globalConfig.setOutputDir(projectPath + "/src/main/java");
-        } else {
-            globalConfig.setOutputDir(projectPath + File.separator + PROJECT_NAME + "/src/main/java");
-        }
-
-        globalConfig.setAuthor(AUTHOR);
-        globalConfig.setOpen(false);
-        globalConfig.setFileOverride(false);
-        generator.setGlobalConfig(globalConfig);
-
-        // 数据源配置
-        DataSourceConfig dataSourceConfig = new DataSourceConfig();
-        dataSourceConfig.setUrl(URL);
-        dataSourceConfig.setDriverName(DRIVER_NAME);
-        dataSourceConfig.setUsername(USERNAME);
-        dataSourceConfig.setPassword(PASSWORD);
-        generator.setDataSource(dataSourceConfig);
-
-        // 包配置
-        PackageConfig packageConfig = new PackageConfig();
-        packageConfig.setModuleName("test");
-        packageConfig.setParent(BASE_PACKAGE_URL);
-        generator.setPackageInfo(packageConfig);
-
-        // 配置自定义代码模板
-        TemplateConfig templateConfig = new TemplateConfig();
-        templateConfig.setXml(XML_MAPPER_TEMPLATE_PATH);
-        templateConfig.setMapper(MAPPER_TEMPLATE_PATH);
-        templateConfig.setEntity(ENTITY_TEMPLATE_PATH);
-        templateConfig.setService(SERVICE_TEMPLATE_PATH);
-        templateConfig.setServiceImpl(SERVICE_IMPL_TEMPLATE_PATH);
-        templateConfig.setController(CONTROLLER_TEMPLATE_PATH);
-        generator.setTemplate(templateConfig);
-
-        // 策略配置
-        StrategyConfig strategy = new StrategyConfig();
-        strategy.setNaming(NamingStrategy.underline_to_camel);
-        strategy.setColumnNaming(NamingStrategy.underline_to_camel);
-        strategy.setEntityLombokModel(true);
-        strategy.setRestControllerStyle(true);
-        strategy.setInclude(scanner("表名"));
-//        strategy.setInclude("customer_complain");
-        strategy.setSuperEntityColumns("id");
-        strategy.setControllerMappingHyphenStyle(true);
-        strategy.setTablePrefix(packageConfig.getModuleName() + "_");
-//        strategy.setTablePrefix(packageConfig.getModuleName());
-        generator.setStrategy(strategy);
-        generator.setTemplateEngine(new FreemarkerTemplateEngine());
-        generator.execute();
+//        AutoGenerator generator = new AutoGenerator();
+//
+//        // 全局配置
+//        GlobalConfig globalConfig = new GlobalConfig();
+//        String projectPath = System.getProperty("user.dir");
+//        if (StringUtils.isBlank(PROJECT_NAME)) {
+//            globalConfig.setOutputDir(projectPath + "/src/main/java");
+//        } else {
+//            globalConfig.setOutputDir(projectPath + File.separator + PROJECT_NAME + "/src/main/java");
+//        }
+//
+//        globalConfig.setAuthor(AUTHOR);
+//        globalConfig.setOpen(false);
+//        globalConfig.setFileOverride(false);
+//        generator.setGlobalConfig(globalConfig);
+//
+//        // 数据源配置
+//        DataSourceConfig dataSourceConfig = new DataSourceConfig();
+//        dataSourceConfig.setUrl(URL);
+//        dataSourceConfig.setDriverName(DRIVER_NAME);
+//        dataSourceConfig.setUsername(USERNAME);
+//        dataSourceConfig.setPassword(PASSWORD);
+//        generator.setDataSource(dataSourceConfig);
+//
+//        // 包配置
+//        PackageConfig packageConfig = new PackageConfig();
+//        packageConfig.setModuleName("test");
+//        packageConfig.setParent(BASE_PACKAGE_URL);
+//        generator.setPackageInfo(packageConfig);
+//
+//        // 配置自定义代码模板
+//        TemplateConfig templateConfig = new TemplateConfig();
+//        templateConfig.setXml(XML_MAPPER_TEMPLATE_PATH);
+//        templateConfig.setMapper(MAPPER_TEMPLATE_PATH);
+//        templateConfig.setEntity(ENTITY_TEMPLATE_PATH);
+//        templateConfig.setService(SERVICE_TEMPLATE_PATH);
+//        templateConfig.setServiceImpl(SERVICE_IMPL_TEMPLATE_PATH);
+//        templateConfig.setController(CONTROLLER_TEMPLATE_PATH);
+//        generator.setTemplate(templateConfig);
+//
+//        // 策略配置
+//        StrategyConfig strategy = new StrategyConfig();
+//        strategy.setNaming(NamingStrategy.underline_to_camel);
+//        strategy.setColumnNaming(NamingStrategy.underline_to_camel);
+//        strategy.setEntityLombokModel(true);
+//        strategy.setRestControllerStyle(true);
+//        strategy.setInclude(scanner("表名"));
+////        strategy.setInclude("customer_complain");
+//        strategy.setSuperEntityColumns("id");
+//        strategy.setControllerMappingHyphenStyle(true);
+//        strategy.setTablePrefix(packageConfig.getModuleName() + "_");
+////        strategy.setTablePrefix(packageConfig.getModuleName());
+//        generator.setStrategy(strategy);
+//        generator.setTemplateEngine(new FreemarkerTemplateEngine());
+//        generator.execute();
     }
 
     private static String scanner(String tip) {

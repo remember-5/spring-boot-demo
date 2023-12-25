@@ -4,11 +4,11 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.remember.mybatisplus.handler.AESEncryptHandler;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -18,8 +18,7 @@ import java.util.Date;
  */
 @Data
 @ApiModel(value = "人")
-@AllArgsConstructor
-@NoArgsConstructor
+@Accessors(chain = true)
 @TableName(value = "t_person")
 public class Person implements Serializable {
     /**
@@ -32,7 +31,7 @@ public class Person implements Serializable {
     /**
      * name
      */
-    @TableField(value = "name")
+    @TableField(value = "name", typeHandler = AESEncryptHandler.class)
     @ApiModelProperty(value = "name")
     private String name;
 

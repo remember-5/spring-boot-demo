@@ -1,8 +1,6 @@
+# spring-boot-demo-mybatis-plus
 
-spring-boot-demo-mybatis-plus
-
-springboot结合mybatisplus并且配置多数据源和ps6py打印日志
-
-版本说明 mybatis-plus 3.3.0
+- `springboot`结合`mybatis-plus`并且配置多数据源
+- `ps6py`打印日志
 
 

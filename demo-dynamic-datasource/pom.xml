@@ -16,8 +16,8 @@
     <properties>
         <java.version>17</java.version>
         <!--   默认jdk版本     -->
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -26,7 +26,7 @@
         <skipTests>true</skipTests>
 
         <spring-boot.version>2.5.13</spring-boot.version>
-        <mybatis-plus.version>3.5.1</mybatis-plus.version>
+        <mybatis-plus.version>3.5.4.1</mybatis-plus.version>
         <dynamic-datasource.version>3.5.1</dynamic-datasource.version>
         <mybatis-plus-generator.version>3.5.2</mybatis-plus-generator.version>
     </properties>

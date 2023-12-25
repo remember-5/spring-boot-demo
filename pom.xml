@@ -70,7 +70,8 @@
         <hutool.version>5.8.19</hutool.version>
         <guava.version>32.0.0-jre</guava.version>
         <user.agent.version>1.20</user.agent.version>
-        <fastjson.version>1.2.83</fastjson.version>
+        <fastjson.version>2.0.43</fastjson.version>
+        <fastjson2.version>2.0.43</fastjson2.version>
         <javafaker.version>1.0.2</javafaker.version>
         <lombok.version>1.18.22</lombok.version>
         <mapstruct.version>1.4.1.Final</mapstruct.version>
@@ -103,6 +104,12 @@
             </dependency>
             <!-- fastjson -->
             <dependency>
+                <groupId>com.alibaba.fastjson2</groupId>
+                <artifactId>fastjson2</artifactId>
+                <version>${fastjson2.version}</version>
+            </dependency>
+            <!-- fastjson2 -->
+            <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
@@ -122,6 +129,7 @@
         </dependencies>
     </dependencyManagement>
 
+    <!--  直接依赖  -->
     <dependencies>
 
 

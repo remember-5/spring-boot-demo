@@ -21,13 +21,19 @@ public class PersonServiceImpl extends ServiceImpl<PersonMapper, Person> impleme
         log.info("开始执行事物");
         try {
             // 先测试写入操作
-            Person person = new Person(1, null, 24, "PVG airport", null, null);
+            Person person = new Person().setName("test").setAge(20).setAddress("test");
             this.save(person);
         } catch (Exception e) { // 抛出异常
             // 异常块内调用三方模块
             myPrint();
-            new Exception("hhhh");
         }
+    }
+
+    @Override
+    public void testEncrypt() {
+        Person person = new Person().setName("name").setAge(20).setAddress("address");
+        log.info("person save : {}", person);
+        save(person);
     }
 
     private void myPrint() {
