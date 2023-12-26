@@ -9,7 +9,6 @@
 	</parent>
 
 	<artifactId>demo-design-pattern</artifactId>
-	<groupId>com.remember5.design.pattern</groupId>
 	<name>demo-design-pattern</name>
 	<version>${parent.version}</version>
 	<description>demo-design-pattern</description>
@@ -17,15 +16,15 @@
 	<properties>
 		<java.version>17</java.version>
 		<!--   默认jdk版本     -->
-		<maven.compiler.source>11</maven.compiler.source>
-		<maven.compiler.target>11</maven.compiler.target>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<!--   跳过测试    -->
 		<skipTests>true</skipTests>
-		<spring-boot.version>2.5.12</spring-boot.version>
+		<spring-boot.version>2.5.15</spring-boot.version>
 	</properties>
 
 	<dependencies>

@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>demo-admin</artifactId>
-    <version>1.0.0</version>
+    <version>${parent.version}</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -24,7 +24,9 @@
         <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <spring-boot.version>2.5.13</spring-boot.version>
+
+        <spring-boot.version>2.5.15</spring-boot.version>
+        <spring-boot-admin.version>2.5.6</spring-boot-admin.version>
     </properties>
 
     <dependencies>

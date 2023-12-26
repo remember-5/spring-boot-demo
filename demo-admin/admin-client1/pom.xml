@@ -9,7 +9,7 @@
     </parent>
 
     <artifactId>admin-client1</artifactId>
-    <version>0.0.1</version>
+    <version>${parent.version}</version>
     <name>admin-client1</name>
     <description>Demo project for Spring Boot</description>
 
@@ -31,7 +31,7 @@
         <dependency>
             <groupId>de.codecentric</groupId>
             <artifactId>spring-boot-admin-starter-client</artifactId>
-            <version>2.3.1</version>
+            <version>${spring-boot-admin.version}</version>
         </dependency>
 
         <dependency>
