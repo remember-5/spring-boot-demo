@@ -9,7 +9,7 @@
     </parent>
 
     <artifactId>resource-server-sso</artifactId>
-    <version>0.0.1</version>
+    <version>${parent.version}</version>
     <name>resource-server</name>
     <description>Demo project for Spring Boot</description>
 

@@ -25,6 +25,6 @@ spring:
 
   elasticsearch:
     rest:
-      uris: http://116.236.68.213:9200
+      uris:
       username:
       password:

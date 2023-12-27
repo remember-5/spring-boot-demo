@@ -30,11 +30,6 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>com.remember5</groupId>
-            <artifactId>demo-common</artifactId>
-            <version>1.0.0</version>
-        </dependency>
     </dependencies>
 
     <dependencyManagement>

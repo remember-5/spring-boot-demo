@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>demo-encrypt</artifactId>
-    <version>0.0.1</version>
+    <version>${parent.version}</version>
     <name>demo-encrypt</name>
     <description>Demo project for Spring Boot</description>
 
@@ -31,14 +31,10 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>

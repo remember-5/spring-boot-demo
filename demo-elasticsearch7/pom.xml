@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>demo-elasticsearch7</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>${parent.version}</version>
     <name>demo-elasticsearch7</name>
     <description>demo-elasticsearch7</description>
 
@@ -18,7 +18,8 @@
         <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <spring-boot.version>2.5.14</spring-boot.version>
+
+        <spring-boot.version>2.5.15</spring-boot.version>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
     </properties>
 

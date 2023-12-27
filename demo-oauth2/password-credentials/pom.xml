@@ -9,7 +9,7 @@
     </parent>
 
     <artifactId>password-credentials</artifactId>
-    <version>0.0.1</version>
+    <version>${parent.version}</version>
     <name>password-credentials</name>
     <description>密码模式-授权服务器</description>
     <properties>

@@ -9,7 +9,7 @@
     </parent>
 
     <artifactId>config</artifactId>
-    <version>0.0.1</version>
+    <version>${parent.version}</version>
     <name>nacos-config</name>
     <description>Demo project for Spring Boot</description>
 

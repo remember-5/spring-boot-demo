@@ -9,7 +9,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>rabbitmq-demo2</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>${parent.version}</version>
     <name>rabbitmq-demo2</name>
     <description>rabbitmq-demo2</description>
 

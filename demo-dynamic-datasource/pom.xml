@@ -9,7 +9,7 @@
     </parent>
 
     <artifactId>demo-dynamic-datasource</artifactId>
-    <version>0.0.1</version>
+    <version>${parent.version}</version>
     <name>demo-dynamic-datasource</name>
     <description>Test dynamic datasource</description>
 

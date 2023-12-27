@@ -9,7 +9,7 @@
     </parent>
 
     <artifactId>demo-liquibase</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>${parent.version}</version>
     <name>demo-liquibase</name>
     <description>liquibase</description>
     <properties>

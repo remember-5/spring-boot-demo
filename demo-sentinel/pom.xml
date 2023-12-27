@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>demo-sentinel</artifactId>
-    <version>0.0.1</version>
+    <version>${parent.version}</version>
     <name>demo-sentinel</name>
     <description>Demo project for Spring Boot</description>
 

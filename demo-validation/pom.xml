@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>demo-validation</artifactId>
-    <version>0.0.1</version>
+    <version>${parent.version}</version>
     <name>demo-validation</name>
     <description>数据校验</description>
 

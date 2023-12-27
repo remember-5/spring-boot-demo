@@ -9,7 +9,7 @@
     </parent>
 
     <artifactId>rocketmq-consumer</artifactId>
-    <version>0.0.1</version>
+    <version>${parent.version}</version>
     <name>rocketmq-consumer</name>
     <description>Demo project for Spring Boot</description>
 

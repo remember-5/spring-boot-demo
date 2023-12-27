@@ -7,7 +7,7 @@
         <groupId>com.remember5</groupId>
         <version>1.0.0</version>
     </parent>
-    <groupId>com.remember5</groupId>
+
     <artifactId>admin-client2</artifactId>
     <version>${parent.version}</version>
     <name>admin-client2</name>
@@ -18,11 +18,6 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>

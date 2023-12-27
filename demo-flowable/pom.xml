@@ -3,9 +3,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.remember5</groupId>
+    <parent>
+        <artifactId>spring-boot-demo</artifactId>
+        <groupId>com.remember5</groupId>
+        <version>1.0.0</version>
+    </parent>
+
     <artifactId>demo-flowable</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>${parent.version}</version>
     <name>demo-flowable</name>
     <description>demo-flowable</description>
     <properties>

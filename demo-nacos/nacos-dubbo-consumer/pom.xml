@@ -11,7 +11,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>nacos-dubbo-consumer</artifactId>
-    <version>0.0.1</version>
+    <version>${parent.version}</version>
     <name>nacos-dubbo-consumer</name>
     <description>nacos-dubbo-consumer</description>
 
