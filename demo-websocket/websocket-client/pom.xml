@@ -9,7 +9,7 @@
     </parent>
 
     <artifactId>websocket-client</artifactId>
-    <version>${parent.version}</version>
+    <version>1.0.0</version>
     <name>websocket-client</name>
     <description>websocket-client</description>
 

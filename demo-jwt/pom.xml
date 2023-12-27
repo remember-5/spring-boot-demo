@@ -9,7 +9,7 @@
     </parent>
 
     <artifactId>demo-jwt</artifactId>
-    <version>${parent.version}</version>
+    <version>1.0.0</version>
     <name>demo-jwt</name>
     <description>Demo project for Spring Boot</description>
 

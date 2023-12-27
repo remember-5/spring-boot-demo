@@ -10,7 +10,7 @@
 	</parent>
 
 	<artifactId>demo-skywalking</artifactId>
-	<version>${parent.version}</version>
+	<version>1.0.0</version>
 	<name>demo-skywalking</name>
 	<description>demo-skywalking</description>
 

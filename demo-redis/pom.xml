@@ -8,7 +8,7 @@
         <version>1.0.0</version>
     </parent>
     <artifactId>demo-redis</artifactId>
-    <version>${parent.version}</version>
+    <version>1.0.0</version>
     <name>demo-jedis</name>
     <description>Demo project for Spring Boot</description>
 

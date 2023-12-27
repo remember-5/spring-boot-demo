@@ -11,7 +11,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>demo-rabbitmq</artifactId>
-    <version>${parent.version}</version>
+    <version>1.0.0</version>
     <name>demo-rabbitmq</name>
     <description>Demo project for Spring Boot</description>
     <packaging>pom</packaging>

@@ -8,7 +8,7 @@
         <version>1.0.0</version>
     </parent>
     <artifactId>role-demo</artifactId>
-    <version>${parent.version}</version>
+    <version>1.0.0</version>
     <name>role-demo</name>
     <description>Demo project for Spring Boot</description>
 

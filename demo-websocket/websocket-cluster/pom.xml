@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>websocket-cluster</artifactId>
-    <version>${parent.version}</version>
+    <version>1.0.0</version>
     <name>websocket-cluster</name>
     <description>websocket-cluster</description>
 

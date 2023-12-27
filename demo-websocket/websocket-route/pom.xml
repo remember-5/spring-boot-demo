@@ -9,7 +9,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>websocket-route</artifactId>
-    <version>${parent.version}</version>
+    <version>1.0.0</version>
     <name>websocket-route</name>
     <description>Demo project for Spring Boot</description>
 

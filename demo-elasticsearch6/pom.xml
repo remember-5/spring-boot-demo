@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>demo-elasticsearch6</artifactId>
-    <version>${parent.version}</version>
+    <version>1.0.0</version>
     <name>demo-elasticsearch</name>
     <description>demo-elasticsearch</description>
 

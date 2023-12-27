@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>demo-webflux</artifactId>
-    <version>${parent.version}</version>
+    <version>1.0.0</version>
     <name>demo-webflux</name>
     <description>demo-webflux</description>
     <properties>

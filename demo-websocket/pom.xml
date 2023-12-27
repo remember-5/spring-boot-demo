@@ -11,7 +11,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>demo-websocket</artifactId>
-    <version>${parent.version}</version>
+    <version>1.0.0</version>
     <name>demo-websocket</name>
     <description>demo-websocket</description>
     <packaging>pom</packaging>

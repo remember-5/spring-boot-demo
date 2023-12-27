@@ -9,7 +9,7 @@
     </parent>
 
     <artifactId>demo-mybatis-plus</artifactId>
-    <version>${parent.version}</version>
+    <version>1.0.0</version>
     <name>demo-mybatis-plus</name>
     <description>spring-boot-demo-mybatis-plus</description>
     <packaging>jar</packaging>

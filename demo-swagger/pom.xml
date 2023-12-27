@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>demo-swagger</artifactId>
-    <version>${parent.version}</version>
+    <version>1.0.0</version>
     <name>demo-swagger</name>
     <description>整合swagger</description>
 

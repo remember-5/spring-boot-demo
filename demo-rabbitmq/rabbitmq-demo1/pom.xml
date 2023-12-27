@@ -11,7 +11,7 @@
 
     <groupId>com.remember.rabbitmq</groupId>
     <artifactId>rabbitmq-demo1</artifactId>
-    <version>${parent.version}</version>
+    <version>1.0.0</version>
     <name>rabbitmq-demo1</name>
     <description>rabbitmq-demo1</description>
 

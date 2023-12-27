@@ -9,7 +9,7 @@
     </parent>
 
     <artifactId>admin-client2</artifactId>
-    <version>${parent.version}</version>
+    <version>1.0.0</version>
     <name>admin-client2</name>
     <description>Demo project for Spring Boot</description>
 

@@ -38,6 +38,7 @@
         <module>demo-nacos</module>
         <module>demo-oauth2</module>
         <module>demo-office</module>
+        <module>demo-package</module>
         <module>demo-quartz</module>
         <module>demo-rabbitmq</module>
         <module>demo-redis</module>
@@ -155,7 +156,7 @@
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
-                    <version>${spring-boot.version}</version>
+                    <version>${spring.boot.version}</version>
                     <executions>
                         <execution>
                             <goals>
@@ -163,17 +164,6 @@
                             </goals>
                         </execution>
                     </executions>
-                    <configuration>
-                        <resources>
-                            <resource>
-                                <directory>src/main/resources</directory>
-                                <excludes>
-                                    <!-- 排除子项目的资源文件 -->
-                                    <exclude>demo*/**/*</exclude>
-                                </excludes>
-                            </resource>
-                        </resources>
-                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -183,8 +173,8 @@
     <!-- 配置依赖仓库 -->
     <repositories>
         <repository>
-            <id>public</id>
-            <name>aliyun nexus</name>
+            <id>aliyunmaven</id>
+            <name>aliyunmaven</name>
             <url>https://maven.aliyun.com/repository/public</url>
             <releases>
                 <enabled>true</enabled>

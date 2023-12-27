@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>demo-encrypt</artifactId>
-    <version>${parent.version}</version>
+    <version>1.0.0</version>
     <name>demo-encrypt</name>
     <description>Demo project for Spring Boot</description>
 

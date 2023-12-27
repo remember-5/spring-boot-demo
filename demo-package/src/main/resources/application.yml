@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: demo
+  datasource:
+    dynamic:
+      p6spy: true # 默认false,建议线上关闭。
+      primary: sqlite #设置默认的数据源或者数据源组,默认值即为master
+      strict: false #严格匹配数据源,默认false. true未匹配到指定数据源时抛异常,false使用默认数据源
+      datasource:
+        # mysql configuration
+        #        mysql:
+        #          driver-class-name: com.mysql.cj.jdbc.Driver
+        #          url: jdbc:mysql://127.0.0.1:3306/spring_boot_demo?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&useSSL=false
+        #          username: root
+        #          password: 123456
+        # sqlite configuration
+        sqlite:
+          driver-class-name: org.sqlite.JDBC
+          url: jdbc:sqlite:/Users/wangjiahao/opt/sqlite/mybatis.db
+logging:
+  level:
+    com.example.demo: debug
+
+# mybatis plus configuration
+mybatis-plus:
+  mapper-locations: classpath:mappers/*.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.remember5.demopackage
+  global-config:
+    # 数据库相关配置
+    db-config:
+      #驼峰下划线转换
+      table-underline: true
+      #是否开启大写命名，默认不开启
+      #capital-mode: true
+      #逻辑删除配置
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  # 原生配置
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: true

@@ -10,7 +10,7 @@
 
 	<artifactId>demo-design-pattern</artifactId>
 	<name>demo-design-pattern</name>
-	<version>${parent.version}</version>
+	<version>1.0.0</version>
 	<description>demo-design-pattern</description>
 
 	<properties>

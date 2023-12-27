@@ -9,7 +9,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>netty-rabbitmq-cluster</artifactId>
-    <version>${parent.version}</version>
+    <version>1.0.0</version>
     <name>netty-rabbitmq-cluster</name>
     <description>Demo project for Spring Boot</description>
 

@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>demo-flowable</artifactId>
-    <version>${parent.version}</version>
+    <version>1.0.0</version>
     <name>demo-flowable</name>
     <description>demo-flowable</description>
     <properties>
