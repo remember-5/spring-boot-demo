@@ -5,8 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.remember.mybatisplus.handler.AESEncryptHandler;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -17,7 +16,7 @@ import java.util.Date;
  * @author wangjiahao
  */
 @Data
-@ApiModel(value = "人")
+@Schema(description = "人", title = "人")
 @Accessors(chain = true)
 @TableName(value = "t_person")
 public class Person implements Serializable {
@@ -25,42 +24,42 @@ public class Person implements Serializable {
      * 主键
      */
     @TableId(value = "id", type = IdType.AUTO)
-    @ApiModelProperty(value = "主键")
+    @Schema(description = "主键")
     private Integer id;
 
     /**
      * name
      */
     @TableField(value = "name", typeHandler = AESEncryptHandler.class)
-    @ApiModelProperty(value = "name")
+    @Schema(description = "name")
     private String name;
 
     /**
      * age
      */
     @TableField(value = "age")
-    @ApiModelProperty(value = "age")
+    @Schema(description = "age")
     private Integer age;
 
     /**
      * address
      */
     @TableField(value = "address")
-    @ApiModelProperty(value = "address")
+    @Schema(description = "address")
     private String address;
 
     /**
      * createTime
      */
     @TableField(value = "create_time")
-    @ApiModelProperty(value = "createTime")
+    @Schema(description = "createTime")
     private Date createTime;
 
     /**
      * updateTime
      */
     @TableField(value = "update_time")
-    @ApiModelProperty(value = "updateTime")
+    @Schema(description = "updateTime")
     private Date updateTime;
 
     private static final long serialVersionUID = 1L;

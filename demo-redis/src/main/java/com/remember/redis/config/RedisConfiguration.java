@@ -1,21 +1,11 @@
 package com.remember.redis.config;
 
-import org.redisson.Redisson;
-import org.redisson.api.RedissonClient;
-import org.redisson.codec.JsonJacksonCodec;
-import org.redisson.config.Config;
-import org.redisson.spring.data.connection.RedissonConnectionFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.core.io.Resource;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
-import org.springframework.integration.redis.util.RedisLockRegistry;
 import org.springframework.stereotype.Component;
-
-import java.io.IOException;
 
 /**
  * @author wangjiahao
@@ -50,20 +40,20 @@ public class RedisConfiguration {
      * @param redisson /
      * @return /
      */
-    @Bean
-    public RedissonConnectionFactory redissonConnectionFactory(RedissonClient redisson) {
-        return new RedissonConnectionFactory(redisson);
-    }
+//    @Bean
+//    public RedissonConnectionFactory redissonConnectionFactory(RedissonClient redisson) {
+//        return new RedissonConnectionFactory(redisson);
+//    }
 
-    @Bean(destroyMethod = "shutdown")
-    public RedissonClient redisson(@Value("classpath:/redisson.yaml") Resource configFile) throws IOException {
-        Config config = Config.fromYAML(configFile.getInputStream());
-        // 使用单体服务
-        config.useSingleServer();
-        // json进行编码
-        config.setCodec(new JsonJacksonCodec());
-        return Redisson.create(config);
-    }
+//    @Bean(destroyMethod = "shutdown")
+//    public RedissonClient redisson(@Value("classpath:/redisson.yaml") Resource configFile) throws IOException {
+//        Config config = Config.fromYAML(configFile.getInputStream());
+//        // 使用单体服务
+//        config.useSingleServer();
+//        // json进行编码
+//        config.setCodec(new JsonJacksonCodec());
+//        return Redisson.create(config);
+//    }
 
     /**
      * 分布式锁
@@ -74,12 +64,12 @@ public class RedisConfiguration {
      * @param redisConnectionFactory factory
      * @return /
      */
-    @Bean(name = "redisLockRegistry", destroyMethod = "destroy")
-    public RedisLockRegistry redisLockRegistry(RedisConnectionFactory redisConnectionFactory) {
-        // 默认失效时间
-        long defaultExpireTime = 60000L;
-        // 默认前缀
-        String defaultPrefixKey = "lock";
-        return new RedisLockRegistry(redisConnectionFactory, defaultPrefixKey);
-    }
+//    @Bean(name = "redisLockRegistry", destroyMethod = "destroy")
+//    public RedisLockRegistry redisLockRegistry(RedisConnectionFactory redisConnectionFactory) {
+//        // 默认失效时间
+//        long defaultExpireTime = 60000L;
+//        // 默认前缀
+//        String defaultPrefixKey = "lock";
+//        return new RedisLockRegistry(redisConnectionFactory, defaultPrefixKey);
+//    }
 }

@@ -1,6 +1,6 @@
 spring:
   application:
-    name: spring-boot-demo-mybatisplus
+    name: spring-boot-demo-mybatis-plus
   datasource:
     dynamic:
       p6spy: true # 默认false,建议线上关闭。

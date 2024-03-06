@@ -3,9 +3,9 @@ package com.remember.redis.service;
 import com.remember.redis.SpringBootDemoRedisApplication;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.integration.redis.util.RedisLockRegistry;
 
 import javax.annotation.Resource;
 import java.util.concurrent.CountDownLatch;
@@ -21,8 +21,6 @@ public class RedisLockTests {
 
     @Resource
     RedissonClient redissonClient;
-    @Resource
-    RedisLockRegistry redisLockRegistry;
 
     public static final String KEY = "mylock";
     /**
@@ -52,30 +50,35 @@ public class RedisLockTests {
         new CountDownLatch(1).await();
     }
 
-    /**
-     * 测试springboot提供的锁
-     * @throws InterruptedException /
-     */
     @Test
-    void testSpringBootLockRegister() throws InterruptedException {
-        for (int i = 0; i < 20; i++) {
-            new Thread(() -> {
-                log.info("线程 {} 启动了", Thread.currentThread().getName());
-                Lock lock = redisLockRegistry.obtain(KEY);
-                lock.lock();
-                try {
-                    log.info("线程 {} 抢到了锁", Thread.currentThread().getName());
-                    Thread.sleep(3000);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                } finally {
-                    lock.unlock();
-                    log.info("线程 {} 释放了锁", Thread.currentThread().getName());
-                }
-            }).start();
-        }
+    void testLock1() {
+        // 创建分布式锁对象
+        RLock lock = redissonClient.getLock("testLock1");
+        // 尝试加锁，最多等待10秒，锁定5秒后自动释放
+        boolean isLocked = false;
+        try {
+            isLocked = lock.tryLock(10, 5, java.util.concurrent.TimeUnit.SECONDS);
+            if (isLocked) {
+                // 成功获得锁，执行业务逻辑
+                System.out.println("Lock acquired. Performing business logic.");
+                // ... 业务逻辑 ...
+            } else {
+                // 无法获得锁，执行相应的处理
+                System.out.println("Unable to acquire lock. Performing alternative logic.");
+                // ... 备选逻辑 ...
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            // 释放锁
+            if (isLocked) {
+                lock.unlock();
+                System.out.println("Lock released.");
+            }
 
-        new CountDownLatch(1).await();
+            // 关闭 Redisson 客户端
+            redissonClient.shutdown();
+        }
     }
 
 }

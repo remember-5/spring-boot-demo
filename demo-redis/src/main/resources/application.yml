@@ -2,9 +2,9 @@ spring:
   application:
     name: spring-boot-demo-redis
   redis:
-    host:
+    host: 127.0.0.1
     port: 6379
-    password:
+    password: 123456
     database: 13 # Redis默认情况下有16个分片，这里配置具体使用的分片
     timeout: 10000
 #    cluster:
