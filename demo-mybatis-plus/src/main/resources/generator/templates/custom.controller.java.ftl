@@ -43,12 +43,12 @@ public class ${table.controllerName} {
     private final ${table.serviceName} ${lowerEntityName}Service;
 
     @GetMapping("/{id}")
-    public R<${entity}> get${entity}(@PathVariable Long id) {
+    public R<${entity}> get${entity}(@PathVariable Integer id) {
         return R.success(${lowerEntityName}Service.getById(id));
     }
 
     @GetMapping
-    public List<${entity}> getAll${entity}() {
+    public R<List<${entity}>> getAll${entity}() {
         return R.success(${lowerEntityName}Service.list());
     }
 
@@ -58,13 +58,13 @@ public class ${table.controllerName} {
     }
 
     @PutMapping("/{id}")
-    public R<Boolean> update${entity}(@PathVariable Long id, @RequestBody ${entity} ${lowerEntityName}) {
+    public R<Boolean> update${entity}(@PathVariable Integer id, @RequestBody ${entity} ${lowerEntityName}) {
         ${lowerEntityName}.setId(id);
         return R.success(${lowerEntityName}Service.updateById(${lowerEntityName}));
     }
 
     @DeleteMapping("/{id}")
-    public R<Boolean> delete${entity}(@PathVariable Long id) {
+    public R<Boolean> delete${entity}(@PathVariable Integer id) {
         return R.success(${lowerEntityName}Service.removeById(id));
     }
 

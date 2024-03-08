@@ -44,7 +44,7 @@ public class ${table.controllerName} {
     private final ${table.serviceName} ${lowerEntityName}Service;
 
     @GetMapping("/{id}")
-    public ${entity} get${entity}(@PathVariable Long id) {
+    public ${entity} get${entity}(@PathVariable Integer id) {
         return ${lowerEntityName}Service.getById(id);
     }
 
@@ -59,13 +59,13 @@ public class ${table.controllerName} {
     }
 
     @PutMapping("/{id}")
-    public void update${entity}(@PathVariable Long id, @RequestBody ${entity} ${lowerEntityName}) {
+    public void update${entity}(@PathVariable Integer id, @RequestBody ${entity} ${lowerEntityName}) {
         ${lowerEntityName}.setId(id);
         ${lowerEntityName}Service.updateById(${lowerEntityName});
     }
 
     @DeleteMapping("/{id}")
-    public void delete${entity}(@PathVariable Long id) {
+    public void delete${entity}(@PathVariable Integer id) {
         ${lowerEntityName}Service.removeById(id);
     }
 
