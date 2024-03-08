@@ -49,18 +49,21 @@ public class NewCodeGenerator {
     /** 保存路径 */
     public static final String OUTPUT_DIR = "/Users/wangjiahao/IdeaProjects/spring-boot-demo/demo-mybatis-plus";
     /** 生成表, 可生成多个 */
-    public static final List<String> TABLES = Arrays.asList("sys_user");
+    public static final List<String> TABLES = Arrays.asList("t_cms");
     /** 忽略的表前缀 */
     public static final List<String> TABLES_PREFIX = Arrays.asList("t_", "c_", "sys_");
     /** 包名 */
-    public static final String PACKAGE_PATH = "com.remember.mybatisplus.test";
+    public static final String PACKAGE_PATH = "com.remember.mybatisplus";
     /** 模块名称 */
-    public static final String MODULE_NAME = "system";
+    public static final String MODULE_NAME = "test";
     /** xml存放包名 */
     public static final String MAPPER_XML_PATH = "mapper";
+    /** 开启自定义返回 */
+    public static final Boolean ENABLE_CUSTOM_RETURN = false;
 
     /** 模版路径 */
     public static final String CONTROLLER_TEMPLATE_PATH = "generator/templates/controller.java";
+    public static final String CUSTOM_CONTROLLER_TEMPLATE_PATH = "generator/templates/custom.controller.java";
     public static final String ENTITY_TEMPLATE_PATH = "generator/templates/entity.java";
     public static final String MAPPER_TEMPLATE_PATH = "generator/templates/mapper.java";
     public static final String MAPPER_XML_TEMPLATE_PATH = "generator/templates/mapper.xml";
@@ -155,7 +158,7 @@ public class NewCodeGenerator {
 
                 })
                 .templateConfig(builder -> {
-                    builder.controller(CONTROLLER_TEMPLATE_PATH)
+                    builder.controller(ENABLE_CUSTOM_RETURN ? CUSTOM_CONTROLLER_TEMPLATE_PATH : CONTROLLER_TEMPLATE_PATH)
                             .entity(ENTITY_TEMPLATE_PATH)
                             .mapper(MAPPER_TEMPLATE_PATH)
                             .xml(MAPPER_XML_TEMPLATE_PATH)
