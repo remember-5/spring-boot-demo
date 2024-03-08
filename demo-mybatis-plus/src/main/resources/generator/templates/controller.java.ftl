@@ -41,32 +41,32 @@ public class ${table.controllerName} extends ${superControllerClass} {
 public class ${table.controllerName} {
 </#if>
 
-    private final ${table.serviceName} ${controllerMappingHyphen}Service;
+    private final ${table.serviceName} ${lowerEntityName}Service;
 
     @GetMapping("/{id}")
     public ${entity} get${entity}(@PathVariable Long id) {
-        return ${controllerMappingHyphen}Service.getById(id);
+        return ${lowerEntityName}Service.getById(id);
     }
 
     @GetMapping
     public List<${entity}> getAll${entity}() {
-        return ${controllerMappingHyphen}Service.list();
+        return ${lowerEntityName}Service.list();
     }
 
     @PostMapping
-    public void add${entity}(@RequestBody ${entity} ${controllerMappingHyphen}) {
-        ${controllerMappingHyphen}Service.save(cms);
+    public void add${entity}(@RequestBody ${entity} ${lowerEntityName}) {
+        ${lowerEntityName}Service.save(${lowerEntityName});
     }
 
     @PutMapping("/{id}")
-    public void update${entity}(@PathVariable Long id, @RequestBody ${entity} ${controllerMappingHyphen}) {
-        ${controllerMappingHyphen}.setId(id);
-        ${controllerMappingHyphen}Service.updateById(cms);
+    public void update${entity}(@PathVariable Long id, @RequestBody ${entity} ${lowerEntityName}) {
+        ${lowerEntityName}.setId(id);
+        ${lowerEntityName}Service.updateById(${lowerEntityName});
     }
 
     @DeleteMapping("/{id}")
     public void delete${entity}(@PathVariable Long id) {
-        ${controllerMappingHyphen}Service.removeById(id);
+        ${lowerEntityName}Service.removeById(id);
     }
 
 }

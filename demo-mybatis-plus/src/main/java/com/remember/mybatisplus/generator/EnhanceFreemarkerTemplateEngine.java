@@ -32,9 +32,12 @@ import java.util.Map;
  * @date 2024/3/6 14:55
  */
 public class EnhanceFreemarkerTemplateEngine extends FreemarkerTemplateEngine {
+
     @Override
     protected void outputCustomFile(@NotNull List<CustomFile> customFiles, @NotNull TableInfo tableInfo, @NotNull Map<String, Object> objectMap) {
         final String entityName = tableInfo.getEntityName();
+        final String lowerEntityName = entityName.substring(0, 1).toLowerCase() + entityName.substring(1);
+        objectMap.put("lowerEntityName", lowerEntityName);
         String otherPath = this.getPathInfo(OutputFile.entity);
         customFiles.forEach(customFile -> {
             String fileName = String.format(otherPath + File.separator + entityName + "%s", customFile.getFileName());
