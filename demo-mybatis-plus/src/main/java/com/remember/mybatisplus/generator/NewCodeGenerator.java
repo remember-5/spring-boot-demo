@@ -49,7 +49,7 @@ public class NewCodeGenerator {
     /** 保存路径 */
     public static final String OUTPUT_DIR = "/Users/wangjiahao/IdeaProjects/spring-boot-demo/demo-mybatis-plus";
     /** 生成表, 可生成多个 */
-    public static final List<String> TABLES = Arrays.asList("t_cms");
+    public static final List<String> TABLES = Arrays.asList("t_gen_test");
     /** 忽略的表前缀 */
     public static final List<String> TABLES_PREFIX = Arrays.asList("t_", "c_", "sys_");
     /** 包名 */
@@ -133,6 +133,8 @@ public class NewCodeGenerator {
                             .naming(NamingStrategy.underline_to_camel)  //数据库表映射到实体的命名策略：下划线转驼峰命
                             .columnNaming(NamingStrategy.underline_to_camel)    //数据库表字段映射到实体的命名策略：下划线转驼峰命
                             .addTableFills(
+                                    new Column("create_by", FieldFill.INSERT),
+                                    new Column("update_by", FieldFill.INSERT_UPDATE),
                                     new Column("create_time", FieldFill.INSERT),
                                     new Column("update_time", FieldFill.INSERT_UPDATE)
                             )   //添加表字段填充，"create_time"字段自动填充为插入时间，"modify_time"字段自动填充为插入修改时间
