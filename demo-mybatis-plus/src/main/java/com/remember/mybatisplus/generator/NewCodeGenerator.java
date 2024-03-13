@@ -71,6 +71,7 @@ public class NewCodeGenerator {
     public static final String SERVICE_IMPL_TEMPLATE_PATH = "generator/templates/serviceImpl.java";
     public static final String DTO_TEMPLATE_PATH = "generator/templates/entityDTO.java.ftl";
     public static final String VO_TEMPLATE_PATH = "generator/templates/entityVO.java.ftl";
+    public static final String MAPSTRUCT_TEMPLATE_PATH = "generator/templates/mapstruct.java.ftl";
 
 
     public static void main(String[] args) {
@@ -94,9 +95,10 @@ public class NewCodeGenerator {
                     if (typeCode == Types.SMALLINT) {
                         // 自定义类型转换
                         return DbColumnType.INTEGER;
+                    } else if(typeCode == Types.DATE || typeCode == Types.TIME || typeCode == Types.TIMESTAMP) {
+                        return DbColumnType.TIMESTAMP;
                     }
                     return typeRegistry.getColumnType(metaInfo);
-
                 }))
                 // 包配置
                 .packageConfig(builder -> {
@@ -118,6 +120,12 @@ public class NewCodeGenerator {
                         customFile.fileName("VO.java")
                                 .packageName("vo")
                                 .templatePath(VO_TEMPLATE_PATH);
+                    });
+                    // mapstruct
+                    consumer.customFile(customFile -> {
+                        customFile.fileName("Mapstruct.java")
+                                .packageName("mapstruct")
+                                .templatePath(MAPSTRUCT_TEMPLATE_PATH);
                     });
                 })
                 // 策略配置

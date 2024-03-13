@@ -13,23 +13,24 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-package ${package.Service};
+package ${mapstructPackages};
 
+import org.mapstruct.Mapper;
 import ${package.Entity}.${entity};
-import ${superServiceClassPackage};
+import ${package.Entity}.${entity}DTO;
 
 /**
- * <p>
- * ${table.comment!} 服务类
- * </p>
- *
- * @author ${author}
- * @since ${date}
- */
-<#if kotlin>
-interface ${table.serviceName} : ${superServiceClass}<${entity}>
-<#else>
-public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
+* <p>
+* ${table.comment!} Mapstruct
+* </p>
+*
+* @author ${author}
+* @since ${date}
+*/
+@Mapper(componentModel = "spring")
+public interface ${entity}Mapstruct {
 
+    ${entity} toEntity(${entity}DTO dto);
+
+    ${entity}DTO toDTO(${entity} entity);
 }
-</#if>
