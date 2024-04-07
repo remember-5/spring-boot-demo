@@ -13,26 +13,50 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.remember5.demowebflux.entity;
+package com.remember5.mongodb.entity;
 
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.util.Date;
+
 /**
+ * 对话内容
+ *
  * @author wangjiahao
- * @date 2023/4/19 17:28
+ * @date 2024/3/31 21:03
  */
 @Data
 @Accessors(chain = true)
-@NoArgsConstructor
-@AllArgsConstructor
+public class ChatContent {
 
-public class UserVO {
+    private Integer id;
+    /**
+     * Q&A 问题或回答
+     */
+    private String type;
+    /**
+     * 模型
+     */
+    private String modelType;
+    /**
+     * 对话内容
+     */
+    private String text;
+    /**
+     * 投票(0 点踩1 点赞)
+     */
+    private int vote;
 
-    private Long id;
-    private String username;
+    /**
+     * 点踩反馈
+     */
+    private String voteDesc;
 
-
+    /**
+     * 创建时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date createTime;
 }

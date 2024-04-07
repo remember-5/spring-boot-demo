@@ -16,12 +16,14 @@
 package com.remember5.demowebflux.controller;
 
 import com.remember5.demowebflux.entity.UserVO;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.time.Duration;
 
 /**
  * @author wangjiahao
@@ -38,12 +40,9 @@ public class UserController {
      */
     @GetMapping("/list")
     public Flux<UserVO> list() {
-        // 查询列表
-        List<UserVO> result = new ArrayList<>();
-        result.add(UserVO.builder().id(1).username("wangjiahao").build());
-        result.add(UserVO.builder().id(2).username("woaini").build());
-        result.add(UserVO.builder().id(3).username("xiabanla").build());
-        return Flux.fromIterable(result);
+        return Flux.interval(Duration.ofSeconds(1))
+                // 演示1秒生成个
+                .map(i -> new UserVO().setId(i).setUsername("wangjiahao"));
     }
 
     /**
@@ -53,8 +52,8 @@ public class UserController {
      * @return 用户
      */
     @GetMapping("/get")
-    public Mono<UserVO> get(@RequestParam("id") Integer id) {
-        return Mono.just(UserVO.builder().id(id).username("username" + id).build());
+    public Mono<UserVO> get(@RequestParam("id") Long id) {
+        return Mono.just(new UserVO().setId(id).setUsername("username" + id));
     }
 
 

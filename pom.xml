@@ -52,6 +52,9 @@
         <module>demo-web</module>
         <module>demo-webflux</module>
         <module>demo-websocket</module>
+        <module>demo-mqtt</module>
+        <module>demo-mongodb</module>
+        <module>demo-email</module>
     </modules>
 
 

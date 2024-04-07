@@ -13,26 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.remember5.demowebflux.entity;
+package com.remember5.mongodb.repository;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.Accessors;
+import com.remember5.mongodb.entity.GptChat;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 /**
  * @author wangjiahao
- * @date 2023/4/19 17:28
+ * @date 2024/3/31 20:40
  */
-@Data
-@Accessors(chain = true)
-@NoArgsConstructor
-@AllArgsConstructor
-
-public class UserVO {
-
-    private Long id;
-    private String username;
-
+public interface GptRepository extends MongoRepository<GptChat, String> {
 
 }

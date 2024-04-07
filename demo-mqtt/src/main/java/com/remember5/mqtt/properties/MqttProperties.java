@@ -13,26 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.remember5.demowebflux.entity;
+package com.remember5.mqtt.properties;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.Accessors;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author wangjiahao
- * @date 2023/4/19 17:28
+ * @date 2024/3/15 17:47
  */
 @Data
-@Accessors(chain = true)
-@NoArgsConstructor
-@AllArgsConstructor
+@Configuration
+@ConfigurationProperties(prefix = "spring.mqtt")
+public class MqttProperties {
 
-public class UserVO {
-
-    private Long id;
     private String username;
 
+    private String password;
+
+    private String url;
+
+    private String clientId;
+
+    private String defaultTopic;
 
 }

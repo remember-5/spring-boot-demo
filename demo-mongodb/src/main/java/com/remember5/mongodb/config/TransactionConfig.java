@@ -13,26 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.remember5.demowebflux.entity;
+package com.remember5.mongodb.config;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.Accessors;
+import org.springframework.context.annotation.Bean;
+import org.springframework.data.mongodb.MongoDatabaseFactory;
+import org.springframework.data.mongodb.MongoTransactionManager;
+import org.springframework.stereotype.Component;
 
 /**
+ * 配置事务管理器
+ *
  * @author wangjiahao
- * @date 2023/4/19 17:28
+ * @date 2024/3/31 17:32
  */
-@Data
-@Accessors(chain = true)
-@NoArgsConstructor
-@AllArgsConstructor
+@Component
+public class TransactionConfig {
 
-public class UserVO {
-
-    private Long id;
-    private String username;
-
-
+    @Bean
+    MongoTransactionManager transactionManager(MongoDatabaseFactory dbFactory) {
+        return new MongoTransactionManager(dbFactory);
+    }
 }

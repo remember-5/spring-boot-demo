@@ -1,0 +1,9 @@
+spring:
+  data:
+    mongodb:
+      host: 127.0.0.1
+      port: 27017
+      database: java_test
+      username: java_test
+      password: java_test
+      authentication-database: admin

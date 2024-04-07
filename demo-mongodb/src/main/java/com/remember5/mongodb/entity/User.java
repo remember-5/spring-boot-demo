@@ -13,26 +13,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.remember5.demowebflux.entity;
+package com.remember5.mongodb.entity;
 
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.Accessors;
+import org.springframework.data.mongodb.core.mapping.MongoId;
+
+import java.util.Date;
 
 /**
  * @author wangjiahao
- * @date 2023/4/19 17:28
+ * @date 2024/3/31 17:24
  */
 @Data
+@ToString
 @Accessors(chain = true)
-@NoArgsConstructor
-@AllArgsConstructor
-
-public class UserVO {
-
-    private Long id;
-    private String username;
+public class User {
 
 
+    /**
+     * 使用 @MongoID 能更清晰的指定 _id 主键
+     */
+    @MongoId
+    private String id;
+    private String name;
+    private String sex;
+    private Integer salary;
+    private Integer age;
+    @JsonFormat( pattern ="yyyy-MM-dd", timezone ="GMT+8")
+    private Date birthday;
+    private String remake;
+    private Status status;
 }

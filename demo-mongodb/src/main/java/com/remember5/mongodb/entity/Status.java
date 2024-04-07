@@ -13,26 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.remember5.demowebflux.entity;
+package com.remember5.mongodb.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 
 /**
  * @author wangjiahao
- * @date 2023/4/19 17:28
+ * @date 2024/3/31 17:24
  */
 @Data
+@ToString
 @Accessors(chain = true)
-@NoArgsConstructor
-@AllArgsConstructor
-
-public class UserVO {
-
-    private Long id;
-    private String username;
-
-
+public class Status {
+    private Integer weight;
+    private Integer height;
 }
