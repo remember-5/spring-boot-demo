@@ -13,13 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.remember5.demowebflux.controller;
+package com.remember5.webflux.controller;
 
-import com.remember5.demowebflux.entity.UserVO;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import com.remember5.webflux.entity.UserVO;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -39,10 +36,11 @@ public class UserController {
      * @return 用户列表
      */
     @GetMapping("/list")
+    @CrossOrigin
     public Flux<UserVO> list() {
         return Flux.interval(Duration.ofSeconds(1))
                 // 演示1秒生成个
-                .map(i -> new UserVO().setId(i).setUsername("wangjiahao"));
+                .map(i -> new UserVO().setId(i).setUsername("steven"));
     }
 
     /**
@@ -52,6 +50,7 @@ public class UserController {
      * @return 用户
      */
     @GetMapping("/get")
+    @CrossOrigin
     public Mono<UserVO> get(@RequestParam("id") Long id) {
         return Mono.just(new UserVO().setId(id).setUsername("username" + id));
     }

@@ -6,6 +6,7 @@
         <groupId>com.remember5</groupId>
         <artifactId>spring-boot-demo</artifactId>
         <version>1.0.0</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>

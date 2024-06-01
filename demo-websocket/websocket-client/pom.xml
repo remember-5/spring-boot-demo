@@ -6,6 +6,7 @@
         <groupId>com.remember5</groupId>
         <artifactId>demo-websocket</artifactId>
         <version>1.0.0</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>websocket-client</artifactId>

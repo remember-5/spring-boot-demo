@@ -21,40 +21,40 @@
     </developers>
 
     <modules>
-        <module>demo-admin</module>
+<!--        <module>demo-admin</module>-->
         <module>demo-common</module>
-        <module>demo-design-pattern</module>
-        <module>demo-dynamic-datasource</module>
-        <module>demo-elasticsearch6</module>
-        <module>demo-elasticsearch7</module>
-        <module>demo-encrypt</module>
-        <module>demo-flowable</module>
-        <module>demo-interview</module>
-        <module>demo-junit</module>
-        <module>demo-jwt</module>
-        <module>demo-liquibase</module>
-        <module>demo-minio</module>
-        <module>demo-mybatis-plus</module>
-        <module>demo-nacos</module>
-        <module>demo-oauth2</module>
-        <module>demo-office</module>
-        <module>demo-package</module>
-        <module>demo-quartz</module>
-        <module>demo-rabbitmq</module>
-        <module>demo-redis</module>
-        <module>demo-rocketmq</module>
-        <module>demo-security</module>
-        <module>demo-sentinel</module>
-        <module>demo-skywalking</module>
-        <module>demo-spi</module>
-        <module>demo-swagger</module>
-        <module>demo-validation</module>
-        <module>demo-web</module>
+<!--        <module>demo-design-pattern</module>-->
+<!--        <module>demo-dynamic-datasource</module>-->
+<!--        <module>demo-elasticsearch6</module>-->
+<!--        <module>demo-elasticsearch7</module>-->
+<!--        <module>demo-encrypt</module>-->
+<!--        <module>demo-flowable</module>-->
+<!--        <module>demo-interview</module>-->
+<!--        <module>demo-junit</module>-->
+<!--        <module>demo-jwt</module>-->
+<!--        <module>demo-liquibase</module>-->
+<!--        <module>demo-minio</module>-->
+<!--        <module>demo-mybatis-plus</module>-->
+<!--        <module>demo-nacos</module>-->
+<!--        <module>demo-oauth2</module>-->
+<!--        <module>demo-office</module>-->
+<!--        <module>demo-package</module>-->
+<!--        <module>demo-quartz</module>-->
+<!--        <module>demo-rabbitmq</module>-->
+<!--        <module>demo-redis</module>-->
+<!--        <module>demo-rocketmq</module>-->
+<!--        <module>demo-security</module>-->
+<!--        <module>demo-sentinel</module>-->
+<!--        <module>demo-skywalking</module>-->
+<!--        <module>demo-spi</module>-->
+<!--        <module>demo-swagger</module>-->
+<!--        <module>demo-validation</module>-->
+<!--        <module>demo-web</module>-->
         <module>demo-webflux</module>
-        <module>demo-websocket</module>
-        <module>demo-mqtt</module>
-        <module>demo-mongodb</module>
-        <module>demo-email</module>
+<!--        <module>demo-websocket</module>-->
+<!--        <module>demo-mqtt</module>-->
+<!--        <module>demo-mongodb</module>-->
+<!--        <module>demo-email</module>-->
     </modules>
 
 
@@ -71,10 +71,10 @@
         <skipTests>true</skipTests>
 
         <!--plugins-->
-        <hutool.version>5.8.26</hutool.version>
-        <guava.version>32.0.0-jre</guava.version>
+        <hutool.version>5.8.28</hutool.version>
+        <guava.version>33.2.0-jre</guava.version>
         <user.agent.version>1.20</user.agent.version>
-        <fastjson.version>2.0.43</fastjson.version>
+        <fastjson.version>2.0.50</fastjson.version>
         <fastjson2.version>2.0.43</fastjson2.version>
         <javafaker.version>1.0.2</javafaker.version>
         <lombok.version>1.18.22</lombok.version>

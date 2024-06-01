@@ -13,4 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.remember5.demowebflux.controller;
+package com.remember5.webflux.entity;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+
+/**
+ * @author wangjiahao
+ * @date 2023/4/19 17:28
+ */
+@Data
+@Accessors(chain = true)
+@NoArgsConstructor
+@AllArgsConstructor
+
+public class UserVO {
+
+    private Long id;
+    private String username;
+
+
+}

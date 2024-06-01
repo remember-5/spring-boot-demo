@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>WebFlux API Demo</title>
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<div id="app">
+	<h1>WebFlux 接口请求示例</h1>
+	<button @click="fetchData">获取数据</button>
+	<div v-if="data">
+		<h2>数据内容:</h2>
+		<pre>{{ data }}</pre>
+	</div>
+</div>
+
+<script>
+    const {createApp, ref} = Vue
+
+    createApp({
+        setup: function () {
+            const data = ref([])
+
+            async function fetchData() {
+                try {
+                    const eventSource = new EventSource('http://127.0.0.1:8080/users/list')
+
+                    eventSource.addEventListener('message', (event) => {
+                        console.log(event.data);
+                        data.value = JSON.parse(event.data);
+                    });
+
+                    eventSource.addEventListener('error', (event) => {
+                        console.error('Error fetching data:', event);
+                        source.close();
+                    });
+                } catch (error) {
+                    console.error('Error fetching data:', error);
+                }
+            }
+
+            // onMounted(fetchData);
+
+            return {
+                data,
+                fetchData
+            }
+        }
+    }).mount('#app')
+</script>
+</body>
+</html>
