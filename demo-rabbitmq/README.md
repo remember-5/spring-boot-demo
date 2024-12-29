@@ -7,10 +7,6 @@ rabbitmq-demo5 (demo7，消费重试,死信队列)
 rabbitmq-demo6 (demo8，定时消息)    
 
 
-
-
-
-
 ## 功能清单
 - [x] 发送普通文本消息
 - [ ] 发送json消息
@@ -53,6 +49,7 @@ routingKey="quick.brown.fox"、routingKey="orange"、routingKey="quick.orange.ma
 ## 其他
 
 
-
-
+# Reference
+- 《芋道 RabbitMQ 极简入门》 https://www.iocoder.cn/RabbitMQ/good-collection/
+- 《芋道 Spring Boot 消息队列 RabbitMQ 入门》 https://www.iocoder.cn/Spring-Boot/RabbitMQ/?self
 

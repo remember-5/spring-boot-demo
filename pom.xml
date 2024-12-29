@@ -27,6 +27,7 @@
 <!--        <module>demo-dynamic-datasource</module>-->
 <!--        <module>demo-elasticsearch6</module>-->
 <!--        <module>demo-elasticsearch7</module>-->
+<!--        <module>demo-email</module>-->
 <!--        <module>demo-encrypt</module>-->
 <!--        <module>demo-flowable</module>-->
 <!--        <module>demo-interview</module>-->
@@ -34,6 +35,8 @@
 <!--        <module>demo-jwt</module>-->
 <!--        <module>demo-liquibase</module>-->
 <!--        <module>demo-minio</module>-->
+<!--        <module>demo-mongodb</module>-->
+<!--        <module>demo-mqtt</module>-->
 <!--        <module>demo-mybatis-plus</module>-->
 <!--        <module>demo-nacos</module>-->
 <!--        <module>demo-oauth2</module>-->
@@ -50,11 +53,8 @@
 <!--        <module>demo-swagger</module>-->
 <!--        <module>demo-validation</module>-->
 <!--        <module>demo-web</module>-->
-        <module>demo-webflux</module>
+<!--        <module>demo-webflux</module>-->
 <!--        <module>demo-websocket</module>-->
-<!--        <module>demo-mqtt</module>-->
-<!--        <module>demo-mongodb</module>-->
-<!--        <module>demo-email</module>-->
     </modules>
 
 
@@ -106,30 +106,35 @@
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
             </dependency>
-            <!-- fastjson -->
+
+            <!-- fastjson2 -->
             <dependency>
                 <groupId>com.alibaba.fastjson2</groupId>
                 <artifactId>fastjson2</artifactId>
                 <version>${fastjson2.version}</version>
             </dependency>
-            <!-- fastjson2 -->
+
+            <!-- fastjson -->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
             </dependency>
+
             <!-- 解析 UserAgent 信息 -->
             <dependency>
                 <groupId>eu.bitwalker</groupId>
                 <artifactId>UserAgentUtils</artifactId>
                 <version>${user.agent.version}</version>
             </dependency>
+
             <!--    javafaker    -->
             <dependency>
                 <groupId>com.github.javafaker</groupId>
                 <artifactId>javafaker</artifactId>
                 <version>${javafaker.version}</version>
             </dependency>
+
         </dependencies>
     </dependencyManagement>
 

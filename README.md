@@ -3,37 +3,46 @@ spring-boot的部分demo，部分参考了http://www.iocoder.cn/
 
 ## 模块介绍
 
-| 模块 | 介绍 |  
-| -- | -- |  
-| demo-admin | spring-boot-admin模块
-| demo-common | 公共模块
-| demo-dynamic-datasource | springboot多数据demo
-| demo-elasticsearch6 | springboot结合es
-| demo-elasticsearch7 | springboot结合es
-| demo-encrypt | 测试springboot结合加密
-| demo-interview | 面试练习
-| demo-junit | junit单元测试案例
-| demo-jwt | jwt token-demo
-| demo-liquibase| liquibase使用教程
-| demo-minio | minio文件上传demo
-| demo-mybatis-plus | springboot结合mybatisplus并且配置多数据源和ps6py打印日志
-| demo-nacos | nacos的基本代码
-| demo-oauth2 | oauth2单点登录
-| demo-office | office(excel/word/ppt)等操作
-| demo-quartz | 定时任务
-| demo-rabbitmq | rabbitmq
-| demo-redis | redis操作demo
-| demo-rocketmq | rocketmq
-| demo-security | security安全代码
-| demo-sentinel | 结合sentinel
-| demo-skywalking | skywalking链路追踪
-| demo-spi | 整合spi
-| demo-swagger | swagger2 knife4j-ui
-| demo-validation | spring数据校验
-| demo-web | web常用代码
-| demo-webflux | spring-webflux简单使用教程
-| demo-websocket | spring和netty-websocket结合使用代码
-
+```shell
+├── demo-admin # spring-boot-admin 监控模块
+├── demo-common # 公共模块
+├── demo-design-pattern # 设计模式部分代码
+├── demo-dynamic-datasource # 动态数据源
+├── demo-elasticsearch6 # es6 代码
+├── demo-elasticsearch7 # es7 代码
+├── demo-email # 发送邮件
+├── demo-encrypt # 加密相关
+├── demo-flowable # flowable
+├── demo-interview # 面试题
+├── demo-junit # junit测试用例
+├── demo-jwt # jwt认证相关
+├── demo-liquibase
+├── demo-minio # minio 文件上传下载相关
+├── demo-mongodb # mongodb测试用例
+├── demo-mqtt # mqtt测试 
+├── demo-mybatis-plus # mybatis-plus
+├── demo-nacos # nacos配置中心
+├── demo-oauth2 # oauth2相关代码
+├── demo-office # office(excel/word/ppt)等操作
+├── demo-package # 打包测试
+├── demo-quartz # 定时任务
+├── demo-rabbitmq # rabbitmq相关代码
+├── demo-redis # redis 相关
+├── demo-rocketmq # rocketmq相关
+├── demo-security # spring security 相关
+├── demo-sentinel # sentinel相关
+├── demo-skywalking # skywalking
+├── demo-spi # spi
+├── demo-swagger # swagger2 knife4j-ui
+├── demo-validation # 数据校验
+├── demo-web # 普通web服务
+├── demo-webflux # webflux相关 
+├── demo-websocket # spring和netty-websocket结合使用代码
+├── CHANGELOG.md # 更新日志
+├── LICENSE # LICENSE
+├── README.md # 介绍
+├── pom.xml # pom
+```
 
 ## FAQ
 如果遇到Lombok失效，请升级Lombok的版本
