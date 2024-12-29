@@ -11,16 +11,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>demo-rabbitmq</artifactId>
-    <version>1.0.0</version>
-    <name>demo-rabbitmq</name>
-    <description>Demo project for Spring Boot</description>
     <packaging>pom</packaging>
 
     <properties>
         <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <spring-boot.version>2.2.0.RELEASE</spring-boot.version>
+        <spring-boot.version>2.7.18</spring-boot.version>
     </properties>
 
     <modules>

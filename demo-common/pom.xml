@@ -13,6 +13,7 @@
     <version>1.0.0</version>
     <name>demo-common</name>
     <description>common公共包</description>
+    <packaging>jar</packaging>
 
     <properties>
         <java.version>17</java.version>

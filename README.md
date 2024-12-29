@@ -1,7 +1,10 @@
-## 写在前面
+## Introduction
 spring-boot的部分demo，部分参考了http://www.iocoder.cn/
 
+
 ## 模块介绍
+
+为了节省编译和加载时间，默认只开启了`demo-common`,需要用什么模块，就开启什么模块，reload maven 即可 
 
 ```shell
 ├── demo-admin # spring-boot-admin 监控模块

@@ -5,11 +5,12 @@ spring:
   application:
     name: demo-rabbitmq-demo1
   rabbitmq:
-    host: 127.0.0.1
+    host: 47.97.57.206
     port: 5672
-    username: guest # RabbitMQ 服务的账号
-    password: guest # RabbitMQ 服务的密码
-    virtual-host: guest
+    username: ryf # RabbitMQ 服务的账号
+    password: zKkbn8c7wuc7iCiT
+    # RabbitMQ 服务的密码
+    virtual-host: ryf
 #    listener: # 手动提交消息
 #      simple:
 #        # 签收模式为手动签收-那么需要在代码中手动ACK

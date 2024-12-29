@@ -9,11 +9,8 @@
         <version>1.0.0</version>
     </parent>
 
-    <groupId>com.remember.rabbitmq</groupId>
     <artifactId>rabbitmq-demo1</artifactId>
-    <version>1.0.0</version>
-    <name>rabbitmq-demo1</name>
-    <description>rabbitmq-demo1</description>
+    <packaging>jar</packaging>
 
     <properties>
         <java.version>17</java.version>

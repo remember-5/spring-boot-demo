@@ -8,10 +8,9 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
+
     <artifactId>rabbitmq-demo6</artifactId>
-    <version>1.0.0</version>
-    <name>rabbitmq-demo6</name>
-    <description>rabbitmq-demo6</description>
+    <packaging>jar</packaging>
 
     <properties>
         <java.version>17</java.version>
